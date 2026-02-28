@@ -1,1 +1,15 @@
-@import "../styles/variables.css";
+:root {
+  --color-primary: #002b5c;
+  --color-accent: #c00000;
+  --color-text: #1a1a1a;
+  --color-muted: #6b7280;
+  --color-background: #ffffff;
+
+  --font-primary: "Inter", sans-serif;
+
+  --container-width: 1280px;
+  --section-spacing: 96px;
+
+  --transition-fast: 150ms ease-in-out;
+  --transition-medium: 300ms ease-in-out;
+}

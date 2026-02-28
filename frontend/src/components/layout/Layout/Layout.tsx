@@ -1,21 +1,17 @@
-import "./globals.css";
-import Layout from "@/components/layout/Layout/Layout";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+import styles from "./Layout.module.css";
 
-export const metadata = {
-  title: "VSM Venture Control Systems Pvt. Ltd.",
-  description: "Industrial Automation & Control Systems",
-};
-
-export default function RootLayout({
-  children,
-}: {
+interface LayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
-    <html lang="en">
-      <body>
-        <Layout>{children}</Layout>
-      </body>
-    </html>
+    <div className={styles.wrapper}>
+      <Navbar />
+      <main className={styles.content}>{children}</main>
+      <Footer />
+    </div>
   );
 }
