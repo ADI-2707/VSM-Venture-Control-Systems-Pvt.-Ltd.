@@ -1,0 +1,14 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.content {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
