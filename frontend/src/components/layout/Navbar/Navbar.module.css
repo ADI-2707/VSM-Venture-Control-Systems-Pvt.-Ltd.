@@ -1,0 +1,19 @@
+.navbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background: var(--color-primary);
+  color: white;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
