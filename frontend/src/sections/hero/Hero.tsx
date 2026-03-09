@@ -46,6 +46,7 @@ export default function Hero() {
                 src={slide.image}
                 alt={slide.title}
                 fill
+                sizes="(max-width: 1200px) 90vw, 70vw"
                 priority={i === 0}
                 className={styles.image}
               />

@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible;
 }
 
 .slide {
@@ -22,7 +23,7 @@
   width: 70%;
   height: 100%;
   overflow: visible;
-  border-radius: 12px;
+  border-radius: 32px;
   transition: transform 0.9s ease, opacity 0.9s ease;
 }
 
