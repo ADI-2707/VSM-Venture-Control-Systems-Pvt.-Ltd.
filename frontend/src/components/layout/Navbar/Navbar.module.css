@@ -5,6 +5,7 @@
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
   z-index: 1000;
+  margin-bottom: 32px;
 }
 
 .inner {

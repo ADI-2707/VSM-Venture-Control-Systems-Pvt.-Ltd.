@@ -1,6 +1,6 @@
 .hero {
   width: 100%;
-  height: 85vh;
+  height: 70vh;
   background: white;
   overflow: hidden;
   position: relative;
@@ -20,12 +20,14 @@
   position: absolute;
   width: 70%;
   height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+
   transition: transform 0.9s ease, opacity 0.9s ease;
 }
 
 .image {
   object-fit: cover;
-  border-radius: 10px;
 }
 
 .overlay {
@@ -33,7 +35,7 @@
   bottom: 70px;
   left: 60px;
   color: white;
-  z-index: 10;
+  z-index: 5;
 }
 
 .overlay h1 {
@@ -52,10 +54,9 @@
   transform: translateX(0) scale(1) rotateY(0deg);
   opacity: 1;
   z-index: 5;
-
   box-shadow:
-    0 50px 120px rgba(0,0,0,0.25),
-    0 15px 40px rgba(0,0,0,0.2);
+    0 40px 80px rgba(0,0,0,0.18),
+    0 10px 25px rgba(0,0,0,0.15);
 }
 
 .left {
@@ -79,8 +80,10 @@
 .blurMask {
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.01);
   pointer-events: none;
+  z-index: 2;
 }
 
 .blurMask.center {
@@ -88,24 +91,37 @@
 }
 
 .blurMask.left {
-  mask-image: linear-gradient(to right, transparent, black);
+  mask-image: linear-gradient(
+    to right,
+    black 30%,
+    transparent 100%
+  );
 }
 
 .blurMask.right {
-  mask-image: linear-gradient(to left, transparent, black);
+  mask-image: linear-gradient(
+    to left,
+    black 30%,
+    transparent 100%
+  );
 }
 
 .fadeMask {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 3;
+}
+
+.fadeMask.center {
+  display: none;
 }
 
 .fadeMask.left {
   background: linear-gradient(
     to left,
     rgba(255,255,255,0),
-    rgba(255,255,255,0.7)
+    rgba(255,255,255,0.85)
   );
 }
 
@@ -113,10 +129,6 @@
   background: linear-gradient(
     to right,
     rgba(255,255,255,0),
-    rgba(255,255,255,0.7)
+    rgba(255,255,255,0.85)
   );
-}
-
-.fadeMask.center {
-  display: none;
 }
