@@ -5,6 +5,13 @@
   background: white;
   overflow: visible;
   position: relative;
+
+  background: radial-gradient(
+    circle at center,
+    #e5e5e5 0%,
+    #f2f2f2 45%,
+    #ffffff 90%
+  );
 }
 
 .slider {
@@ -24,7 +31,9 @@
   width: 70%;
   height: 100%;
   overflow: visible;
-  transition: transform 0.9s ease, opacity 0.9s ease;
+  transition:
+    transform 0.9s ease,
+    opacity 0.9s ease;
 }
 
 .slide::after {
@@ -37,10 +46,10 @@
   border-radius: 32px;
   background: radial-gradient(
     ellipse at center,
-    rgba(0,0,0,0.35) 0%,
-    rgba(0,0,0,0.22) 35%,
-    rgba(0,0,0,0.10) 60%,
-    rgba(0,0,0,0.03) 75%,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.22) 35%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0.03) 75%,
     transparent 85%
   );
 
@@ -66,7 +75,7 @@
 .overlay h1 {
   font-size: 52px;
   font-weight: 600;
-  text-shadow: 0 6px 30px rgba(0,0,0,0.45);
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
 }
 
 .overlay p {
@@ -82,8 +91,8 @@
   z-index: 5;
   border-radius: 32px;
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.25),
-    0 10px 25px rgba(0,0,0,0.15);
+    0 30px 80px rgba(0, 0, 0, 0.25),
+    0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .center::after {
@@ -112,7 +121,7 @@
   position: absolute;
   inset: 0;
   backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.01);
+  background: rgba(255, 255, 255, 0.01);
   pointer-events: none;
   z-index: 2;
 }
@@ -122,19 +131,11 @@
 }
 
 .blurMask.left {
-  mask-image: linear-gradient(
-    to right,
-    black 30%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to right, black 30%, transparent 100%);
 }
 
 .blurMask.right {
-  mask-image: linear-gradient(
-    to left,
-    black 30%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to left, black 30%, transparent 100%);
 }
 
 .fadeMask {
@@ -151,15 +152,15 @@
 .fadeMask.left {
   background: linear-gradient(
     to left,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0.85)
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.85)
   );
 }
 
 .fadeMask.right {
   background: linear-gradient(
     to right,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0.85)
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.85)
   );
 }
