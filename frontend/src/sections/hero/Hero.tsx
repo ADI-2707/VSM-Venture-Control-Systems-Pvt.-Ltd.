@@ -43,6 +43,7 @@ export default function Hero() {
 
             <div className={styles.overlay}>
               <h1>{slide.title}</h1>
+              <p>{slide.subtitle}</p>
             </div>
           </div>
         ))}
