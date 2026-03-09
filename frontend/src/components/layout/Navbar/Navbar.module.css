@@ -28,7 +28,6 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 32px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,7 +43,8 @@
 
 .nav {
   display: flex;
-  gap: 28px;
+  gap: 24px;
+  flex-wrap: nowrap;
 }
 
 .link {
@@ -53,6 +53,11 @@
   font-weight: 500;
   color: #1f2937;
   text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
   transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -88,6 +93,4 @@
 .active {
   color: #0b5ed7;
   background: #f3f4f6;
-  padding: 6px 10px;
-  border-radius: 6px;
 }
