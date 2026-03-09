@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loader from "@/features/loader/Loader";
@@ -12,6 +13,16 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { showLoader, setShowLoader } = useLoader();
+
+  useEffect(() => {
+    if (showLoader) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showLoader]);
 
   return (
     <>
