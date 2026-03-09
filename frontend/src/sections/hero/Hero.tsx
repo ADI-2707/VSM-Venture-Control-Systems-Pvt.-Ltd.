@@ -18,6 +18,14 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [total]);
 
+  const nextSlide = () => {
+    setIndex((prev) => (prev + 1) % total);
+  };
+
+  const prevSlide = () => {
+    setIndex((prev) => (prev - 1 + total) % total);
+  };
+
   const getPosition = (i: number) => {
     const prev = (index - 1 + total) % total;
     const next = (index + 1) % total;
@@ -31,6 +39,15 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.slider}>
+
+        <button className={styles.navLeft} onClick={prevSlide}>
+          ‹
+        </button>
+
+        <button className={styles.navRight} onClick={nextSlide}>
+          ›
+        </button>
+
         {heroSlides.map((slide, i) => {
           const pos = getPosition(i);
 
@@ -38,9 +55,6 @@ export default function Hero() {
             <motion.div
               key={slide.id}
               className={`${styles.slide} ${styles[pos]}`}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              whileTap={{ cursor: "grabbing" }}
             >
               <Image
                 src={slide.image}
@@ -52,7 +66,6 @@ export default function Hero() {
               />
 
               <div className={`${styles.fadeMask} ${styles[pos]}`} />
-
               <div className={`${styles.blurMask} ${styles[pos]}`} />
 
               <div className={styles.overlay}>
