@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -16,6 +17,8 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <header className={styles.navbar}>
       <div className={styles.inner}>
@@ -31,11 +34,19 @@ export default function Navbar() {
         </Link>
 
         <nav className={styles.nav}>
-          {navItems.map((item) => (
-            <Link key={item.label} href={item.href} className={styles.link}>
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`${styles.link} ${isActive ? styles.active : ""}`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
       </div>
