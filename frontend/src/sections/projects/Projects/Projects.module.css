@@ -23,6 +23,40 @@
   gap: 28px;
 }
 
+.controls {
+  margin-top: 30px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev,
+.next {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  padding: 10px 20px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.prev:hover,
+.next:hover {
+  background: #f3f4f6;
+}
+
+.prev:disabled,
+.next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 @media (max-width: 1200px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
