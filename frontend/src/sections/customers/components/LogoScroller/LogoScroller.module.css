@@ -2,20 +2,38 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 80px,
+    black calc(100% - 80px),
+    transparent
+  );
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 80px,
+    black calc(100% - 80px),
+    transparent
+  );
 }
 
 .scrollerTrack {
   display: flex;
-  width: max-content;
   gap: 40px;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .scrollLeft {
-  animation: scrollLeft 30s linear infinite;
+  animation: scrollLeft 35s linear infinite;
 }
 
 .scrollRight {
-  animation: scrollRight 30s linear infinite;
+  animation: scrollRight 35s linear infinite;
 }
 
 .scrollerWrapper:hover .scrollerTrack {
@@ -24,42 +42,18 @@
 
 @keyframes scrollLeft {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes scrollRight {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
-}
-
-.scrollerWrapper::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(to right, white, transparent);
-}
-
-.scrollerWrapper::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(to left, white, transparent);
 }
