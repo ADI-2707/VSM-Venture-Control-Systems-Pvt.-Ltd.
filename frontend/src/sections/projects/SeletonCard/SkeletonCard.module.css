@@ -1,0 +1,60 @@
+.card {
+  border-radius: 12px;
+  padding: 2px;
+}
+
+.inner {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    0 4px 10px rgba(0,0,0,0.05);
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  background: #e5e7eb;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.content {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  height: 14px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 6px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.arrow {
+  margin-top: 10px;
+  height: 14px;
+  width: 30px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  align-self: center;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #e5e7eb;
+  }
+
+  50% {
+    background-color: #f3f4f6;
+  }
+
+  100% {
+    background-color: #e5e7eb;
+  }
+}
