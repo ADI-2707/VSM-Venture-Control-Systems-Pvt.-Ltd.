@@ -5,6 +5,7 @@
   background: #f5f4f4;
   overflow: visible;
   position: relative;
+  margin-bottom: 32px;
 
   background: radial-gradient(
     circle at center,
