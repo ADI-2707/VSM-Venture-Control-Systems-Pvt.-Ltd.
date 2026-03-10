@@ -43,7 +43,9 @@ export default function ProjectCard({
             <span className={styles.value}>{location}</span>
           </div>
 
-          <div className={styles.arrow}>→</div>
+          <div className={styles.arrow}>
+            <span className={styles.arrowIcon}>→</span>
+          </div>
         </div>
       </div>
     </div>

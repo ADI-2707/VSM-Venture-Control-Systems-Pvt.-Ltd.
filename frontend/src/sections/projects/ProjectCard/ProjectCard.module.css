@@ -108,15 +108,26 @@
 
 .arrow {
   margin-top: 10px;
-  align-self: flex-end;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   font-size: 18px;
   color: #1f2937;
+}
 
-  transition: transform 0.2s ease;
+.arrowIcon {
+  transition: transform 0.35s ease;
 }
 
 .card:hover .arrow {
+  margin-left: auto;
+  margin-right: 0;
   transform: translateX(6px);
+}
+
+.card:hover .arrowIcon {
+  transform: translateX(120px);
+  opacity: 0.85;
 }
 
 @keyframes borderSpin {
