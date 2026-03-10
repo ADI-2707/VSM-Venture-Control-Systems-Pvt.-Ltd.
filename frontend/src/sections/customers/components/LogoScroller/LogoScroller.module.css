@@ -40,6 +40,14 @@
   animation-play-state: paused;
 }
 
+.play {
+  animation-play-state: running;
+}
+
+.pause {
+  animation-play-state: paused;
+}
+
 @keyframes scrollLeft {
   from {
     transform: translate3d(0, 0, 0);
