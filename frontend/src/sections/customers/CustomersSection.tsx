@@ -6,11 +6,11 @@ export default function CustomersSection() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        {customerGroups.map((group) => (
+        {customerGroups.map((group, index) => (
           <div key={group.title} className={styles.group}>
             <h2 className={styles.title}>{group.title}</h2>
 
-            <LogoScroller logos={group.logos} />
+            <LogoScroller logos={group.logos} direction={index === 0 ? "left" : "right"} />
           </div>
         ))}
       </div>

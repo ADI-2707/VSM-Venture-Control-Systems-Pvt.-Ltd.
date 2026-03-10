@@ -8,14 +8,18 @@ type Logo = {
 
 type LogoScrollerProps = {
   logos: Logo[];
+  direction?: "left" | "right";
 };
 
-export default function LogoScroller({ logos }: LogoScrollerProps) {
+export default function LogoScroller({ logos, direction = "left" }: LogoScrollerProps) {
   const duplicatedLogos = [...logos, ...logos];
+
+  const directionClass =
+    direction === "right" ? styles.scrollRight : styles.scrollLeft;
 
   return (
     <div className={styles.scrollerWrapper}>
-      <div className={styles.scrollerTrack}>
+      <div className={`${styles.scrollerTrack} ${directionClass}`}>
         {duplicatedLogos.map((logo, index) => (
           <LogoItem key={index} name={logo.name} src={logo.src} />
         ))}
