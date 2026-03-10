@@ -1,0 +1,25 @@
+.logoItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  min-width: 160px;
+  padding: 10px 20px;
+}
+
+.logoImage {
+  object-fit: contain;
+  max-height: 60px;
+  width: auto;
+
+  filter: grayscale(100%);
+  opacity: 0.75;
+
+  transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+}
+
+.logoItem:hover .logoImage {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
