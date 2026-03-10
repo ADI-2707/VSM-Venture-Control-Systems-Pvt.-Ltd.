@@ -1,0 +1,50 @@
+.scrollerWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.scrollerTrack {
+  display: flex;
+  width: max-content;
+  gap: 40px;
+  animation: scroll 30s linear infinite;
+}
+
+.scrollerWrapper:hover .scrollerTrack {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.scrollerWrapper::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.scrollerWrapper::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to left, white, transparent);
+}
