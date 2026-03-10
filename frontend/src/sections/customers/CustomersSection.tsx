@@ -10,7 +10,11 @@ export default function CustomersSection() {
           <div key={group.title} className={styles.group}>
             <h2 className={styles.title}>{group.title}</h2>
 
-            <LogoScroller logos={group.logos} direction={index === 0 ? "left" : "right"} />
+            <LogoScroller
+              logos={group.logos}
+              direction={index === 0 ? "left" : "right"}
+              speed={index === 0 ? 40 : 30}
+            />
           </div>
         ))}
       </div>

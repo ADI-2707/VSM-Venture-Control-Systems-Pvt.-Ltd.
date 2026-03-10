@@ -9,9 +9,10 @@ type Logo = {
 type LogoScrollerProps = {
   logos: Logo[];
   direction?: "left" | "right";
+  speed?: number;
 };
 
-export default function LogoScroller({ logos, direction = "left" }: LogoScrollerProps) {
+export default function LogoScroller({ logos, direction = "left", speed = 35 }: LogoScrollerProps) {
   const duplicatedLogos = [...logos, ...logos];
 
   const directionClass =
@@ -19,7 +20,8 @@ export default function LogoScroller({ logos, direction = "left" }: LogoScroller
 
   return (
     <div className={styles.scrollerWrapper}>
-      <div className={`${styles.scrollerTrack} ${directionClass}`}>
+      <div className={`${styles.scrollerTrack} ${directionClass}`}
+        style={{ ["--scroll-duration" as any]: `${speed}s` }}>
         {duplicatedLogos.map((logo, index) => (
           <LogoItem key={index} name={logo.name} src={logo.src} />
         ))}

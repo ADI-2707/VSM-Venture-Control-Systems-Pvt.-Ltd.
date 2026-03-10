@@ -29,11 +29,11 @@
 }
 
 .scrollLeft {
-  animation: scrollLeft 35s linear infinite;
+  animation: scrollLeft var(--scroll-duration, 35s) linear infinite;
 }
 
 .scrollRight {
-  animation: scrollRight 35s linear infinite;
+  animation: scrollRight var(--scroll-duration, 35s) linear infinite;
 }
 
 .scrollerWrapper:hover .scrollerTrack {
