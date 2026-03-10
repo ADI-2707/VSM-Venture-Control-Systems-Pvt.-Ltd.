@@ -20,6 +20,21 @@
   );
 }
 
+.scrollerWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.15) 25%,
+    rgba(255,255,255,0) 45%,
+    rgba(0,0,0,0) 70%
+  );
+}
+
 .scrollerTrack {
   display: flex;
   gap: 40px;
