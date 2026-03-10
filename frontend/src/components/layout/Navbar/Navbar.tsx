@@ -23,17 +23,21 @@ export default function Navbar() {
     <header className={styles.navbar}>
       <div className={styles.inner}>
 
-        <Link href="/" className={styles.logo}>
-          <Image
-            src="/logo.png"
-            alt="VSM Venture Control Systems"
-            width={160}
-            height={50}
-            priority
-          />
-        </Link>
+        {/* LEFT — LOGO */}
+        <div className={styles.left}>
+          <Link href="/" className={styles.logo}>
+            <Image
+              src="/logo.png"
+              alt="VSM Venture Control Systems"
+              width={160}
+              height={50}
+              priority
+            />
+          </Link>
+        </div>
 
-        <nav className={styles.nav}>
+        {/* CENTER — NAV LINKS */}
+        <nav className={styles.center}>
           {navItems.map((item) => {
             const isActive = pathname === item.href;
 
@@ -48,6 +52,18 @@ export default function Navbar() {
             );
           })}
         </nav>
+
+        {/* RIGHT — PHONE BUTTON */}
+        <div className={styles.right}>
+          <button className={styles.phoneButton}>
+            <Image
+              src="/icons/phone.svg"
+              alt="Contact"
+              width={22}
+              height={22}
+            />
+          </button>
+        </div>
 
       </div>
     </header>
