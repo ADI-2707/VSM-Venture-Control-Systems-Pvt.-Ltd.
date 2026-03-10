@@ -24,37 +24,37 @@
 }
 
 .controls {
-  margin-top: 30px;
-
+  margin-top: 12px;
   display: flex;
   justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .prev,
 .next {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-
-  padding: 10px 20px;
-  border-radius: 8px;
-
-  font-size: 14px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 15px;
   font-weight: 500;
-
+  color: #2563eb;
+  text-decoration: underline;
   cursor: pointer;
-
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .prev:hover,
 .next:hover {
   background: #f3f4f6;
+  color: #1d4ed8;
 }
 
 .prev:disabled,
 .next:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+  color: #9ca3af;
 }
 
 @media (max-width: 1200px) {
