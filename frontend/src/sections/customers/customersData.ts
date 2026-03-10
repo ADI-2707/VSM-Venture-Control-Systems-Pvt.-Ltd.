@@ -1,4 +1,14 @@
-export const customerGroups = [
+export type Logo = {
+  name: string;
+  src: string;
+};
+
+export type CustomerGroup = {
+  title: string;
+  logos: Logo[];
+};
+
+export const customerGroups: CustomerGroup[] = [
   {
     title: "Our Customers",
     logos: [
