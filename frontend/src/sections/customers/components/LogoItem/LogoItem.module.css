@@ -6,11 +6,11 @@
   min-width: 160px;
   padding: 10px 20px;
   position: relative;
-  animation: floatUp 7s ease-in-out infinite;
+  animation: floatUp 11s ease-in-out infinite;
 }
 
 .logoItem:nth-child(even) {
-  animation: floatDown 7s ease-in-out infinite;
+  animation: floatDown 11s ease-in-out infinite;
 }
 
 .logoItem::after {
