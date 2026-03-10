@@ -6,6 +6,11 @@
   min-width: 160px;
   padding: 10px 20px;
   position: relative;
+  animation: floatUp 7s ease-in-out infinite;
+}
+
+.logoItem:nth-child(even) {
+  animation: floatDown 7s ease-in-out infinite;
 }
 
 .logoItem::after {
@@ -14,7 +19,6 @@
   bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-
   width: 60%;
   height: 8px;
 
@@ -40,4 +44,16 @@
 .logoItem:hover .logoImage {
   opacity: 1;
   transform: translateY(-2px) scale(1.05);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes floatDown {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(0px); }
 }
