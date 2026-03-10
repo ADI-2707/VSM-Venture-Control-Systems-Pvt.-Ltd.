@@ -26,7 +26,7 @@ export const customerGroups: CustomerGroup[] = [
       { name: "KR Pulp", src: "/customers/kr_pulp.png" },
       { name: "Orient", src: "/customers/orient.png" },
       { name: "RCS", src: "/customers/rcs.png" },
-      { name: "Sri", src: "/customers/sri.png" },
+      { name: "SRJ", src: "/customers/srj.png" },
       { name: "Super", src: "/customers/super.png" },
       { name: "Tata Steel", src: "/customers/tata_steel.png" },
       { name: "Uttam", src: "/customers/uttam.png" },
@@ -37,7 +37,7 @@ export const customerGroups: CustomerGroup[] = [
     title: "OEM & Consultants",
     logos: [
       { name: "Esmech", src: "/consultants/esmech.png" },
-      { name: "Hardayal Engineering", src: "/consultants/hardayal.png" },
+      { name: "Hardayal Engineering", src: "/consultants/hardayal_engg.png" },
       { name: "Innov Engineering", src: "/consultants/innov.png" },
       { name: "Kibos", src: "/consultants/kibos.png" },
       { name: "Korus", src: "/consultants/korus.png" },
