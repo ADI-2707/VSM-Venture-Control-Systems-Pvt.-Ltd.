@@ -16,10 +16,7 @@ export default function Home() {
       <Reveal>
         <CustomersSection />
       </Reveal>
-
-      <section className={styles.textSection}>
-        <h1>VSM Venture Control Systems Pvt. Ltd.</h1>
-      </section>
+      
     </main>
   );
 }
