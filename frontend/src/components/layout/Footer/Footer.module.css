@@ -88,46 +88,10 @@
   position: relative;
 }
 
-.icon::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: 46px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px) scale(0.9);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-}
-
-.icon:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) scale(1);
-}
-
 .icon img {
   width: 18px;
   height: 18px;
   filter: brightness(0) invert(1);
-}
-
-.facebook::after {
-  background: #1877f2;
-}
-
-.linkedin::after {
-  background: #0a66c2;
-}
-
-.instagram::after {
-  background: #dd2a7b;
 }
 
 .facebook:hover {
@@ -150,6 +114,69 @@
 
 .icon:hover img {
   filter: brightness(0) invert(1);
+}
+
+.socialItem {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.socialItem::after {
+  content: "";
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+}
+
+.tooltip {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px) scale(0.9);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+
+  z-index: 10;
+}
+
+.tooltip a {
+  color: white;
+  text-decoration: none;
+}
+
+.tooltip.facebook {
+  background: #1877f2;
+}
+
+.tooltip.linkedin {
+  background: #0a66c2;
+}
+
+.tooltip.instagram {
+  background: linear-gradient(
+    45deg,
+    #f58529,
+    #dd2a7b,
+    #8134af,
+    #515bd4
+  );
+}
+
+.socialItem:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .bottom {

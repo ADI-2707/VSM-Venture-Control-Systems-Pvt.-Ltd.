@@ -63,16 +63,28 @@ export default function Footer() {
 
             <div className={styles.social}>
               {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-tooltip={social.tooltip}
-                  className={`${styles.icon} ${styles[social.className]}`}
-                >
-                  <img src={social.icon} alt={social.name} />
-                </a>
+                <div key={social.name} className={styles.socialItem}>
+
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.icon} ${styles[social.className]}`}
+                  >
+                    <img src={social.icon} alt={social.name} />
+                  </a>
+
+                  <div className={`${styles.tooltip} ${styles[social.className]}`}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {social.tooltip}
+                    </a>
+                  </div>
+
+                </div>
               ))}
             </div>
           </div>
