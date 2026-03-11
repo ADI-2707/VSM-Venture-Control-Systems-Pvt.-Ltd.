@@ -6,6 +6,7 @@
   background: #f5f4f4;
   overflow: visible;
   position: relative;
+  margin-top: var(--navbar-height);
   margin-bottom: 32px;
 
   background: radial-gradient(

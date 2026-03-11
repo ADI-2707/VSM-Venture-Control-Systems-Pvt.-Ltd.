@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --navbar-height: 85px;
+}
+
 html {
   font-size: 16px;
 }
