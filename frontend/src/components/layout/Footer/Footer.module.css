@@ -85,12 +85,49 @@
   border-radius: 50%;
   background: #1c1f24;
   transition: all 0.25s ease;
+  position: relative;
+}
+
+.icon::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px) scale(0.9);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.icon:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
 }
 
 .icon img {
   width: 18px;
   height: 18px;
   filter: brightness(0) invert(1);
+}
+
+.facebook::after {
+  background: #1877f2;
+}
+
+.linkedin::after {
+  background: #0a66c2;
+}
+
+.instagram::after {
+  background: #dd2a7b;
 }
 
 .facebook:hover {
@@ -125,7 +162,6 @@
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 24px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;

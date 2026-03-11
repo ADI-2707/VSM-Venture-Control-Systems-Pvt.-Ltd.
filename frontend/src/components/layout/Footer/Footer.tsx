@@ -1,4 +1,5 @@
 import styles from "./Footer.module.css";
+import { socialLinks } from "@/constants/socialLinks";
 
 export default function Footer() {
   return (
@@ -61,31 +62,18 @@ export default function Footer() {
             <button className={styles.quote}>Get A Quote</button>
 
             <div className={styles.social}>
-
-              <a
-                href="#"
-                className={`${styles.icon} ${styles.facebook}`}
-                title="Facebook"
-              >
-                <img src="/icons/facebook.svg" alt="Facebook" />
-              </a>
-
-              <a
-                href="#"
-                className={`${styles.icon} ${styles.linkedin}`}
-                title="LinkedIn"
-              >
-                <img src="/icons/linkedin.svg" alt="LinkedIn" />
-              </a>
-
-              <a
-                href="#"
-                className={`${styles.icon} ${styles.instagram}`}
-                title="Instagram"
-              >
-                <img src="/icons/instagram.svg" alt="Instagram" />
-              </a>
-
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-tooltip={social.tooltip}
+                  className={`${styles.icon} ${styles[social.className]}`}
+                >
+                  <img src={social.icon} alt={social.name} />
+                </a>
+              ))}
             </div>
           </div>
 
