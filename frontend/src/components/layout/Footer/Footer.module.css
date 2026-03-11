@@ -51,8 +51,39 @@
 }
 
 .contact {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.contactIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.mailIcon {
+  fill: #1f8acb;
+}
+
+.phoneIcon {
+  fill: #25D366;
+}
+
+.locationIcon {
+  fill: #e53935;
+  transform: scale(1.2);
+}
+
+.contact:hover .contactIcon {
+  transform: scale(1.15) rotate(-12deg) translateY(-1px);
+}
+
+.contact:hover .locationIcon {
+  transform: scale(1.3) rotate(-12deg) translateY(-1px);
 }
 
 .quote {

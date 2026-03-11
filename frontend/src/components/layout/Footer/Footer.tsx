@@ -12,16 +12,27 @@ export default function Footer() {
             <p>If you have any questions or need help, feel free to contact with our team.</p>
 
             <div className={styles.contact}>
-              <span>venture@venture-online.com</span>
+              <svg className={`${styles.contactIcon} ${styles.mailIcon}`} viewBox="0 0 24 24">
+                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z" />
+              </svg>
+              venture@venture-online.com
             </div>
+
 
             <div className={styles.contact}>
-              <span>0120-4881000-49</span>
+              <svg className={`${styles.contactIcon} ${styles.phoneIcon}`} viewBox="0 0 24 24">
+                <path d="M6.62 10.79a15.466 15.466 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.72 11.72 0 0 0 3.69.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.72 11.72 0 0 0 .59 3.69 1 1 0 0 1-.25 1z" />
+              </svg>
+              0120-4881000-49
             </div>
 
-            <p className={styles.address}>
+
+            <div className={styles.contact}>
+              <svg className={`${styles.contactIcon} ${styles.locationIcon}`} viewBox="0 0 24 24">
+                <path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+              </svg>
               W53D & W54H, Sector 11, Noida, Uttar Pradesh – 201301
-            </p>
+            </div>
           </div>
 
           <div className={styles.col}>
