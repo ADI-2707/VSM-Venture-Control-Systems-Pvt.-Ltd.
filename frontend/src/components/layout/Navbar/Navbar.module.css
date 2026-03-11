@@ -11,6 +11,22 @@
     box-shadow 0.25s ease,
     background 0.25s ease,
     backdrop-filter 0.25s ease;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
 }
 
 .scrolled {
