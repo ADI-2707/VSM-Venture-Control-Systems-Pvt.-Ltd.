@@ -1,12 +1,22 @@
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   background: #f5f4f4;
   z-index: 1000;
-  padding-top: 6px;
-  margin-bottom: 82px;
   height: 85px;
+
+  transition:
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    backdrop-filter 0.25s ease;
+}
+
+.scrolled {
+  background: rgba(245, 244, 244, 0.9);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
 .navbar::after {
@@ -30,7 +40,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 32px;
-  height: 72px;
+  height: 100%;
   display: grid;
   grid-template-columns: 150px 1fr auto 1fr auto;
   align-items: center;
@@ -61,14 +71,12 @@
   display: flex;
   align-items: center;
   box-shadow: 0 6px 16px rgba(0,0,0,0.10);
-  padding: auto;
 }
 
 .logo img {
   height: 72px;
   width: auto;
   border-radius: 10px;
-  padding: auto;
 }
 
 .link {
