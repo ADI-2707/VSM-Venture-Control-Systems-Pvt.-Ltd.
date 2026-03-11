@@ -61,9 +61,31 @@ export default function Footer() {
             <button className={styles.quote}>Get A Quote</button>
 
             <div className={styles.social}>
-              <span>f</span>
-              <span>in</span>
-              <span>t</span>
+
+              <a
+                href="#"
+                className={`${styles.icon} ${styles.facebook}`}
+                title="Facebook"
+              >
+                <img src="/icons/facebook.svg" alt="Facebook" />
+              </a>
+
+              <a
+                href="#"
+                className={`${styles.icon} ${styles.linkedin}`}
+                title="LinkedIn"
+              >
+                <img src="/icons/linkedin.svg" alt="LinkedIn" />
+              </a>
+
+              <a
+                href="#"
+                className={`${styles.icon} ${styles.instagram}`}
+                title="Instagram"
+              >
+                <img src="/icons/instagram.svg" alt="Instagram" />
+              </a>
+
             </div>
           </div>
 
