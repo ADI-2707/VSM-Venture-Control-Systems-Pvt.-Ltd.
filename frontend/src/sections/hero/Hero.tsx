@@ -50,9 +50,10 @@ export default function Hero() {
 
         {heroSlides.map((slide, i) => {
           const pos = getPosition(i);
+          const isCenter = pos === "center";
 
           return (
-            <motion.div
+            <div
               key={slide.id}
               className={`${styles.slide} ${styles[pos]}`}
             >
@@ -69,10 +70,38 @@ export default function Hero() {
               <div className={`${styles.blurMask} ${styles[pos]}`} />
 
               <div className={styles.overlay}>
-                <h1>{slide.title}</h1>
-                <p>{slide.subtitle}</p>
+                <motion.h1
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={
+                    isCenter
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 40 }
+                  }
+                  transition={{
+                    duration: 0.8,
+                    ease: "easeOut"
+                  }}
+                >
+                  {slide.title}
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={
+                    isCenter
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 40 }
+                  }
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.3,
+                    ease: "easeOut"
+                  }}
+                >
+                  {slide.subtitle}
+                </motion.p>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
