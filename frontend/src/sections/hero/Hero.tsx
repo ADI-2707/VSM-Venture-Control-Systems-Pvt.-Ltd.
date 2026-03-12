@@ -11,11 +11,18 @@ export default function Hero() {
   const total = heroSlides.length;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % total);
-    }, 4000);
+    let timer: NodeJS.Timeout;
 
-    return () => clearInterval(interval);
+    const startSlider = () => {
+      timer = setTimeout(() => {
+        setIndex((prev) => (prev + 1) % total);
+        startSlider();
+      }, 4000);
+    };
+
+    startSlider();
+
+    return () => clearTimeout(timer);
   }, [total]);
 
   useEffect(() => {
@@ -53,12 +60,20 @@ export default function Hero() {
     <section className={styles.hero}>
       <div className={styles.slider}>
 
-        <button className={styles.navLeft} onClick={prevSlide}>
-          ‹
+        <button
+          className={`${styles.navButton} ${styles.navLeft}`}
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <span>‹</span>
         </button>
 
-        <button className={styles.navRight} onClick={nextSlide}>
-          ›
+        <button
+          className={`${styles.navButton} ${styles.navRight}`}
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          <span>›</span>
         </button>
 
         {heroSlides.map((slide, i) => {
