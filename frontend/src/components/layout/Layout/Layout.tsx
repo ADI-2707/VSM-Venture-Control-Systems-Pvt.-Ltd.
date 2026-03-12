@@ -29,6 +29,7 @@ export default function Layout({ children }: LayoutProps) {
       {showLoader && (
         <Loader onComplete={() => setShowLoader(false)} />
       )}
+
       <div className={styles.wrapper}>
         <Navbar />
         <main className={styles.content}>{children}</main>

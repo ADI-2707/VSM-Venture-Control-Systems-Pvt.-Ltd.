@@ -8,6 +8,8 @@
   position: relative;
   margin-bottom: 32px;
 
+  isolation: isolate;
+
   background: radial-gradient(
     circle at center,
     #e5e5e5 0%,
