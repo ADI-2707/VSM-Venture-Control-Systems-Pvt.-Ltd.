@@ -6,5 +6,6 @@
 
 .content {
   flex: 1;
-  padding-top: 85px;
+  padding-top: var(--navbar-height);
+  margin-top: 65px;
 }
