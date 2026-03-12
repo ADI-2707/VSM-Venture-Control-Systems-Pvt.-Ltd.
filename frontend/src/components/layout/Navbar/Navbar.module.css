@@ -3,9 +3,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: #f5f4f4;
   z-index: 1000;
   height: var(--navbar-height);
+  background: rgba(245,244,244,0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 
   transition:
     box-shadow 0.25s ease,
