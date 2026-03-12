@@ -3,11 +3,18 @@
   min-height: 680px;
   height: 72vh;
   padding-bottom: 125px;
-  background: #f5f4f4;
   overflow: visible;
   position: relative;
   margin-bottom: 12px;
   isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -60px;
+  z-index: 0;
+  pointer-events: none;
 
   background: radial-gradient(
     circle at center,
@@ -15,6 +22,9 @@
     #f2f2f2 45%,
     #f5f4f4 90%
   );
+
+  transform: translateY(var(--bg-shift, 0));
+  transition: transform 1.2s ease-out;
 }
 
 .hero::after {
@@ -38,6 +48,7 @@
   width: 100%;
   height: 100%;
   position: relative;
+  z-index: 1;
   perspective: 1600px;
   display: flex;
   align-items: center;

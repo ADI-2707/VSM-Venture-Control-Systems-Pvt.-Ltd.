@@ -18,6 +18,19 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [total]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.querySelector(`.${styles.hero}`) as HTMLElement;
+      if (!hero) return;
+
+      const offset = window.scrollY * 0.05; // subtle movement
+      hero.style.setProperty("--bg-shift", `${offset}px`);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const nextSlide = () => {
     setIndex((prev) => (prev + 1) % total);
   };
