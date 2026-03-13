@@ -190,11 +190,12 @@
   background: rgba(255,255,255,0.01);
   pointer-events: none;
   z-index: 2;
-  opacity: 1;
-  transition: opacity 0.8s ease;
+  transform: scale(1.04);
+  transition: transform 8s ease, opacity 0.8s ease;
 }
 
 .blurMask.center {
+  transform: scale(1.09);
   opacity: 0;
 }
 
@@ -206,15 +207,23 @@
   mask-image: linear-gradient(to left, black 30%, transparent 100%);
 }
 
+.blurMask.left,
+.blurMask.right {
+  transform: scale(0.96);
+}
+
 .fadeMask {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 3;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
 
 .fadeMask.center {
-  display: none;
+  transform: scale(1.09);
+  opacity: 0;
 }
 
 .fadeMask.left {
@@ -231,6 +240,11 @@
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0.85)
   );
+}
+
+.fadeMask.left,
+.fadeMask.right {
+  transform: scale(0.96);
 }
 
 .navButton {
