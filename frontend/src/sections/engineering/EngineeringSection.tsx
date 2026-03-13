@@ -1,6 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import styles from "./EngineeringSection.module.css";
+
+function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const duration = 1200;
+    const stepTime = 16;
+    const increment = end / (duration / stepTime);
+
+    const timer = setInterval(() => {
+      start += increment;
+
+      if (start >= end) {
+        start = end;
+        clearInterval(timer);
+      }
+
+      setCount(Math.floor(start));
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [end]);
+
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
+}
 
 export default function EngineeringSection() {
   return (
@@ -21,22 +53,30 @@ export default function EngineeringSection() {
         <div className={styles.metrics}>
 
           <div className={styles.metric}>
-            <span className={styles.metricNumber}>10+</span>
+            <span className={styles.metricNumber}>
+              <CountUp end={10} suffix="+" />
+            </span>
             <span className={styles.metricLabel}>Industrial Systems</span>
           </div>
 
           <div className={styles.metric}>
-            <span className={styles.metricNumber}>500+</span>
+            <span className={styles.metricNumber}>
+              <CountUp end={500} suffix="+" />
+            </span>
             <span className={styles.metricLabel}>Deployments</span>
           </div>
 
           <div className={styles.metric}>
-            <span className={styles.metricNumber}>10K+</span>
+            <span className={styles.metricNumber}>
+              <CountUp end={10} suffix="K+" />
+            </span>
             <span className={styles.metricLabel}>Git Commits</span>
           </div>
 
           <div className={styles.metric}>
-            <span className={styles.metricNumber}>5+</span>
+            <span className={styles.metricNumber}>
+              <CountUp end={5} suffix="+" />
+            </span>
             <span className={styles.metricLabel}>Industries Served</span>
           </div>
 
