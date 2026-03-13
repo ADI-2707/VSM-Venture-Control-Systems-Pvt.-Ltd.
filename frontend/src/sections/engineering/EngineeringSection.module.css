@@ -41,3 +41,31 @@
     rgba(0,0,0,0)
   );
 }
+
+.metrics {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metricNumber {
+  font-size: 34px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.metricLabel {
+  font-size: 14px;
+  color: #666;
+  letter-spacing: 0.3px;
+}

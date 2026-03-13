@@ -18,6 +18,30 @@ export default function EngineeringSection() {
           environments.
         </p>
 
+        <div className={styles.metrics}>
+
+          <div className={styles.metric}>
+            <span className={styles.metricNumber}>10+</span>
+            <span className={styles.metricLabel}>Industrial Systems</span>
+          </div>
+
+          <div className={styles.metric}>
+            <span className={styles.metricNumber}>500+</span>
+            <span className={styles.metricLabel}>Deployments</span>
+          </div>
+
+          <div className={styles.metric}>
+            <span className={styles.metricNumber}>10K+</span>
+            <span className={styles.metricLabel}>Git Commits</span>
+          </div>
+
+          <div className={styles.metric}>
+            <span className={styles.metricNumber}>5+</span>
+            <span className={styles.metricLabel}>Industries Served</span>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
