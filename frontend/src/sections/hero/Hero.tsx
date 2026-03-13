@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import styles from "./Hero.module.css";
@@ -8,6 +8,7 @@ import { heroSlides } from "./sliderData";
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const heroRef = useRef<HTMLElement | null>(null);
   const total = heroSlides.length;
 
   useEffect(() => {
@@ -20,15 +21,17 @@ export default function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const hero = document.querySelector(`.${styles.hero}`) as HTMLElement;
-      if (!hero) return;
+      if (!heroRef.current) return;
 
       const offset = window.scrollY * 0.05;
-      hero.style.setProperty("--bg-shift", `${offset}px`);
+      heroRef.current.style.setProperty("--bg-shift", `${offset}px`);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const nextSlide = () => {
@@ -50,7 +53,7 @@ export default function Hero() {
   };
 
   return (
-    <section className={styles.hero}>
+    <section ref={heroRef} className={styles.hero}>
       <div className={styles.slider}>
 
         <button
