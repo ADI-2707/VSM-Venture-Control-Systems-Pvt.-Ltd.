@@ -83,7 +83,10 @@ export default function EngineeringSection() {
           environments.
         </p>
 
-        <div ref={metricsRef} className={styles.metrics}>
+        <div
+          ref={metricsRef}
+          className={`${styles.metrics} ${visible ? styles.visible : ""}`}
+        >
           <div className={styles.metric}>
             <span className={styles.metricNumber}>
               <CountUp end={10} suffix="+" startAnimation={visible} />
@@ -100,9 +103,9 @@ export default function EngineeringSection() {
 
           <div className={styles.metric}>
             <span className={styles.metricNumber}>
-              <CountUp end={10} suffix="K+" startAnimation={visible} />
+              <CountUp end={10} suffix="+" startAnimation={visible} />
             </span>
-            <span className={styles.metricLabel}>Git Commits</span>
+            <span className={styles.metricLabel}>Years of Tranformation</span>
           </div>
 
           <div className={styles.metric}>
