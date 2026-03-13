@@ -1,9 +1,31 @@
+"use client";
+
 import styles from "./Footer.module.css";
 import { socialLinks } from "@/constants/socialLinks";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.6
+      }
+    );
+
+    if (footerRef.current) observer.observe(footerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className={styles.footer}>
+    <footer ref={footerRef} className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.container}>
 
@@ -18,14 +40,12 @@ export default function Footer() {
               venture@venture-online.com
             </div>
 
-
             <div className={styles.contact}>
               <svg className={`${styles.contactIcon} ${styles.phoneIcon}`} viewBox="0 0 24 24">
                 <path d="M6.62 10.79a15.466 15.466 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.72 11.72 0 0 0 3.69.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.72 11.72 0 0 0 .59 3.69 1 1 0 0 1-.25 1z" />
               </svg>
               0120-4881000-49
             </div>
-
 
             <div className={styles.contact}>
               <svg className={`${styles.contactIcon} ${styles.locationIcon}`} viewBox="0 0 24 24">
@@ -69,8 +89,59 @@ export default function Footer() {
           </div>
 
           <div className={styles.col}>
-            <h4>Have A Project?</h4>
-            <button className={styles.quote}>Get A Quote</button>
+
+            <motion.div
+              className={styles.quoteArea}
+              initial={{ rotateX: -145, y: -80, opacity: 0, scaleY: 0.92 }}
+animate={
+  visible
+    ? {
+        rotateX: [-145, 28, -10, 4, 0],
+        y: [-95, 18, -6, 2, 0],
+        scaleY: [0.92, 1.05, 0.97, 1],
+        opacity: 1
+      }
+    : {}
+}
+              transition={{
+                duration: 1.2,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+            >
+
+              <div className={styles.pin}></div>
+
+              <motion.div
+                className={styles.string}
+                animate={
+                  visible
+                    ? { scaleY: [1, 1.35, 0.88, 1.05, 1] }
+                    : {}
+                }
+                transition={{
+                  duration: 1.2,
+                  ease: "easeOut"
+                }}
+              />
+
+              <motion.button
+                className={styles.quote}
+                animate={
+                  visible
+                    ? { rotateZ: [0, 4, -3, 2, -1, 0] }
+                    : {}
+                }
+                transition={{
+                  duration: 1.8,
+                  ease: "easeOut"
+                }}
+              >
+                Get A Quote
+              </motion.button>
+
+            </motion.div>
+
+            <h4 className={styles.projectTitle}>Have A Project?</h4>
 
             <div className={styles.social}>
               {socialLinks.map((social) => (
@@ -86,11 +157,7 @@ export default function Footer() {
                   </a>
 
                   <div className={`${styles.tooltip} ${styles[social.className]}`}>
-                    <a
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={social.href} target="_blank" rel="noopener noreferrer">
                       {social.tooltip}
                     </a>
                   </div>
@@ -98,6 +165,7 @@ export default function Footer() {
                 </div>
               ))}
             </div>
+
           </div>
 
         </div>
