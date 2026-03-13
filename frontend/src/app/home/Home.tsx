@@ -10,9 +10,8 @@ import EngineeringSection from "@/sections/engineering/EngineeringSection";
 export default function Home() {
   return (
     <main className={styles.container}>
+      
       <Hero />
-
-      <div className={styles.sectionTransition}></div>
 
       <Reveal>
         <Capabilities />
