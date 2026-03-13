@@ -2,6 +2,7 @@
 
 import styles from "./IndustriesSection.module.css";
 import { industries } from "./industriesData";
+import Link from "next/link";
 import Image from "next/image";
 
 export default function IndustriesSection() {
@@ -19,8 +20,11 @@ export default function IndustriesSection() {
 
         <div className={styles.grid}>
           {industries.map((industry) => (
-            <div key={industry.id} className={styles.card}>
-
+            <Link
+              key={industry.id}
+              href={`/industries/${industry.slug}`}
+              className={styles.card}
+            >
               <div className={styles.iconWrapper}>
                 <Image
                   src={industry.icon}
@@ -33,7 +37,10 @@ export default function IndustriesSection() {
               <h3>{industry.name}</h3>
               <p>{industry.description}</p>
 
-            </div>
+              <span className={styles.explore}>
+                Explore Industry →
+              </span>
+            </Link>
           ))}
         </div>
 

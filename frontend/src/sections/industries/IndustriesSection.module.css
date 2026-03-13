@@ -130,3 +130,17 @@
   box-shadow:
     0 8px 18px rgba(31,138,203,0.25);
 }
+
+.explore {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f8acb;
+
+  transition: transform 0.25s ease;
+}
+
+.card:hover .explore {
+  transform: translateX(4px);
+}
