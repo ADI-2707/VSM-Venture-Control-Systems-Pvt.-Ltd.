@@ -1,8 +1,8 @@
 .hero {
   width: 100%;
-  min-height: 680px;
-  height: 72vh;
-  padding-bottom: 125px;
+  min-height: 720px;
+  height: 78vh;
+  padding-bottom: 140px;
   overflow: visible;
   position: relative;
   margin-bottom: 12px;
@@ -12,7 +12,7 @@
 .hero::before {
   content: "";
   position: absolute;
-  inset: -60px;
+  inset: -120px;
   z-index: 0;
   pointer-events: none;
 
@@ -32,8 +32,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -140px;
-  height: 140px;
+  bottom: -200px;
+  height: 200px;
   pointer-events: none;
 
   background: linear-gradient(
@@ -49,7 +49,7 @@
   height: 100%;
   position: relative;
   z-index: 1;
-  perspective: 1400px;
+  perspective: 1800px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,22 +74,22 @@
 .slide::after {
   content: "";
   position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: -125px;
-  height: 55px;
+  left: 14%;
+  right: 14%;
+  bottom: -70px;
+  height: 70px;
   border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0,0,0,0.16) 0%,
-    rgba(0,0,0,0.10) 35%,
-    rgba(0,0,0,0.05) 55%,
-    rgba(0,0,0,0.02) 75%,
-    rgba(0,0,0,0.01) 90%,
-    transparent 100%
-  );
 
-  filter: blur(18px);
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0.16) 0%,
+      rgba(0,0,0,0.10) 35%,
+      rgba(0,0,0,0.05) 60%,
+      transparent 100%
+    );
+
+  filter: blur(12px);
   opacity: 0;
   transition: opacity 0.9s ease;
   pointer-events: none;
@@ -98,7 +98,7 @@
 .image {
   object-fit: cover;
   border-radius: 32px;
-  transform: scale(1.08);
+  transform: scale(1.04);
   transition: transform 8s ease, filter 0.9s ease;
   will-change: transform;
 }
@@ -124,8 +124,7 @@
 }
 
 .center {
-  background-color: rgba(128,128,128,0.15);
-  transform: translateX(0) scale(1.04) rotateY(0deg) translateZ(30px);
+  transform: translateX(0) scale(1.05) rotateY(0deg) translateZ(40px);
   opacity: 1;
   z-index: 5;
   border-radius: 32px;
@@ -138,11 +137,11 @@
 }
 
 .center .image {
-  transform: scale(1.03);
+  transform: scale(1.08);
 }
 
 .left {
-  transform: translateX(-85%) scale(0.75) rotateY(25deg) translateZ(-80px);
+  transform: translateX(-78%) scale(0.92) rotateY(25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
 
@@ -153,11 +152,11 @@
 }
 
 .left .image {
-  transform: scale(0.96);
+  transform: scale(1.04);
 }
 
 .right {
-  transform: translateX(85%) scale(0.75) rotateY(-25deg) translateZ(-80px);
+  transform: translateX(78%) scale(0.92) rotateY(-25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
 
@@ -168,7 +167,13 @@
 }
 
 .right .image {
-  transform: scale(0.96);
+  transform: scale(1.04);
+}
+
+.left::after,
+.right::after {
+  transform: scale(0.85);
+  opacity: 0.45;
 }
 
 .hidden {

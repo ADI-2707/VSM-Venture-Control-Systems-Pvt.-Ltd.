@@ -1,5 +1,5 @@
 .section {
-  padding: 110px 0;
+  padding: 80px 0 80px;
   background: #f5f5f5;
   position: relative;
 }
@@ -7,7 +7,7 @@
 .container {
   max-width: 820px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 2px;
   text-align: center;
 }
 
