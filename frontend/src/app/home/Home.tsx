@@ -6,6 +6,7 @@ import CustomersSection from "@/sections/customers/CustomersSection";
 import Capabilities from "@/sections/capabilities/Capabilities";
 import IndustriesSection from "@/sections/industries/IndustriesSection";
 import EngineeringSection from "@/sections/engineering/EngineeringSection";
+import TestimonialsSection from "@/sections/testimonials/TestimonialsSection"
 import CTASection from "@/sections/cta/CTASection";
 
 export default function Home() {
@@ -32,6 +33,10 @@ export default function Home() {
 
       <Reveal>
         <IndustriesSection />
+      </Reveal>
+
+      <Reveal>
+        <TestimonialsSection />
       </Reveal>
 
       <Reveal>
