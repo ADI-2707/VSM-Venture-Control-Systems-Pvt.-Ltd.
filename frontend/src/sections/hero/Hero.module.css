@@ -68,7 +68,8 @@
   transition:
     transform 0.9s cubic-bezier(.22, 1, .36, 1),
     opacity 0.85s ease,
-    filter 0.85s ease;
+    filter 0.85s ease,
+    box-shadow 0.85s ease;
 }
 
 .slide::after {
@@ -99,7 +100,7 @@
   object-fit: cover;
   border-radius: 32px;
   transform: scale(1.04);
-  transition: transform 8s ease, filter 0.9s ease;
+  transition: transform 8s ease, filter 0.9s ease, opacity 0.8s ease;
   will-change: transform;
 }
 
@@ -186,13 +187,15 @@
   position: absolute;
   inset: 0;
   backdrop-filter: blur(8px);
-  background: rgba(255, 255, 255, 0.01);
+  background: rgba(255,255,255,0.01);
   pointer-events: none;
   z-index: 2;
+  opacity: 1;
+  transition: opacity 0.8s ease;
 }
 
 .blurMask.center {
-  backdrop-filter: none;
+  opacity: 0;
 }
 
 .blurMask.left {

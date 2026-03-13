@@ -8,16 +8,41 @@ import { heroSlides } from "./sliderData";
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const [inView, setInView] = useState(true);
+
   const heroRef = useRef<HTMLElement | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const total = heroSlides.length;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % total);
-    }, 4000);
+    if (!heroRef.current) return;
 
-    return () => clearInterval(interval);
-  }, [total]);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(heroRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      intervalRef.current = setInterval(() => {
+        setIndex((prev) => (prev + 1) % total);
+      }, 4000);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [inView, total]);
 
   useEffect(() => {
     const handleScroll = () => {
