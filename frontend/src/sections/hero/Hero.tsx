@@ -11,18 +11,11 @@ export default function Hero() {
   const total = heroSlides.length;
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % total);
+    }, 4000);
 
-    const startSlider = () => {
-      timer = setTimeout(() => {
-        setIndex((prev) => (prev + 1) % total);
-        startSlider();
-      }, 4000);
-    };
-
-    startSlider();
-
-    return () => clearTimeout(timer);
+    return () => clearInterval(interval);
   }, [total]);
 
   useEffect(() => {
@@ -30,7 +23,7 @@ export default function Hero() {
       const hero = document.querySelector(`.${styles.hero}`) as HTMLElement;
       if (!hero) return;
 
-      const offset = window.scrollY * 0.05; // subtle movement
+      const offset = window.scrollY * 0.05;
       hero.style.setProperty("--bg-shift", `${offset}px`);
     };
 
