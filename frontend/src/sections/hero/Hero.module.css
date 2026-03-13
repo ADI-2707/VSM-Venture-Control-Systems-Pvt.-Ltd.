@@ -49,7 +49,7 @@
   height: 100%;
   position: relative;
   z-index: 1;
-  perspective: 1600px;
+  perspective: 1400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +140,7 @@
 }
 
 .left {
-  transform: translateX(-85%) scale(0.75) rotateY(25deg);
+  transform: translateX(-85%) scale(0.75) rotateY(25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
 
@@ -155,7 +155,7 @@
 }
 
 .right {
-  transform: translateX(85%) scale(0.75) rotateY(-25deg);
+  transform: translateX(85%) scale(0.75) rotateY(-25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
 
