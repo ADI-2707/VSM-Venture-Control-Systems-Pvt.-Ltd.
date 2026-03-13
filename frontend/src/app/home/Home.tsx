@@ -14,15 +14,11 @@ export default function Home() {
       <Hero />
 
       <Reveal>
-        <Capabilities />
-      </Reveal>
-
-      <Reveal>
           <EngineeringSection />
       </Reveal>
 
       <Reveal>
-        <IndustriesSection />
+        <CustomersSection />
       </Reveal>
 
       <Reveal>
@@ -30,9 +26,13 @@ export default function Home() {
       </Reveal>
 
       <Reveal>
-        <CustomersSection />
+        <Capabilities />
       </Reveal>
-      
+
+      <Reveal>
+        <IndustriesSection />
+      </Reveal>
+
     </main>
   );
 }
