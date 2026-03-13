@@ -92,17 +92,24 @@ export default function Footer() {
 
             <motion.div
               className={styles.quoteArea}
-              initial={{ rotateX: -145, y: -80, opacity: 0, scaleY: 0.92 }}
-animate={
-  visible
-    ? {
-        rotateX: [-145, 28, -10, 4, 0],
-        y: [-95, 18, -6, 2, 0],
-        scaleY: [0.92, 1.05, 0.97, 1],
-        opacity: 1
-      }
-    : {}
-}
+              initial={{
+                rotateX: -145,
+                y: -80,
+                z: -60,
+                opacity: 0,
+                scaleY: 0.92
+              }}
+              animate={
+                visible
+                  ? {
+                    rotateX: [-145, 28, -10, 4, 0],
+                    y: [-95, 18, -6, 2, 0],
+                    z: [-60, 40, -10, 0],
+                    scaleY: [0.92, 1.05, 0.97, 1],
+                    opacity: 1
+                  }
+                  : {}
+              }
               transition={{
                 duration: 1.2,
                 ease: [0.22, 1, 0.36, 1]
@@ -115,7 +122,29 @@ animate={
                 className={styles.string}
                 animate={
                   visible
-                    ? { scaleY: [1, 1.35, 0.88, 1.05, 1] }
+                    ? {
+                      scaleY: [1, 1.38, 0.92, 1.06, 1],
+                      rotateZ: [0, 5, -3, 1.5, 0],
+                      scaleX: [1, 0.82, 1.05, 0.96, 1]
+                    }
+                    : {}
+                }
+                transition={{
+                  duration: 1.45,
+                  ease: [0.34, 1.56, 0.64, 1]
+                }}
+              />
+
+              <motion.div
+                className={styles.shadow}
+                initial={{ opacity: 0, scaleX: 0.6, scaleY: 0.6 }}
+                animate={
+                  visible
+                    ? {
+                      opacity: [0, 0.5, 0.35],
+                      scaleX: [0.6, 1.2, 1],
+                      scaleY: [0.6, 0.9, 0.8]
+                    }
                     : {}
                 }
                 transition={{
@@ -128,11 +157,14 @@ animate={
                 className={styles.quote}
                 animate={
                   visible
-                    ? { rotateZ: [0, 4, -3, 2, -1, 0] }
+                    ? {
+                      rotateZ: [0, 7, -5, 3, -1.5, 0],
+                      y: [0, 4, -3, 1.5, 0]
+                    }
                     : {}
                 }
                 transition={{
-                  duration: 1.8,
+                  duration: 2,
                   ease: "easeOut"
                 }}
               >
