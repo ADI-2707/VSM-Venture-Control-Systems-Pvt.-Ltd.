@@ -2,6 +2,7 @@
 
 import styles from "./IndustriesSection.module.css";
 import { industries } from "./industriesData";
+import Image from "next/image";
 
 export default function IndustriesSection() {
   return (
@@ -19,8 +20,19 @@ export default function IndustriesSection() {
         <div className={styles.grid}>
           {industries.map((industry) => (
             <div key={industry.id} className={styles.card}>
+
+              <div className={styles.iconWrapper}>
+                <Image
+                  src={industry.icon}
+                  alt={industry.name}
+                  width={28}
+                  height={28}
+                />
+              </div>
+
               <h3>{industry.name}</h3>
               <p>{industry.description}</p>
+
             </div>
           ))}
         </div>

@@ -61,3 +61,23 @@
   color: #555;
   line-height: 1.5;
 }
+
+.iconWrapper {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #e9f2fb;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+  transform: scale(1.1);
+  background: #d9ebfb;
+}
