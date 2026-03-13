@@ -96,6 +96,7 @@
 .image {
   object-fit: cover;
   border-radius: 32px;
+  transform: scale(1.08);
   transition: transform 8s ease, filter 0.9s ease;
   will-change: transform;
 }
@@ -135,7 +136,7 @@
 }
 
 .center .image {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .left {
