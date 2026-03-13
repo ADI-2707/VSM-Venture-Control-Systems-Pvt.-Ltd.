@@ -11,6 +11,8 @@ export default function Home() {
     <main className={styles.container}>
       <Hero />
 
+      <div className={styles.sectionTransition}></div>
+
       <Reveal>
         <Capabilities />
       </Reveal>
