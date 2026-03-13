@@ -4,6 +4,7 @@ import Hero from "@/sections/hero/Hero";
 import Projects from "@/sections/projects/Projects/Projects";
 import CustomersSection from "@/sections/customers/CustomersSection";
 import Capabilities from "@/sections/capabilities/Capabilities";
+import IndustriesSection from "@/sections/industries/IndustriesSection";
 
 export default function Home() {
   return (
@@ -12,6 +13,10 @@ export default function Home() {
 
       <Reveal>
         <Capabilities />
+      </Reveal>
+
+      <Reveal>
+        <IndustriesSection />
       </Reveal>
 
       <Reveal>
