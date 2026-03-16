@@ -1,13 +1,42 @@
+import dynamic from "next/dynamic";
 import styles from "./Home.module.css";
 import Reveal from "@/components/Reveal/Reveal";
 import Hero from "@/sections/hero/Hero";
-import Projects from "@/sections/projects/Projects/Projects";
-import CustomersSection from "@/sections/customers/CustomersSection";
-import Capabilities from "@/sections/capabilities/Capabilities";
-import IndustriesSection from "@/sections/industries/IndustriesSection";
-import EngineeringSection from "@/sections/engineering/EngineeringSection";
-import TestimonialsSection from "@/sections/testimonials/TestimonialsSection"
-import CTASection from "@/sections/cta/CTASection";
+
+const EngineeringSection = dynamic(
+  () => import("@/sections/engineering/EngineeringSection"),
+  { loading: () => <div style={{ height: 420 }} /> }
+);
+
+const CustomersSection = dynamic(
+  () => import("@/sections/customers/CustomersSection"),
+  { loading: () => <div style={{ height: 260 }} /> }
+);
+
+const Projects = dynamic(
+  () => import("@/sections/projects/Projects/Projects"),
+  { loading: () => <div style={{ height: 500 }} /> }
+);
+
+const Capabilities = dynamic(
+  () => import("@/sections/capabilities/Capabilities"),
+  { loading: () => <div style={{ height: 400 }} /> }
+);
+
+const IndustriesSection = dynamic(
+  () => import("@/sections/industries/IndustriesSection"),
+  { loading: () => <div style={{ height: 420 }} /> }
+);
+
+const TestimonialsSection = dynamic(
+  () => import("@/sections/testimonials/TestimonialsSection"),
+  { loading: () => <div style={{ height: 350 }} /> }
+);
+
+const CTASection = dynamic(
+  () => import("@/sections/cta/CTASection"),
+  { loading: () => <div style={{ height: 250 }} /> }
+);
 
 export default function Home() {
   return (
