@@ -1,54 +1,28 @@
-import dynamic from "next/dynamic";
 import styles from "./Home.module.css";
 import Reveal from "@/components/Reveal/Reveal";
 import Hero from "@/sections/hero/Hero";
-import useSectionPrefetch from "@/hooks/useSectionPrefetch";
+import PrefetchController from "@/components/PrefetchController/PrefetchController";
 
-const EngineeringSection = dynamic(
-  () => import("@/sections/engineering/EngineeringSection"),
-  { loading: () => <div style={{ height: 420 }} /> }
-);
+import dynamic from "next/dynamic";
 
-const CustomersSection = dynamic(
-  () => import("@/sections/customers/CustomersSection"),
-  { loading: () => <div style={{ height: 260 }} /> }
-);
-
-const Projects = dynamic(
-  () => import("@/sections/projects/Projects/Projects"),
-  { loading: () => <div style={{ height: 500 }} /> }
-);
-
-const Capabilities = dynamic(
-  () => import("@/sections/capabilities/Capabilities"),
-  { loading: () => <div style={{ height: 400 }} /> }
-);
-
-const IndustriesSection = dynamic(
-  () => import("@/sections/industries/IndustriesSection"),
-  { loading: () => <div style={{ height: 420 }} /> }
-);
-
-const TestimonialsSection = dynamic(
-  () => import("@/sections/testimonials/TestimonialsSection"),
-  { loading: () => <div style={{ height: 350 }} /> }
-);
-
-const CTASection = dynamic(
-  () => import("@/sections/cta/CTASection"),
-  { loading: () => <div style={{ height: 250 }} /> }
-);
+const EngineeringSection = dynamic(() => import("@/sections/engineering/EngineeringSection"));
+const CustomersSection = dynamic(() => import("@/sections/customers/CustomersSection"));
+const Projects = dynamic(() => import("@/sections/projects/Projects/Projects"));
+const Capabilities = dynamic(() => import("@/sections/capabilities/Capabilities"));
+const IndustriesSection = dynamic(() => import("@/sections/industries/IndustriesSection"));
+const TestimonialsSection = dynamic(() => import("@/sections/testimonials/TestimonialsSection"));
+const CTASection = dynamic(() => import("@/sections/cta/CTASection"));
 
 export default function Home() {
-  useSectionPrefetch();
-
   return (
     <main className={styles.container}>
-      
+
+      <PrefetchController />
+
       <Hero />
 
       <Reveal>
-          <EngineeringSection />
+        <EngineeringSection />
       </Reveal>
 
       <Reveal>
