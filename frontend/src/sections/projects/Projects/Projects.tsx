@@ -7,35 +7,37 @@ import ProjectCard from "../ProjectCard/ProjectCard";
 import SkeletonCard from "../SkeletonCard/SkeletonCard";
 
 export default function Projects() {
-  const [page, setPage] = useState(0);
+
+  const [startIndex, setStartIndex] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const totalPages = Math.ceil(projects.length / PROJECTS_PER_PAGE);
-  const start = page * PROJECTS_PER_PAGE;
-  const end = start + PROJECTS_PER_PAGE;
-
-  const visibleProjects = projects.slice(start, end);
+  const visibleProjects = projects.slice(
+    startIndex,
+    startIndex + PROJECTS_PER_PAGE
+  );
 
   const handleNext = () => {
-    if (page >= totalPages - 1) return;
+
+    if (startIndex + PROJECTS_PER_PAGE >= projects.length) return;
 
     setLoading(true);
 
     setTimeout(() => {
-      setPage((prev) => prev + 1);
+      setStartIndex((prev) => prev + 1);
       setLoading(false);
-    }, 400);
+    }, 300);
   };
 
   const handlePrev = () => {
-    if (page <= 0) return;
+
+    if (startIndex === 0) return;
 
     setLoading(true);
 
     setTimeout(() => {
-      setPage((prev) => prev - 1);
+      setStartIndex((prev) => prev - 1);
       setLoading(false);
-    }, 400);
+    }, 300);
   };
 
   return (
@@ -48,24 +50,24 @@ export default function Projects() {
         <div className={styles.grid}>
           {loading
             ? Array.from({ length: PROJECTS_PER_PAGE }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))
+                <SkeletonCard key={i} />
+              ))
             : visibleProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                image={project.image}
-                application={project.application}
-                customer={project.customer}
-                location={project.location}
-              />
-            ))}
+                <ProjectCard
+                  key={project.id}
+                  image={project.image}
+                  application={project.application}
+                  customer={project.customer}
+                  location={project.location}
+                />
+              ))}
         </div>
 
         <div className={styles.controls}>
           <button
             className={styles.prev}
             onClick={handlePrev}
-            disabled={page === 0 || loading}
+            disabled={startIndex === 0 || loading}
           >
             ← Prev
           </button>
@@ -73,11 +75,14 @@ export default function Projects() {
           <button
             className={styles.next}
             onClick={handleNext}
-            disabled={page === totalPages - 1 || loading}
+            disabled={
+              startIndex + PROJECTS_PER_PAGE >= projects.length || loading
+            }
           >
             Next →
           </button>
         </div>
+
       </div>
     </section>
   );

@@ -10,6 +10,13 @@ export const PROJECTS_PER_PAGE = 4;
 
 export const projects: Project[] = [
   {
+    id: 5,
+    image: "/images/projects/hot-strip.jfif",
+    application: "Iron Mill",
+    customer: "Mill Group",
+    location: "Bilaspur, Chhattisgarh"
+  },
+  {
     id: 1,
     image: "/images/projects/hot-strip.jfif",
     application: "Hot Strip Mill",
