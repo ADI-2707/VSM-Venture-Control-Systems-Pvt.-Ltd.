@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import styles from "./Home.module.css";
 import Reveal from "@/components/Reveal/Reveal";
 import Hero from "@/sections/hero/Hero";
+import useSectionPrefetch from "@/hooks/useSectionPrefetch";
 
 const EngineeringSection = dynamic(
   () => import("@/sections/engineering/EngineeringSection"),
@@ -39,6 +40,8 @@ const CTASection = dynamic(
 );
 
 export default function Home() {
+  useSectionPrefetch();
+
   return (
     <main className={styles.container}>
       
