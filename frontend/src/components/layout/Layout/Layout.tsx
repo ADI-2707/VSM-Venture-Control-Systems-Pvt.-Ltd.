@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
 
       return () => clearTimeout(timer);
     }
-  }, [showLoader]);
+  }, [showLoader, setShowLoader]);
 
   return (
     <>
