@@ -5,6 +5,10 @@ export default function useInView<T extends HTMLElement>() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -14,10 +18,10 @@ export default function useInView<T extends HTMLElement>() {
       }
     );
 
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(element);
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      observer.unobserve(element);
     };
   }, []);
 
