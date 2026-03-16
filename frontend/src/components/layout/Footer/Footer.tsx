@@ -188,7 +188,11 @@ export default function Footer() {
                   >
                     <Image
                       src={social.icon}
-                      alt={social.name} />
+                      alt={social.name}
+                      width={18}
+                      height={18}
+                      priority={false}
+                    />
                   </a>
 
                   <div className={`${styles.tooltip} ${styles[social.className]}`}>
