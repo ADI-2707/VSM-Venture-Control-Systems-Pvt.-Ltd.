@@ -4,6 +4,7 @@ import styles from "./Footer.module.css";
 import { socialLinks } from "@/constants/socialLinks";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement | null>(null);
@@ -185,7 +186,9 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className={`${styles.icon} ${styles[social.className]}`}
                   >
-                    <img src={social.icon} alt={social.name} />
+                    <Image
+                      src={social.icon}
+                      alt={social.name} />
                   </a>
 
                   <div className={`${styles.tooltip} ${styles[social.className]}`}>
