@@ -14,7 +14,7 @@ export const projects: Project[] = [
     image: "/images/projects/hot-strip.jfif",
     application: "Hot Strip Mill",
     customer: "Hira Group",
-    location: "Raipur Chhattisgarh"
+    location: "Raipur, Chhattisgarh"
   },
   {
     id: 2,
@@ -28,13 +28,13 @@ export const projects: Project[] = [
     image: "/images/projects/skin-pass.jfif",
     application: "Skin Pass Mill",
     customer: "AMNS",
-    location: "Hazira Gujarat"
+    location: "Hazira, Gujarat"
   },
   {
     id: 4,
     image: "/images/projects/paper-machine.jfif",
     application: "Paper Machine",
     customer: "Magnum Paper",
-    location: "Sahibabad UP"
+    location: "Sahibabad, UP"
   }
 ];
