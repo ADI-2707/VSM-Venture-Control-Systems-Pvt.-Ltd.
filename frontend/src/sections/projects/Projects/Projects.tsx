@@ -2,72 +2,62 @@
 
 import { useState } from "react";
 import styles from "./Projects.module.css";
-import { projects, PROJECTS_PER_PAGE } from "../projectData";
+import { projects } from "../projectData";
 import ProjectCard from "../ProjectCard/ProjectCard";
-import SkeletonCard from "../SkeletonCard/SkeletonCard";
 
 export default function Projects() {
 
-  const [startIndex, setStartIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [index, setIndex] = useState(0);
 
-  const visibleProjects = projects.slice(
-    startIndex,
-    startIndex + PROJECTS_PER_PAGE
-  );
+  const visibleCount = 4;
 
   const handleNext = () => {
-
-    if (startIndex + PROJECTS_PER_PAGE >= projects.length) return;
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setStartIndex((prev) => prev + 1);
-      setLoading(false);
-    }, 300);
+    if (index >= projects.length - visibleCount) return;
+    setIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-
-    if (startIndex === 0) return;
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setStartIndex((prev) => prev - 1);
-      setLoading(false);
-    }, 300);
+    if (index === 0) return;
+    setIndex((prev) => prev - 1);
   };
 
   return (
     <section className={styles.section}>
       <div className={styles.container}>
+
         <h2 className={styles.title}>
           Latest Projects And Updates.
         </h2>
 
-        <div className={styles.grid}>
-          {loading
-            ? Array.from({ length: PROJECTS_PER_PAGE }).map((_, i) => (
-                <SkeletonCard key={i} />
-              ))
-            : visibleProjects.map((project) => (
+        <div className={styles.carouselViewport}>
+
+          <div
+            className={styles.carouselTrack}
+            style={{
+              transform: `translateX(-${index * 25}%)`
+            }}
+          >
+
+            {projects.map((project) => (
+              <div key={project.id} className={styles.carouselItem}>
                 <ProjectCard
-                  key={project.id}
                   image={project.image}
                   application={project.application}
                   customer={project.customer}
                   location={project.location}
                 />
-              ))}
+              </div>
+            ))}
+
+          </div>
+
         </div>
 
         <div className={styles.controls}>
           <button
             className={styles.prev}
             onClick={handlePrev}
-            disabled={startIndex === 0 || loading}
+            disabled={index === 0}
           >
             ← Prev
           </button>
@@ -75,9 +65,7 @@ export default function Projects() {
           <button
             className={styles.next}
             onClick={handleNext}
-            disabled={
-              startIndex + PROJECTS_PER_PAGE >= projects.length || loading
-            }
+            disabled={index >= projects.length - visibleCount}
           >
             Next →
           </button>

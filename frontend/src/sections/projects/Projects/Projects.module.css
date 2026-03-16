@@ -17,10 +17,19 @@
   margin-bottom: 48px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.carouselViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.carouselTrack {
+  display: flex;
   gap: 28px;
+  transition: transform 0.45s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.carouselItem {
+  min-width: calc((100% - 84px) / 4);
 }
 
 .controls {
