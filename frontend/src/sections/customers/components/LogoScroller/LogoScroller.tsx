@@ -1,5 +1,6 @@
 import styles from "./LogoScroller.module.css";
 import LogoItem from "../LogoItem/LogoItem";
+import { CSSProperties } from "react";
 
 type Logo = {
   name: string;
@@ -30,7 +31,7 @@ export default function LogoScroller({
     <div className={styles.scrollerWrapper}>
       <div
         className={`${styles.scrollerTrack} ${directionClass} ${playClass}`}
-        style={{ ["--scroll-duration" as any]: `${speed}s` }}
+        style={{ ["--scroll-duration" as keyof CSSProperties]: `${speed}s` }}
       >
         {duplicatedLogos.map((logo, index) => (
           <LogoItem key={index} name={logo.name} src={logo.src} />
