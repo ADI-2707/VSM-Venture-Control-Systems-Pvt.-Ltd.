@@ -229,13 +229,7 @@
   margin-bottom: 10px;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
-
-  background: linear-gradient(
-    180deg,
-    #3a3cf4,
-    #1e22b8
-  );
-
+  background-color: #1f8acb;
   -webkit-background-clip: text;
   -webkit-font-smoothing: antialiased;
   background-clip: text;

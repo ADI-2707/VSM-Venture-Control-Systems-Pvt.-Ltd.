@@ -404,6 +404,7 @@ transform-style: preserve-3d;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
+  
   transition:
     opacity 0.25s ease,
     transform 0.25s ease;
