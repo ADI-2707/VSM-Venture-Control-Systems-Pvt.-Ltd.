@@ -10,20 +10,28 @@ type RevealProps = {
 export default function Reveal({ children }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          setMounted(true);
           setVisible(true);
+          observer.unobserve(element);
         }
       },
       {
+        rootMargin: "120px", 
         threshold: 0.15
       }
     );
 
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(element);
 
     return () => observer.disconnect();
   }, []);
@@ -33,7 +41,7 @@ export default function Reveal({ children }: RevealProps) {
       ref={ref}
       className={`${styles.reveal} ${visible ? styles.visible : ""}`}
     >
-      {children}
+      {mounted && children}
     </div>
   );
 }
