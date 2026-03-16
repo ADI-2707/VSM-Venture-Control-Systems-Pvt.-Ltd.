@@ -132,6 +132,10 @@ export default function EngineeringSection() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const element = metricsRef.current;
+
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -141,14 +145,10 @@ export default function EngineeringSection() {
       { threshold: 0.4 }
     );
 
-    if (metricsRef.current) {
-      observer.observe(metricsRef.current);
-    }
+    observer.observe(element);
 
     return () => {
-      if (metricsRef.current) {
-        observer.unobserve(metricsRef.current);
-      }
+      observer.unobserve(element);
     };
   }, []);
 
