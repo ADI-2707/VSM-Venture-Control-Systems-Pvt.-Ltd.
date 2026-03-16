@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useRef } from "react";
 import styles from "./ProjectCard.module.css";
 
 interface Props {
@@ -14,8 +17,46 @@ export default function ProjectCard({
   customer,
   location,
 }: Props) {
+
+  const [active, setActive] = useState(false);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const arrowRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const handleEnter = () => {
+
+    if (arrowRef.current && buttonRef.current) {
+
+      const arrowRect = arrowRef.current.getBoundingClientRect();
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+
+      const distance = buttonRect.left - arrowRect.left - 28;
+
+      arrowRef.current.style.setProperty("--arrow-move", `${distance}px`);
+    }
+
+    timerRef.current = setTimeout(() => {
+      setActive(true);
+    }, 350);
+  };
+
+  const handleLeave = () => {
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+
+    setActive(false);
+  };
+
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
       <div className={styles.inner}>
         <div className={styles.imageWrapper}>
           <Image
@@ -43,8 +84,32 @@ export default function ProjectCard({
             <span className={styles.value}>{location}</span>
           </div>
 
-          <div className={styles.arrow}>
-            <span className={styles.arrowIcon}>→</span>
+          <div className={styles.actionRow}>
+            <div ref={arrowRef} className={styles.arrowTrack}>
+              <svg
+                className={styles.arrow}
+                width="16"
+                height="9"
+                viewBox="0 0 22 12"
+                fill="none"
+              >
+                <path
+                  d="M1 6H18M18 6L13 1M18 6L13 11"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
+            <button
+              ref={buttonRef}
+              className={`${styles.seeMore} ${active ? styles.visible : ""}`}
+              disabled={!active}
+            >
+              See More
+            </button>
           </div>
         </div>
       </div>

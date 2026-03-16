@@ -14,10 +14,12 @@
   overflow: hidden;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.08),
-    0 4px 10px rgba(0,0,0,0.05);
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.05);
 
-  transition: box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .card::before {
@@ -26,13 +28,7 @@
   inset: 0;
   border-radius: 12px;
 
-  background: linear-gradient(
-    120deg,
-    #00c853,
-    #00e5ff,
-    #00c853,
-    #00e5ff
-  );
+  background: linear-gradient(120deg, #00c853, #00e5ff, #00c853, #00e5ff);
 
   background-size: 300% 300%;
   opacity: 0;
@@ -40,8 +36,7 @@
   animation: borderSpin 2s linear infinite;
   z-index: 0;
 
-  filter:
-    drop-shadow(0 0 4px rgba(0, 229, 255, 0.35))
+  filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.35))
     drop-shadow(0 0 6px rgba(0, 200, 83, 0.25));
 }
 
@@ -53,15 +48,14 @@
   background: rgb(250, 250, 255);
 
   box-shadow:
-    0 18px 40px rgba(0,0,0,0.12),
-    0 6px 16px rgba(0,0,0,0.08);
+    0 18px 40px rgba(0, 0, 0, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .card:hover::before {
   opacity: 1;
 
-  filter:
-    drop-shadow(0 0 6px rgba(0, 229, 255, 0.45))
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.45))
     drop-shadow(0 0 8px rgba(0, 200, 83, 0.35));
 }
 
@@ -103,31 +97,94 @@
 .value {
   color: #1f2937;
   font-weight: 600;
-  text-align: right;
+}
+
+.actionRow {
+  margin-top: 12px;
+  height: 36px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.arrowTrack {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  transition: transform 0.35s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.card:hover .arrowTrack {
+  transform: translateX(var(--arrow-move, 120px));
 }
 
 .arrow {
-  margin-top: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-size: 18px;
+  width: 16px;
+  height: 9px;
   color: #1f2937;
+  display: block;
 }
 
-.arrowIcon {
+.arrowTrack::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 80px;
+  height: 1.5px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0),
+    rgba(37, 99, 235, 0.15),
+    rgba(37, 99, 235, 0.55),
+    rgba(37, 99, 235, 0.9),
+    rgba(37, 99, 235, 0.55),
+    rgba(37, 99, 235, 0.15),
+    rgba(37, 99, 235, 0)
+  );
+
+  transform: translateY(-50%) scaleX(0);
+  filter: blur(0.5px);
+  transform-origin: right;
   transition: transform 0.35s ease;
 }
 
-.card:hover .arrow {
-  margin-left: auto;
-  margin-right: 0;
-  transform: translateX(6px);
+.card:hover .arrowTrack::before {
+  animation: arrowTrail 0.35s cubic-bezier(0.22, 0.9, 0.3, 1) forwards;
 }
 
-.card:hover .arrowIcon {
-  transform: translateX(120px);
-  opacity: 0.85;
+.seeMore {
+  position: absolute;
+  right: 0;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #2563eb;
+  background: white;
+  color: #2563eb;
+  opacity: 0;
+  transform: translateX(20px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 0.9, 0.3, 1) 0.02s;
+
+  pointer-events: none;
+}
+
+.seeMore.visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.seeMore:hover {
+  background: #2563eb;
+  color: white;
 }
 
 @keyframes borderSpin {
@@ -137,5 +194,27 @@
 
   100% {
     background-position: 200% 50%;
+  }
+}
+
+@keyframes arrowTrail {
+  0% {
+    transform: translateY(-50%) scaleX(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 1;
+  }
+
+  70% {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 0;
   }
 }
