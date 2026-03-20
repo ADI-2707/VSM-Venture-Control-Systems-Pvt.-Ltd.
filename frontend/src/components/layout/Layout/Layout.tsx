@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loader from "@/features/loader/Loader";
@@ -13,6 +13,15 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { showLoader, setShowLoader } = useLoader();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useEffect(() => {
     if (showLoader) {
@@ -24,10 +33,22 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [showLoader, setShowLoader]);
 
+  if (!mounted) {
+    return (
+      <div className={styles.wrapper}>
+        <Navbar />
+        <main className={styles.content}>{children}</main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
-    <>
+    <div className={styles.root}>
       {showLoader && (
-        <Loader onComplete={() => setShowLoader(false)} />
+        <div className={styles.loaderOverlay}>
+          <Loader onComplete={() => setShowLoader(false)} />
+        </div>
       )}
 
       <div className={styles.wrapper}>
@@ -35,6 +56,6 @@ export default function Layout({ children }: LayoutProps) {
         <main className={styles.content}>{children}</main>
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
