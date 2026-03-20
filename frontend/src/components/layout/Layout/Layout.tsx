@@ -19,7 +19,6 @@ export default function Layout({ children }: LayoutProps) {
     const id = requestAnimationFrame(() => {
       setMounted(true);
     });
-
     return () => cancelAnimationFrame(id);
   }, []);
 
@@ -33,19 +32,11 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [showLoader, setShowLoader]);
 
-  if (!mounted) {
-    return (
-      <div className={styles.wrapper}>
-        <Navbar />
-        <main className={styles.content}>{children}</main>
-        <Footer />
-      </div>
-    );
-  }
+  const showLoaderSafe = mounted && showLoader;
 
   return (
     <div className={styles.root}>
-      {showLoader && (
+      {showLoaderSafe && (
         <div className={styles.loaderOverlay}>
           <Loader onComplete={() => setShowLoader(false)} />
         </div>
