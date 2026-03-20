@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
@@ -20,6 +22,15 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,49 +42,55 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <div className={styles.inner}>
+    <>
+      <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+        <div className={styles.inner}>
 
-        <div className={styles.left}>
-          <Link href="/" className={styles.logo}>
-            <Image
-              src="/logo1.jpg"
-              alt="VSM Venture Control Systems"
-              width={160}
-              height={50}
-              priority
-            />
-          </Link>
+          <div className={styles.left}>
+            <Link href="/" className={styles.logo}>
+              <Image src="/logo1.jpg" alt="VSM" width={160} height={50} priority />
+            </Link>
+          </div>
+
+          <nav className={`${styles.center} ${menuOpen ? styles.open : ""}`}>
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`${styles.link} ${isActive ? styles.active : ""}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className={styles.right}>
+            <button className={styles.phoneButton}>
+              <Image src="/icons/phone.svg" alt="Contact" width={22} height={22} />
+            </button>
+
+            <button
+              className={`${styles.menuButton} ${menuOpen ? styles.open : ""}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+
         </div>
+      </header>
 
-        <nav className={styles.center}>
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`${styles.link} ${isActive ? styles.active : ""}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className={styles.right}>
-          <button className={styles.phoneButton}>
-            <Image
-              src="/icons/phone.svg"
-              alt="Contact"
-              width={22}
-              height={22}
-            />
-          </button>
-        </div>
-
-      </div>
-    </header>
+      <div
+        className={`${styles.overlay} ${menuOpen ? styles.overlayOpen : ""}`}
+        onClick={() => setMenuOpen(false)}
+      />
+    </>
   );
 }
