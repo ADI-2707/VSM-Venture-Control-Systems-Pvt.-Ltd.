@@ -6,12 +6,15 @@ import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const navItems = [
+const primaryNav = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Solutions & Services", href: "/solutions" },
   { label: "Products", href: "/products" },
   { label: "Industries", href: "/industries" },
+];
+
+const secondaryNav = [
   { label: "Application Areas", href: "/applications" },
   { label: "Gallery", href: "/gallery" },
   { label: "Clients", href: "/clients" },
@@ -53,7 +56,7 @@ export default function Navbar() {
           </div>
 
           <nav className={`${styles.center} ${menuOpen ? styles.open : ""}`}>
-            {navItems.map((item) => {
+            {primaryNav.map((item) => {
               const isActive = pathname === item.href;
 
               return (
@@ -67,6 +70,45 @@ export default function Navbar() {
                 </Link>
               );
             })}
+
+            <div className={styles.mobileOnly}>
+              {secondaryNav.map((item) => {
+                const isActive = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`${styles.link} ${isActive ? styles.active : ""}`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className={styles.desktopOnly}>
+              <div className={styles.more}>
+                <button className={`${styles.link} ${styles.moreTrigger}`}>
+                  More
+                  <span className={styles.chevron}>▾</span>
+                </button>
+
+                <div className={styles.moreMenu}>
+                  {secondaryNav.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className={styles.dropdownItem}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </nav>
 
           <div className={styles.right}>
