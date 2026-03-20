@@ -1,11 +1,12 @@
 .hero {
   width: 100%;
-  min-height: 720px;
-  height: 78vh;
-  padding-bottom: 140px;
+  min-height: clamp(520px, 70vh, 720px);
+  height: clamp(520px, 78vh, 820px);
+  padding-bottom: clamp(80px, 10vw, 140px);
+  margin-bottom: clamp(8px, 2vw, 12px);
+  margin-top: calc(var(--navbar-height) * -0.2);
   overflow: visible;
   position: relative;
-  margin-bottom: 12px;
   isolation: isolate;
 }
 
@@ -58,8 +59,8 @@
 
 .slide {
   position: absolute;
-  border-radius: 32px;
-  width: 74%;
+  border-radius: clamp(16px, 2vw, 32px);
+  width: clamp(85%, 74%, 74%);
   height: 100%;
   overflow: visible;
   will-change: transform;
@@ -77,8 +78,8 @@
   position: absolute;
   left: 14%;
   right: 14%;
-  bottom: -70px;
-  height: 70px;
+  bottom: clamp(-40px, -6vw, -70px);
+  height: clamp(40px, 6vw, 70px);
   border-radius: 50%;
 
   background:
@@ -106,21 +107,22 @@
 
 .overlay {
   position: absolute;
-  bottom: 70px;
-  left: 60px;
+  bottom: clamp(30px, 6vw, 70px);
+  left: clamp(20px, 5vw, 60px);
+  right: clamp(20px, 5vw, 60px);
   color: white;
   z-index: 5;
 }
 
 .overlay h1 {
-  font-size: 56px;
+  font-size: clamp(24px, 4vw, 56px);
   font-weight: 600;
   text-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
 }
 
 .overlay p {
   margin-top: 8px;
-  font-size: 18px;
+  font-size: clamp(14px, 1.6vw, 18px);
   opacity: 0.9;
 }
 
@@ -142,7 +144,11 @@
 }
 
 .left {
-  transform: translateX(-78%) scale(0.92) rotateY(25deg) translateZ(-80px);
+  transform: translateX(clamp(-60%, -78%, -78%)) 
+             scale(0.92) 
+             rotateY(25deg) 
+             translateZ(-80px);
+
   opacity: 0.45;
   z-index: 3;
 
@@ -157,7 +163,11 @@
 }
 
 .right {
-  transform: translateX(78%) scale(0.92) rotateY(-25deg) translateZ(-80px);
+  transform: translateX(clamp(60%, 78%, 78%)) 
+             scale(0.92) 
+             rotateY(-25deg) 
+             translateZ(-80px);
+
   opacity: 0.45;
   z-index: 3;
 
@@ -252,14 +262,14 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 52px;
-  height: 52px;
+  width: clamp(38px, 4vw, 52px);
+  height: clamp(38px, 4vw, 52px);
   border-radius: 50%;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: clamp(18px, 2vw, 28px);
   font-weight: 600;
   cursor: pointer;
   background: rgba(255,255,255,0.65);
@@ -293,9 +303,57 @@
 }
 
 .navLeft {
-  left: 70px;
+  left: clamp(10px, 4vw, 70px);
 }
 
 .navRight {
-  right: 70px;
+  right: clamp(10px, 4vw, 70px);
+}
+
+@supports not (width: clamp(1px, 2px, 3px)) {
+  .hero {
+    min-height: 600px;
+    height: 75vh;
+    padding-bottom: 100px;
+  }
+
+  .overlay h1 {
+    font-size: 36px;
+  }
+
+  .overlay p {
+    font-size: 16px;
+  }
+
+  .navButton {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .navLeft {
+    left: 20px;
+  }
+
+  .navRight {
+    right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    width: 92%;
+  }
+
+  .left,
+  .right {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+
+  .overlay {
+    text-align: center;
+    left: 16px;
+    right: 16px;
+  }
 }
