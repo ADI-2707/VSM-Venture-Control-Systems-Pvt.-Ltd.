@@ -11,7 +11,7 @@ const metrics = [
 ];
 
 function CountUp({
-  end,
+  end,  
   suffix = "",
   startAnimation,
 }: {
