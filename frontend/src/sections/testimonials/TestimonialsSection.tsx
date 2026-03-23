@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import styles from "./TestimonialsSection.module.css";
 
 const testimonials = [
@@ -26,12 +27,40 @@ const testimonials = [
 export default function TestimonialsSection() {
   const loopData = [...testimonials, ...testimonials];
 
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className={styles.testimonials}>
+    <section ref={sectionRef} className={styles.testimonials}>
       <div className={styles.container}>
 
         <div className={styles.scrollerWrapper}>
-          <div className={styles.scroller}>
+          <div
+            className={`${styles.scroller} ${
+              isVisible ? styles.play : styles.pause
+            }`}
+          >
             {loopData.map((t, index) => (
               <div key={index} className={styles.card}>
                 <div className={styles.topLine}></div>
