@@ -23,23 +23,82 @@
 }
 
 .card {
+  position: relative;
   background: #f8fafc;
   padding: 30px;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    clip-path 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(31, 138, 203, 0.08),
+    transparent 60%
+  );
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+.card::before {
+  content: "↗";
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f8acb;
+  opacity: 0;
+  transform: translateY(6px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .quote {
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #374151;
   margin-bottom: 24px;
+  transition: color 0.25s ease;
+}
+
+.card:hover .quote {
+  color: #111827;
 }
 
 .author {
@@ -55,4 +114,16 @@
 .company {
   font-size: 14px;
   color: #6b7280;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
