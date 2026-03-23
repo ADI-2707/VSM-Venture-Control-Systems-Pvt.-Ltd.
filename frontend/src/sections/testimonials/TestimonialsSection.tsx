@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./TestimonialsSection.module.css";
 
 const testimonials = [
@@ -22,26 +24,37 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
+  const loopData = [...testimonials, ...testimonials];
+
   return (
     <section className={styles.testimonials}>
       <div className={styles.container}>
-        <h2 className={styles.title}>What our partners say</h2>
 
-        <div className={styles.grid}>
-          {testimonials.map((t, index) => (
-            <div key={index} className={styles.card}>
-              <div className={styles.topLine}></div>
-              <div className={styles.streak}></div>
+        <div className={styles.scrollerWrapper}>
+          <div className={styles.scroller}>
+            {loopData.map((t, index) => (
+              <div key={index} className={styles.card}>
+                <div className={styles.topLine}></div>
+                <div className={styles.streak}></div>
 
-              <p className={styles.quote}>“{t.quote}”</p>
+                <p className={styles.quote}>“{t.quote}”</p>
 
-              <div className={styles.author}>
-                <span className={styles.name}>{t.name}</span>
-                <span className={styles.company}>{t.company}</span>
+                <div className={styles.author}>
+                  <span className={styles.name}>{t.name}</span>
+                  <span className={styles.company}>{t.company}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        <div className={styles.headingBlock}>
+          <h2 className={styles.title}>What our partners say</h2>
+          <p className={styles.subtitle}>
+            Trusted by industry leaders across multiple sectors.
+          </p>
+        </div>
+
       </div>
     </section>
   );

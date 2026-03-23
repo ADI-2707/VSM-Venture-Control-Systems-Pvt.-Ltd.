@@ -6,27 +6,50 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 60px;
+  align-items: center;
+}
+
+.headingBlock {
+  position: sticky;
+  top: 120px;
 }
 
 .title {
-  text-align: center;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 600;
-  margin-bottom: 70px;
   color: #1f2937;
-  letter-spacing: -0.3px;
+  margin-bottom: 16px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+.subtitle {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.scrollerWrapper {
+  height: 420px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroller {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: scrollUp 18s linear infinite;
+}
+
+.scrollerWrapper:hover .scroller {
+  animation-play-state: paused;
 }
 
 .card {
   position: relative;
   background: linear-gradient(180deg, #f9fbfd, #f4f7fa);
-  padding: 30px;
+  padding: 26px;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
   overflow: hidden;
@@ -40,8 +63,8 @@
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
 
   clip-path: polygon(
     0 0,
@@ -77,14 +100,10 @@
   top: 12px;
   right: 14px;
   font-size: 16px;
-  font-weight: 600;
   color: #1f8acb;
   opacity: 0;
   transform: translateY(6px);
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .card:hover::before {
@@ -92,7 +111,7 @@
   transform: translateY(0);
 }
 
-.card .streak {
+.streak {
   position: absolute;
   top: 0;
   left: -120%;
@@ -107,24 +126,19 @@
   );
 
   transform: skewX(-20deg);
-  pointer-events: none;
 }
 
 .card:hover .streak {
   animation: streakMove 0.9s ease forwards;
 }
 
-.card .topLine {
+.topLine {
   position: absolute;
   top: 0;
   left: 0;
   height: 2px;
   width: 0%;
-  background: linear-gradient(
-    to right,
-    #1f8acb,
-    transparent
-  );
+  background: linear-gradient(to right, #1f8acb, transparent);
 }
 
 .card:hover .topLine {
@@ -133,42 +147,58 @@
 }
 
 .quote {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.7;
   color: #374151;
-  margin-bottom: 24px;
-  transition: color 0.3s ease;
-}
-
-.card:hover .quote {
-  color: #111827;
-}
-
-.author {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 18px;
 }
 
 .name {
   font-weight: 600;
   color: #111827;
-  letter-spacing: 0.2px;
 }
 
 .company {
-  font-size: 14px;
+  font-size: 13px;
   color: #6b7280;
 }
 
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .headingBlock {
+    position: static;
+    text-align: center;
+  }
+
+  .scrollerWrapper {
+    height: 360px;
   }
 }
 
 @media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
+  .title {
+    font-size: 28px;
+  }
+
+  .scrollerWrapper {
+    height: 300px;
+  }
+
+  .card {
+    padding: 20px;
   }
 }
 
