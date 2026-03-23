@@ -9,7 +9,15 @@ export default function Projects() {
 
   const [index, setIndex] = useState(0);
 
-  const visibleCount = 4;
+  const getVisibleCount = () => {
+    if (typeof window === "undefined") return 4;
+
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 4;
+  };
+
+  const visibleCount = getVisibleCount();
 
   const handleNext = () => {
     if (index >= projects.length - visibleCount) return;
@@ -34,7 +42,7 @@ export default function Projects() {
           <div
             className={styles.carouselTrack}
             style={{
-              transform: `translateX(-${index * 25}%)`
+              transform: `translateX(-${index * (100 / visibleCount)}%)`
             }}
           >
 
