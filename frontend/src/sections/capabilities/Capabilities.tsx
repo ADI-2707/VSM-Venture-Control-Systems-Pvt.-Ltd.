@@ -38,6 +38,26 @@ export default function Capabilities() {
         <div className={styles.grid}>
           {capabilities.map((item, index) => (
             <div key={index} className={styles.card}>
+
+              {/* SVG BACKGROUND ONLY FOR FIRST CARD */}
+              {index === 0 && (
+                <>
+                  <svg
+                    className={`${styles.gear} ${styles.gearBig}`}
+                    viewBox="0 0 100 100"
+                  >
+                    <circle cx="50" cy="50" r="30" />
+                  </svg>
+
+                  <svg
+                    className={`${styles.gear} ${styles.gearSmall}`}
+                    viewBox="0 0 100 100"
+                  >
+                    <circle cx="50" cy="50" r="20" />
+                  </svg>
+                </>
+              )}
+
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </div>
