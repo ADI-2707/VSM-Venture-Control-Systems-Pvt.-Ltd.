@@ -1,7 +1,6 @@
 .section {
   padding: clamp(40px, 6vw, 80px) 0;
   background: #f5f5f5;
-  position: relative;
 }
 
 .container {
@@ -129,6 +128,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 140px;
 
   transition:
     transform 0.18s ease,
@@ -141,7 +141,6 @@
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  contain: layout paint style;
 }
 
 .metric::before {
@@ -168,6 +167,7 @@
 .visible .metric {
   opacity: 1;
   transform: translateY(0);
+
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
@@ -195,7 +195,7 @@
 
 .metrics .metric:hover {
   opacity: 1;
-}
+} 
 
 .metric .shine {
   position: absolute;
@@ -222,6 +222,14 @@
 
   transform: rotate(25deg);
   animation: cardSweep 12s infinite linear;
+}
+
+.metricContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .metricNumber {
@@ -313,15 +321,30 @@
   .metric {
     transform: none !important;
   }
-
-  .metric:hover {
-    transform: none;
-  }
 }
 
 @media (max-width: 600px) {
   .metrics::before,
   .metrics::after {
     display: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .metric {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .metric {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .metric {
+    min-height: 110px;
+    padding: 16px;
   }
 }
