@@ -10,10 +10,11 @@
 
 .title {
   text-align: center;
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 600;
   margin-bottom: 70px;
   color: #1f2937;
+  letter-spacing: -0.3px;
 }
 
 .grid {
@@ -24,21 +25,23 @@
 
 .card {
   position: relative;
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f9fbfd, #f4f7fa);
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #e5e7eb;
   overflow: hidden;
 
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    clip-path 0.25s ease;
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    clip-path 0.3s ease;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 
   clip-path: polygon(
     0 0,
@@ -56,12 +59,12 @@
 
   background: linear-gradient(
     135deg,
-    rgba(31, 138, 203, 0.08),
+    rgba(31, 138, 203, 0.10),
     transparent 60%
   );
 
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease;
 }
 
 .card:hover::after {
@@ -80,8 +83,8 @@
   transform: translateY(6px);
 
   transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .card:hover::before {
@@ -89,12 +92,52 @@
   transform: translateY(0);
 }
 
+.card .streak {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.card:hover .streak {
+  animation: streakMove 0.9s ease forwards;
+}
+
+.card .topLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(
+    to right,
+    #1f8acb,
+    transparent
+  );
+}
+
+.card:hover .topLine {
+  width: 100%;
+  transition: width 0.35s ease;
+}
+
 .quote {
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: #374151;
   margin-bottom: 24px;
-  transition: color 0.25s ease;
+  transition: color 0.3s ease;
 }
 
 .card:hover .quote {
@@ -109,6 +152,7 @@
 .name {
   font-weight: 600;
   color: #111827;
+  letter-spacing: 0.2px;
 }
 
 .company {
@@ -125,5 +169,14 @@
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@keyframes streakMove {
+  0% {
+    left: -120%;
+  }
+  100% {
+    left: 140%;
   }
 }

@@ -30,6 +30,9 @@ export default function TestimonialsSection() {
         <div className={styles.grid}>
           {testimonials.map((t, index) => (
             <div key={index} className={styles.card}>
+              <div className={styles.topLine}></div>
+              <div className={styles.streak}></div>
+
               <p className={styles.quote}>“{t.quote}”</p>
 
               <div className={styles.author}>
