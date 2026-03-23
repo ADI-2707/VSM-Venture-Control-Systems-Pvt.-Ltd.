@@ -10,6 +10,8 @@ export default function Projects() {
   const [visibleCount, setVisibleCount] = useState(4);
   const [translateX, setTranslateX] = useState(0);
 
+  const startX = useRef(0);
+  const currentX = useRef(0);
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,6 +38,30 @@ export default function Projects() {
     setTranslateX(index * (cardWidth + gap));
   }, [index, visibleCount]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    currentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = startX.current - currentX.current;
+
+    if (Math.abs(diff) < 50) return;
+
+    if (diff > 0) {
+      if (index < projects.length - visibleCount) {
+        setIndex((prev) => prev + 1);
+      }
+    } else {
+      if (index > 0) {
+        setIndex((prev) => prev - 1);
+      }
+    }
+  };
+
   const handleNext = () => {
     if (index >= projects.length - visibleCount) return;
     setIndex((prev) => prev + 1);
@@ -53,7 +79,12 @@ export default function Projects() {
           Latest Projects And Updates.
         </h2>
 
-        <div className={styles.carouselViewport}>
+        <div
+          className={styles.carouselViewport}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             ref={trackRef}
             className={styles.carouselTrack}
