@@ -118,6 +118,12 @@ export default function Capabilities() {
                     className={`${styles.graphLine} ${styles.red}`}
                   />
 
+                  <g className={styles.ticks}>
+                    <path d="M20 150 H180" />
+                    <path d="M20 120 H180" />
+                    <path d="M20 90 H180" />
+                  </g>
+
                   <circle cx="180" cy="40" r="2" className={`${styles.point} ${styles.blue}`} />
                   <circle cx="180" cy="60" r="2" className={`${styles.point} ${styles.green}`} />
                   <circle cx="180" cy="110" r="2" className={`${styles.point} ${styles.red}`} />
