@@ -533,3 +533,48 @@ transform-style: preserve-3d;
     gap: 12px;
   }
 }
+
+.quoteWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+
+  .quoteArea {
+    height: auto;
+    perspective: none;
+    transform: none;
+    display: block;
+  }
+
+  .pin,
+  .string,
+  .shadow {
+    display: none;
+  }
+
+  .quote {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 220px;
+    transform: none !important;
+    animation: none !important;
+
+    box-shadow:
+      0 8px 18px rgba(0,0,0,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  .quote:hover {
+    transform: none;
+  }
+
+  .col:last-child {
+    margin-top: 12px;
+  }
+
+  .projectTitle {
+    margin-top: 14px;
+  }
+}
