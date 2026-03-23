@@ -1,23 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./Projects.module.css";
 import { projects } from "../projectData";
 import ProjectCard from "../ProjectCard/ProjectCard";
 
 export default function Projects() {
-
   const [index, setIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [translateX, setTranslateX] = useState(0);
 
-  const getVisibleCount = () => {
-    if (typeof window === "undefined") return 4;
+  const trackRef = useRef<HTMLDivElement>(null);
 
-    if (window.innerWidth <= 600) return 1;
-    if (window.innerWidth <= 1024) return 2;
-    return 4;
-  };
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth <= 600) setVisibleCount(1);
+      else if (window.innerWidth <= 1024) setVisibleCount(2);
+      else setVisibleCount(4);
+    };
 
-  const visibleCount = getVisibleCount();
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+
+    const firstCard = trackRef.current.children[0] as HTMLElement;
+    if (!firstCard) return;
+
+    const gap = 28;
+    const cardWidth = firstCard.offsetWidth;
+
+    setTranslateX(index * (cardWidth + gap));
+  }, [index, visibleCount]);
 
   const handleNext = () => {
     if (index >= projects.length - visibleCount) return;
@@ -32,20 +49,18 @@ export default function Projects() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-
         <h2 className={styles.title}>
           Latest Projects And Updates.
         </h2>
 
         <div className={styles.carouselViewport}>
-
           <div
+            ref={trackRef}
             className={styles.carouselTrack}
             style={{
-              transform: `translateX(-${index * (100 / visibleCount)}%)`
+              transform: `translateX(-${translateX}px)`
             }}
           >
-
             {projects.map((project) => (
               <div key={project.id} className={styles.carouselItem}>
                 <ProjectCard
@@ -56,9 +71,7 @@ export default function Projects() {
                 />
               </div>
             ))}
-
           </div>
-
         </div>
 
         <div className={styles.controls}>
@@ -78,7 +91,6 @@ export default function Projects() {
             Next →
           </button>
         </div>
-
       </div>
     </section>
   );
