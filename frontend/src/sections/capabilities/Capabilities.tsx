@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Capabilities.module.css";
 
@@ -23,9 +24,30 @@ const capabilities = [
 ];
 
 export default function Capabilities() {
+
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setActiveIndex(null);
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const handleCardClick = (index: number) => {
+    if (window.innerWidth <= 767) {
+      setActiveIndex(prev => (prev === index ? null : index));
+    }
+  };
+
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      <div className={styles.container} ref={containerRef}>
 
         <h2 className={styles.title}>
           Engineering Solutions for Modern Industry
@@ -38,7 +60,10 @@ export default function Capabilities() {
 
         <div className={styles.grid}>
           {capabilities.map((item, index) => (
-            <div key={index} className={styles.card}>
+            <div key={index} className={`${styles.card} ${
+                activeIndex === index ? styles.active : ""
+              }`}
+              onClick={() => handleCardClick(index)}>
 
               {index === 0 && (
                 <>
