@@ -27,8 +27,8 @@ export const industries = [
       "Energy Optimization",
     ],
     images: [
-      "/industry/pulp-paper/1.jpeg",
-      "/industry/pulp-paper/2.jpeg",
+      "/industries/pulp/1.jpeg",
+      "/industries/pulp/2.jpeg",
     ],
   },
   {
@@ -43,8 +43,8 @@ export const industries = [
       "Energy Monitoring",
     ],
     images: [
-      "/industry/cement/1.jpeg",
-      "/industry/cement/2.jpeg",
+      "/industries/cement/1.jpeg",
+      "/industries/cement/2.jpeg",
     ],
   },
   {
@@ -59,8 +59,8 @@ export const industries = [
       "Grid Monitoring",
     ],
     images: [
-      "/industry/power/1.jpeg",
-      "/industry/power/2.jpeg",
+      "/industries/power/1.jpeg",
+      "/industries/power/2.jpeg",
     ],
   },
   {
@@ -75,8 +75,8 @@ export const industries = [
       "Load Tracking",
     ],
     images: [
-      "/industry/material-handling/1.jpeg",
-      "/industry/material-handling/2.jpeg",
+      "/industries/material/1.jpeg",
+      "/industries/material/2.jpeg",
     ],
   },
 ];
