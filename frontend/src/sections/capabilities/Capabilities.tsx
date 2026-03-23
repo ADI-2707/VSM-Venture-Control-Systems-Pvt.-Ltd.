@@ -60,6 +60,22 @@ export default function Capabilities() {
                 </>
               )}
 
+              {index === 1 && (
+                <svg className={styles.fiber} viewBox="0 0 200 200">
+
+                  {/* Curved cables */}
+                  <path d="M-20 40 C 80 20, 120 60, 220 40" className={styles.cable} />
+                  <path d="M-20 100 C 60 120, 140 80, 220 100" className={styles.cable} />
+                  <path d="M-20 160 C 80 140, 120 180, 220 160" className={styles.cable} />
+
+                  {/* Flow pulse */}
+                  <path d="M-20 40 C 80 20, 120 60, 220 40" className={styles.pulse} />
+                  <path d="M-20 100 C 60 120, 140 80, 220 100" className={styles.pulse} />
+                  <path d="M-20 160 C 80 140, 120 180, 220 160" className={styles.pulse} />
+
+                </svg>
+              )}
+
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </div>
