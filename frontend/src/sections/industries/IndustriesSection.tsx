@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./IndustriesSection.module.css";
-import IndustriesDeck from "./IndustriesDeck";
+import IndustriesPanel from "./IndustriesPanel";
 
 export default function IndustriesSection() {
   return (
@@ -16,7 +16,7 @@ export default function IndustriesSection() {
           </p>
         </div>
 
-        <IndustriesDeck />
+        <IndustriesPanel />
 
       </div>
     </section>
