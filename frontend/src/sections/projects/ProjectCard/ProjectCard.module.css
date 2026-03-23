@@ -222,3 +222,43 @@
     opacity: 0;
   }
 }
+
+@media (hover: none), (pointer: coarse) {
+
+  .card {
+    transform: none !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+  }
+
+  .card:hover .inner {
+    background: #ffffff !important;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .card:hover::before {
+    opacity: 0 !important;
+  }
+
+  .card:hover .image {
+    transform: none !important;
+  }
+
+  .card:hover .arrowTrack {
+    transform: translateX(-50%) !important;
+  }
+
+  .card:hover .arrowTrack::before {
+    animation: none !important;
+  }
+
+  .seeMore {
+    opacity: 0 !important;
+    transform: translateX(20px) !important;
+    pointer-events: none !important;
+  }
+}
