@@ -161,6 +161,11 @@
   margin-bottom: 18px;
 }
 
+.author {
+  display: flex;
+  flex-direction: column;
+}
+
 .name {
   font-weight: 600;
   color: #111827;
@@ -169,7 +174,7 @@
 .company {
   font-size: 13px;
   color: #6b7280;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 @keyframes scrollUp {
