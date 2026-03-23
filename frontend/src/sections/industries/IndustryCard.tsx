@@ -22,7 +22,6 @@ export default function IndustryCard({
       onClick={() => setActiveIndex(index)}
     >
       <div className={styles.inner}>
-        {/* LEFT */}
         <div className={styles.content}>
           <h3>{industry.name}</h3>
           <p>{industry.description}</p>
@@ -36,7 +35,6 @@ export default function IndustryCard({
           )}
         </div>
 
-        {/* RIGHT */}
         {isActive && (
           <div className={styles.images}>
             {industry.images.map((img: string, i: number) => (

@@ -1,9 +1,7 @@
 "use client";
 
 import styles from "./IndustriesSection.module.css";
-import { industries } from "./industriesData";
-import Link from "next/link";
-import Image from "next/image";
+import IndustriesDeck from "./IndustriesDeck";
 
 export default function IndustriesSection() {
   return (
@@ -18,31 +16,7 @@ export default function IndustriesSection() {
           </p>
         </div>
 
-        <div className={styles.grid}>
-          {industries.map((industry) => (
-            <Link
-              key={industry.id}
-              href={`/industries/${industry.slug}`}
-              className={styles.card}
-            >
-              <div className={styles.iconWrapper}>
-                <Image
-                  src={industry.icon}
-                  alt={industry.name}
-                  width={28}
-                  height={28}
-                />
-              </div>
-
-              <h3>{industry.name}</h3>
-              <p>{industry.description}</p>
-
-              <span className={styles.explore}>
-                Explore Industry →
-              </span>
-            </Link>
-          ))}
-        </div>
+        <IndustriesDeck />
 
       </div>
     </section>
