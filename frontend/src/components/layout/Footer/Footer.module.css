@@ -483,3 +483,53 @@ transform-style: preserve-3d;
   gap: 20px;
   font-size: 13px;
 }
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .col:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .col {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .col:last-child {
+    align-items: center;
+    text-align: center;
+  }
+
+  .quoteArea {
+    height: 60px;
+  }
+
+  .string {
+    height: 50px;
+  }
+
+  .pin {
+    top: -40px;
+  }
+
+  .bottomContainer {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .links {
+    gap: 12px;
+  }
+}
