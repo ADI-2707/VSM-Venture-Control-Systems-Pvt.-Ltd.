@@ -29,45 +29,56 @@ export default function Navbar() {
   const [showNavbar, setShowNavbar] = useState(true);
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let ticking = false;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      setScrolled(currentScrollY > 20);
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
+      if (currentScrollY > 20 !== scrolled) {
+        setScrolled(currentScrollY > 20);
       }
 
-      lastScrollY = currentScrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
+
+      if (Math.abs(scrollDiff) > 5) {
+        if (scrollDiff > 0 && currentScrollY > 80) {
+          setShowNavbar(false);
+        } else {
+          setShowNavbar(true);
+        }
+
+        lastScrollY = currentScrollY;
+      }
+
+      ticking = false;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [scrolled]);
 
   return (
     <>
       <header
-        className={`${styles.navbar} 
-    ${scrolled ? styles.scrolled : ""} 
-    ${showNavbar ? styles.show : styles.hide}
-  `}
+        className={`${styles.navbar}
+        ${scrolled ? styles.scrolled : ""}
+        ${showNavbar ? styles.show : styles.hide}
+      `}
       >
         <div className={styles.inner}>
-
           <div className={styles.left}>
             <Link href="/" className={styles.logo}>
               <Image src="/logo1.jpg" alt="VSM" width={160} height={50} priority />
@@ -127,7 +138,6 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
-
           </nav>
 
           <div className={styles.right}>
@@ -144,7 +154,6 @@ export default function Navbar() {
               <span></span>
             </button>
           </div>
-
         </div>
       </header>
 
