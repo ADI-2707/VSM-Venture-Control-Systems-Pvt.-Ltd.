@@ -98,6 +98,33 @@ export default function Capabilities() {
                 </svg>
               )}
 
+              {index === 3 && (
+                <svg className={styles.graph} viewBox="0 0 200 200">
+
+                  <path d="M20 20 V180 H180" className={styles.axis} />
+
+                  <path
+                    d="M20 150 L60 120 L100 100 L140 70 L180 40"
+                    className={`${styles.graphLine} ${styles.blue}`}
+                  />
+
+                  <path
+                    d="M20 160 L60 140 L100 110 L140 90 L180 60"
+                    className={`${styles.graphLine} ${styles.green}`}
+                  />
+
+                  <path
+                    d="M20 140 L60 130 L100 120 L140 115 L180 110"
+                    className={`${styles.graphLine} ${styles.red}`}
+                  />
+
+                  <circle cx="180" cy="40" r="2" className={`${styles.point} ${styles.blue}`} />
+                  <circle cx="180" cy="60" r="2" className={`${styles.point} ${styles.green}`} />
+                  <circle cx="180" cy="110" r="2" className={`${styles.point} ${styles.red}`} />
+
+                </svg>
+              )}
+
               <h3>{item.title}</h3>
               <p>{item.text}</p>
             </div>
