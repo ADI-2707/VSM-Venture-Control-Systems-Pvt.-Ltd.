@@ -36,7 +36,8 @@ export default function TestimonialsSection() {
         setIsVisible(entry.isIntersecting);
       },
       {
-        threshold: 0.1,
+        threshold: 0.2,
+        rootMargin: "0px 0px -20% 0px",
       }
     );
 
@@ -54,14 +55,15 @@ export default function TestimonialsSection() {
   return (
     <section ref={sectionRef} className={styles.testimonials}>
       <div className={styles.container}>
-
         <div
-          className={`${styles.scrollerWrapper} ${isVisible ? styles.scrollerVisible : styles.scrollerHidden
-            }`}
+          className={`${styles.scrollerWrapper} ${
+            isVisible ? styles.scrollerVisible : styles.scrollerHidden
+          }`}
         >
           <div
-            className={`${styles.scroller} ${isVisible ? styles.play : styles.pause
-              }`}
+            className={`${styles.scroller} ${
+              isVisible ? styles.play : styles.pause
+            }`}
           >
             {loopData.map((t, index) => (
               <div key={index} className={styles.card}>
@@ -80,8 +82,9 @@ export default function TestimonialsSection() {
         </div>
 
         <div
-          className={`${styles.headingBlock} ${isVisible ? styles.headingVisible : styles.headingHidden
-            }`}
+          className={`${styles.headingBlock} ${
+            isVisible ? styles.headingVisible : styles.headingHidden
+          }`}
         >
           <h2 className={styles.title}>What our partners say</h2>
           <p className={styles.subtitle}>

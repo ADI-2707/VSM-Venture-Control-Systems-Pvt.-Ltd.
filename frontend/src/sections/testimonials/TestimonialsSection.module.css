@@ -50,8 +50,16 @@
   animation-play-state: paused;
 }
 
-.scrollerWrapper:hover .scroller {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .scrollerWrapper:hover .scroller {
+    animation-play-state: paused;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroller {
+    animation-play-state: running !important;
+  }
 }
 
 .card {
@@ -87,13 +95,7 @@
   content: "";
   position: absolute;
   inset: 0;
-
-  background: linear-gradient(
-    135deg,
-    rgba(31, 138, 203, 0.10),
-    transparent 60%
-  );
-
+  background: linear-gradient(135deg, rgba(31,138,203,0.10), transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -125,14 +127,7 @@
   left: -120%;
   width: 60%;
   height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.5),
-    transparent
-  );
-
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
   transform: skewX(-20deg);
 }
 
@@ -185,11 +180,8 @@
 .headingVisible {
   opacity: 1;
   transform: translateX(0);
+  transition: all 0.6s ease;
   transition-delay: 0.1s;
-
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
 }
 
 .scrollerHidden {
@@ -208,6 +200,15 @@
   }
   100% {
     transform: translateY(-50%);
+  }
+}
+
+@keyframes streakMove {
+  0% {
+    left: -120%;
+  }
+  100% {
+    left: 140%;
   }
 }
 
@@ -238,14 +239,5 @@
 
   .card {
     padding: 20px;
-  }
-}
-
-@keyframes streakMove {
-  0% {
-    left: -120%;
-  }
-  100% {
-    left: 140%;
   }
 }
