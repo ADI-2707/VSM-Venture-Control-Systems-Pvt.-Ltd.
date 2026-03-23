@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./Capabilities.module.css";
 
 const capabilities = [
@@ -39,22 +40,23 @@ export default function Capabilities() {
           {capabilities.map((item, index) => (
             <div key={index} className={styles.card}>
 
-              {/* SVG BACKGROUND ONLY FOR FIRST CARD */}
               {index === 0 && (
                 <>
-                  <svg
+                  <Image
+                    src="/icons/gear.svg"
+                    alt="gear"
+                    width={140}
+                    height={140}
                     className={`${styles.gear} ${styles.gearBig}`}
-                    viewBox="0 0 100 100"
-                  >
-                    <circle cx="50" cy="50" r="30" />
-                  </svg>
+                  />
 
-                  <svg
+                  <Image
+                    src="/icons/gear.svg"
+                    alt="gear"
+                    width={90}
+                    height={90}
                     className={`${styles.gear} ${styles.gearSmall}`}
-                    viewBox="0 0 100 100"
-                  >
-                    <circle cx="50" cy="50" r="20" />
-                  </svg>
+                  />
                 </>
               )}
 
