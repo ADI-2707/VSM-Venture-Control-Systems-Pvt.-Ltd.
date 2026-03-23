@@ -26,6 +26,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
 
   useEffect(() => {
     if (menuOpen) {
@@ -36,17 +37,35 @@ export default function Navbar() {
   }, [menuOpen]);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+
+      setScrolled(currentScrollY > 20);
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+      <header
+        className={`${styles.navbar} 
+    ${scrolled ? styles.scrolled : ""} 
+    ${showNavbar ? styles.show : styles.hide}
+  `}
+      >
         <div className={styles.inner}>
 
           <div className={styles.left}>

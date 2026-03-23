@@ -8,7 +8,11 @@
   background: rgba(245, 244, 244, 0.92);
   backdrop-filter: blur(8px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.25s ease;
+  transform: translateY(0);
+
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              background 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 .scrolled {
@@ -43,6 +47,14 @@
   opacity: 0;
   pointer-events: none;
   transition: all 0.35s ease;
+}
+
+.show {
+  transform: translateY(0);
+}
+
+.hide {
+  transform: translateY(-100%);
 }
 
 .overlayOpen {
