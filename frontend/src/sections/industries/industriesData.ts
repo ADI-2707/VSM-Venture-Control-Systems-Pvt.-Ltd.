@@ -11,8 +11,8 @@ export const industries = [
       "Process Optimization",
     ],
     images: [
-      "/industry/steel/1.jpeg",
-      "/industry/steel/2.jpeg",
+      "/industries/steel/1.jpg",
+      "/industries/steel/2.jpg",
     ],
   },
   {
@@ -27,8 +27,8 @@ export const industries = [
       "Energy Optimization",
     ],
     images: [
-      "/industries/pulp/1.jpeg",
-      "/industries/pulp/2.jpeg",
+      "/industries/pulp/1.jpg",
+      "/industries/pulp/2.jpg",
     ],
   },
   {
@@ -43,8 +43,8 @@ export const industries = [
       "Energy Monitoring",
     ],
     images: [
-      "/industries/cement/1.jpeg",
-      "/industries/cement/2.jpeg",
+      "/industries/cement/1.jpg",
+      "/industries/cement/2.jpg",
     ],
   },
   {
@@ -59,8 +59,8 @@ export const industries = [
       "Grid Monitoring",
     ],
     images: [
-      "/industries/power/1.jpeg",
-      "/industries/power/2.jpeg",
+      "/industries/power/1.jpg",
+      "/industries/power/2.jpg",
     ],
   },
   {
@@ -75,8 +75,8 @@ export const industries = [
       "Load Tracking",
     ],
     images: [
-      "/industries/material/1.jpeg",
-      "/industries/material/2.jpeg",
+      "/industries/material/1.jpg",
+      "/industries/material/2.jpg",
     ],
   },
 ];

@@ -13,7 +13,6 @@ export default function IndustriesPanel() {
   return (
     <div className={styles.wrapper}>
 
-      {/* LEFT LIST */}
       <div className={styles.sidebar}>
         {industries.map((industry, index) => (
           <div
@@ -29,7 +28,6 @@ export default function IndustriesPanel() {
         ))}
       </div>
 
-      {/* RIGHT DETAILS */}
       <div className={styles.content}>
         <div className={styles.imageWrapper}>
           <Image
