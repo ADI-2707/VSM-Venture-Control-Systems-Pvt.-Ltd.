@@ -1,11 +1,6 @@
 .cta {
   padding: 120px 24px;
-
-  background: linear-gradient(
-    to bottom,
-    #f7f9fc,
-    #eef2f7
-  );
+  background: linear-gradient(to bottom, #f7f9fc, #eef2f7);
 }
 
 .container {
@@ -27,10 +22,8 @@
 .inner {
   position: relative;
   text-align: center;
-
   padding: 60px 40px;
   border-radius: 16px;
-
   background: white;
 
   box-shadow:
@@ -46,52 +39,57 @@
   top: 0;
   bottom: 0;
   width: 4px;
-
-  background: linear-gradient(
-    to bottom,
-    #1e40af,
-    transparent
-  );
+  background: linear-gradient(to bottom, #1e40af, transparent);
 }
 
 .title {
   font-size: 38px;
   font-weight: 600;
   color: #1f2937;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .subtitle {
   font-size: 18px;
   color: #4b5563;
   max-width: 720px;
-  margin: 0 auto 40px;
+  margin: 0 auto 36px;
   line-height: 1.6;
 }
 
 .actions {
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 
 .primaryBtn {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   background: linear-gradient(135deg, #1e40af, #2563eb);
   color: white;
-  padding: 14px 30px;
+  padding: 14px 32px;
   border-radius: 8px;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.25s ease;
-  box-shadow: 0 6px 16px rgba(30,64,175,0.3);
+  box-shadow: 0 6px 18px rgba(30,64,175,0.35);
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.primaryBtn:hover .arrow {
+  transform: translateX(6px);
 }
 
 .primaryBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(30,64,175,0.4);
+  box-shadow: 0 12px 28px rgba(30,64,175,0.45);
 }
 
 .secondaryBtn {
@@ -109,9 +107,16 @@
   color: white;
 }
 
+.microcopy {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 14px;
+}
+
 .trust {
   font-size: 14px;
   color: #6b7280;
+  margin-top: 8px;
 }
 
 @media (max-width: 768px) {

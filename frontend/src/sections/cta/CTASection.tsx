@@ -28,21 +28,22 @@ export default function CTASection() {
         }`}
       >
         <div className={styles.inner}>
+
           <div className={styles.accent}></div>
 
           <h2 className={styles.title}>
-            Ready to build reliable industrial software systems?
+            Build reliable industrial systems — without delays or rework
           </h2>
 
           <p className={styles.subtitle}>
-            We help engineering and manufacturing teams design and build
-            scalable data platforms, automation systems, and AI solutions
-            for real-world production environments.
+            We design and deliver scalable automation, data platforms, and AI
+            solutions tailored for real production environments.
           </p>
 
           <div className={styles.actions}>
             <a href="/contact" className={styles.primaryBtn}>
-              Schedule a Consultation →
+              <span>Schedule a Consultation</span>
+              <span className={styles.arrow}>→</span>
             </a>
 
             <a href="/projects" className={styles.secondaryBtn}>
@@ -50,8 +51,12 @@ export default function CTASection() {
             </a>
           </div>
 
+          <p className={styles.microcopy}>
+            No commitment. Just a focused technical discussion.
+          </p>
+
           <p className={styles.trust}>
-            Trusted by industrial teams across steel, cement, and power sectors
+            Trusted by teams in steel, cement, and power industries
           </p>
 
         </div>
