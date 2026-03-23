@@ -63,15 +63,37 @@ export default function Capabilities() {
               {index === 1 && (
                 <svg className={styles.fiber} viewBox="0 0 200 200">
 
-                  {/* Curved cables */}
                   <path d="M-20 40 C 80 20, 120 60, 220 40" className={styles.cable} />
                   <path d="M-20 100 C 60 120, 140 80, 220 100" className={styles.cable} />
                   <path d="M-20 160 C 80 140, 120 180, 220 160" className={styles.cable} />
 
-                  {/* Flow pulse */}
                   <path d="M-20 40 C 80 20, 120 60, 220 40" className={styles.pulse} />
                   <path d="M-20 100 C 60 120, 140 80, 220 100" className={styles.pulse} />
                   <path d="M-20 160 C 80 140, 120 180, 220 160" className={styles.pulse} />
+
+                </svg>
+              )}
+
+              {index === 2 && (
+                <svg className={styles.blueprint} viewBox="0 0 200 200">
+
+                  <g className={styles.gridLines}>
+                    <path d="M0 50 H200" />
+                    <path d="M0 100 H200" />
+                    <path d="M0 150 H200" />
+                    <path d="M50 0 V200" />
+                    <path d="M100 0 V200" />
+                    <path d="M150 0 V200" />
+                  </g>
+
+                  <path d="M20 130 H180" className={styles.pipeMain} />
+
+                  <path d="M60 130 V90" className={styles.pipeBranch} />
+                  <path d="M120 130 V80" className={styles.pipeBranch} />
+
+                  <rect x="100" y="60" width="40" height="20" rx="3" className={styles.unit} />
+
+                  <path d="M150 130 l6 -4 l0 8 z" className={styles.arrow} />
 
                 </svg>
               )}
