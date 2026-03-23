@@ -86,7 +86,7 @@ export default function Capabilities() {
                     <path d="M150 0 V200" />
                   </g>
 
-                  <path d="M20 130 H180" className={styles.pipeMain} />
+                  <path d="M20 155 H180" className={styles.pipeMain} />
 
                   <path d="M60 130 V90" className={styles.pipeBranch} />
                   <path d="M120 130 V80" className={styles.pipeBranch} />
@@ -123,11 +123,6 @@ export default function Capabilities() {
                     <path d="M20 120 H180" />
                     <path d="M20 90 H180" />
                   </g>
-
-                  <circle cx="180" cy="40" r="2" className={`${styles.point} ${styles.blue}`} />
-                  <circle cx="180" cy="60" r="2" className={`${styles.point} ${styles.green}`} />
-                  <circle cx="180" cy="110" r="2" className={`${styles.point} ${styles.red}`} />
-
                 </svg>
               )}
 
