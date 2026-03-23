@@ -55,11 +55,13 @@ export default function TestimonialsSection() {
     <section ref={sectionRef} className={styles.testimonials}>
       <div className={styles.container}>
 
-        <div className={styles.scrollerWrapper}>
-          <div
-            className={`${styles.scroller} ${
-              isVisible ? styles.play : styles.pause
+        <div
+          className={`${styles.scrollerWrapper} ${isVisible ? styles.scrollerVisible : styles.scrollerHidden
             }`}
+        >
+          <div
+            className={`${styles.scroller} ${isVisible ? styles.play : styles.pause
+              }`}
           >
             {loopData.map((t, index) => (
               <div key={index} className={styles.card}>
@@ -77,7 +79,10 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        <div className={styles.headingBlock}>
+        <div
+          className={`${styles.headingBlock} ${isVisible ? styles.headingVisible : styles.headingHidden
+            }`}
+        >
           <h2 className={styles.title}>What our partners say</h2>
           <p className={styles.subtitle}>
             Trusted by industry leaders across multiple sectors.
