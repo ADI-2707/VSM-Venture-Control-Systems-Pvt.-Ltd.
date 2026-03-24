@@ -397,8 +397,6 @@
   }
 
   .navButton {
-    width: 34px;
-    height: 34px;
-    font-size: 18px;
+    display: none;
   }
 }
