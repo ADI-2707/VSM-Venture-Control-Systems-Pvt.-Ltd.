@@ -21,29 +21,28 @@ export default function Loader({ onComplete }: LoaderProps) {
   return (
     <div className={styles.overlay}>
       <motion.div
+        layoutId="logo"
         className={styles.logoWrapper}
-        initial={{ opacity: 0, scale: 0.92 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.8,
-          ease: [0.25, 1, 0.5, 1],
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{
+          opacity: 1,
+          scale: [1, 1.05, 1],
         }}
-      >
-        <motion.div
-          animate={{ scale: [1, 1.04, 1] }}
-          transition={{
+        transition={{
+          opacity: { duration: 0.6, ease: "easeOut" },
+          scale: {
             duration: 1.4,
             ease: "easeInOut",
-          }}
-        >
-          <Image
-            src="/logo2.png"
-            alt="VSM Logo"
-            width={320}
-            height={120}
-            priority
-          />
-        </motion.div>
+          },
+        }}
+      >
+        <Image
+          src="/logo2.png"
+          alt="VSM Logo"
+          width={320}
+          height={120}
+          priority
+        />
       </motion.div>
     </div>
   );
