@@ -12,6 +12,9 @@ export default function Hero() {
 
   const heroRef = useRef<HTMLElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const touchStartTime = useRef(0);
 
   const total = heroSlides.length;
 
@@ -67,6 +70,29 @@ export default function Hero() {
     setIndex((prev) => (prev - 1 + total) % total);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartTime.current = Date.now();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const distance = touchStartX.current - touchEndX.current;
+    const time = Date.now() - touchStartTime.current;
+
+    const isFastSwipe = time < 250 && Math.abs(distance) > 30;
+    const isNormalSwipe = Math.abs(distance) > 60;
+
+    if (distance > 0 && (isFastSwipe || isNormalSwipe)) {
+      nextSlide();
+    } else if (distance < 0 && (isFastSwipe || isNormalSwipe)) {
+      prevSlide();
+    }
+  };
+
   const getPosition = (i: number) => {
     const prev = (index - 1 + total) % total;
     const next = (index + 1) % total;
@@ -79,7 +105,12 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
-      <div className={styles.slider}>
+      <div
+        className={styles.slider}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
 
         <button
           className={`${styles.navButton} ${styles.navLeft}`}
@@ -106,15 +137,15 @@ export default function Hero() {
               key={slide.id}
               className={`${styles.slide} ${styles[pos]}`}
             >
-            <div className={styles.imageWrapper}>
-              <Image
-                src={slide.image}
-                alt={slide.title}
-                fill
-                sizes="(max-width: 1200px) 90vw, 70vw"
-                priority={i === 0}
-                className={styles.image}
-              />
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={slide.image}
+                  alt={slide.title}
+                  fill
+                  sizes="(max-width: 1200px) 90vw, 70vw"
+                  priority={i === 0}
+                  className={styles.image}
+                />
               </div>
 
               <div className={`${styles.fadeMask} ${styles[pos]}`} />
