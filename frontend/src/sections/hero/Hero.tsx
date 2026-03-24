@@ -23,22 +23,22 @@ export default function Hero() {
   const total = heroSlides.length;
 
   useEffect(() => {
-    const resetTimer = () => {
+    const handleMove = () => {
       setShowControls(true);
 
       if (idleTimer.current) clearTimeout(idleTimer.current);
 
       idleTimer.current = setTimeout(() => {
         setShowControls(false);
-      }, 2500);
+      }, 2000);
     };
 
-    resetTimer();
+    handleMove();
 
-    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("mousemove", handleMove);
 
     return () => {
-      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("mousemove", handleMove);
       if (idleTimer.current) clearTimeout(idleTimer.current);
     };
   }, []);
@@ -153,7 +153,7 @@ export default function Hero() {
           <button
             className={`${styles.navButton} ${styles.navLeft}`}
             onClick={prevSlide}
-            style={{ opacity: showControls ? 1 : 0 }}
+            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none", }}
           >
             ‹
           </button>
@@ -161,7 +161,7 @@ export default function Hero() {
           <button
             className={`${styles.navButton} ${styles.navRight}`}
             onClick={nextSlide}
-            style={{ opacity: showControls ? 1 : 0 }}
+            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none", }}
           >
             ›
           </button>
