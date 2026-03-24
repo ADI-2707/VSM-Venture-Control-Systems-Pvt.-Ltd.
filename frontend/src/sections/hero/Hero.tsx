@@ -10,6 +10,7 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(true);
   const [prevIndex, setPrevIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -35,7 +36,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && !isPaused) {
       intervalRef.current = setInterval(() => {
         setPrevIndex(index);
         setIndex((prev) => (prev + 1) % total);
@@ -47,7 +48,7 @@ export default function Hero() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [inView, total, index]);
+  }, [inView, total, index, isPaused]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,15 +76,14 @@ export default function Hero() {
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
     touchStartX.current = e.touches[0].clientX;
     touchStartTime.current = Date.now();
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
   const handleTouchEnd = () => {
+    setIsPaused(false);
+
     const distance = touchStartX.current - touchEndX.current;
     const time = Date.now() - touchStartTime.current;
 
@@ -95,6 +95,10 @@ export default function Hero() {
     } else if (distance < 0 && (isFastSwipe || isNormalSwipe)) {
       prevSlide();
     }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
   };
 
   const getPosition = (i: number) => {
@@ -120,10 +124,19 @@ export default function Hero() {
     <section ref={heroRef} className={styles.hero}>
       <div
         className={styles.slider}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
+
+        <div className={styles.progressBar}>
+          <div
+            key={index}
+            className={`${styles.progressFill} ${!isPaused ? styles.animate : ""}`}
+          />
+        </div>
 
         <button
           className={`${styles.navButton} ${styles.navLeft}`}
