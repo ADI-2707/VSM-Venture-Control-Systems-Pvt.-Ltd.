@@ -357,3 +357,45 @@
     right: 16px;
   }
 }
+
+@media (max-width: 768px) {
+
+  .hero {
+    height: clamp(260px, 42vh, 380px);
+    min-height: unset;
+    padding-bottom: 40px;
+    margin-top: 0;
+  }
+
+  .slide {
+    width: 94%;
+  }
+
+  .left,
+  .right {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+  }
+
+  .overlay {
+    text-align: center;
+    left: 16px;
+    right: 16px;
+    bottom: 20px;
+  }
+
+  .overlay h1 {
+    font-size: clamp(18px, 5vw, 24px);
+  }
+
+  .overlay p {
+    font-size: clamp(12px, 3.5vw, 14px);
+  }
+
+  .navButton {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+}
