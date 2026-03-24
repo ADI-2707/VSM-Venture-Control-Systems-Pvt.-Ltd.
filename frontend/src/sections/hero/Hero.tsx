@@ -10,10 +10,6 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(true);
   const [prevIndex, setPrevIndex] = useState(0);
-  const [showControls, setShowControls] = useState(true);
-  const [isHoveringImage, setIsHoveringImage] = useState(false);
-
-  const idleTimer = useRef<NodeJS.Timeout | null>(null);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -22,27 +18,6 @@ export default function Hero() {
   const touchStartTime = useRef(0);
 
   const total = heroSlides.length;
-
-  useEffect(() => {
-    const handleMove = () => {
-      setShowControls(true);
-
-      if (idleTimer.current) clearTimeout(idleTimer.current);
-
-      idleTimer.current = setTimeout(() => {
-        setShowControls(false);
-      }, 2000);
-    };
-
-    handleMove();
-
-    window.addEventListener("mousemove", handleMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      if (idleTimer.current) clearTimeout(idleTimer.current);
-    };
-  }, []);
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -151,41 +126,14 @@ export default function Hero() {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <button
-            className={`${styles.navButton} ${styles.navLeft}`}
-            onClick={prevSlide}
-            style={{
-              opacity: showControls && isHoveringImage ? 1 : 0,
-              pointerEvents: showControls && isHoveringImage ? "auto" : "none",
-            }}
-          >
-            ‹
-          </button>
-
-          <button
-            className={`${styles.navButton} ${styles.navRight}`}
-            onClick={nextSlide}
-            style={{
-              opacity: showControls && isHoveringImage ? 1 : 0,
-              pointerEvents: showControls && isHoveringImage ? "auto" : "none",
-            }}
-          >
-            ›
-          </button>
-
           {heroSlides.map((slide, i) => {
             const pos = getPosition(i);
             const isCenter = pos === "center";
 
             return (
               <div key={slide.id} className={`${styles.slide} ${styles[pos]}`}>
-                <div
-                  className={styles.imageWrapper}
-                  onMouseEnter={() => {
-                    if (pos === "center") setIsHoveringImage(true);
-                  }}
-                  onMouseLeave={() => setIsHoveringImage(false)}
-                >
+
+                <div className={styles.imageWrapper}>
                   <Image
                     src={slide.image}
                     alt={slide.title}
