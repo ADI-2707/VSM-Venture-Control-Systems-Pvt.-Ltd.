@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const primaryNav = [
   { label: "Home", href: "/" },
@@ -81,7 +82,17 @@ export default function Navbar() {
         <div className={styles.inner}>
           <div className={styles.left}>
             <Link href="/" className={styles.logo}>
-              <Image src="/logo2.png" alt="VSM" width={130} height={45} priority />
+              <motion.div layoutId="logo" transition={{
+                layout: { duration: 0.8, ease: "easeInOut" },
+              }}>
+                <Image
+                  src="/logo2.png"
+                  alt="VSM"
+                  width={130}
+                  height={45}
+                  priority
+                />
+              </motion.div>
             </Link>
           </div>
 

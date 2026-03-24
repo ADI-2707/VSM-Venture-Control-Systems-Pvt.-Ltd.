@@ -34,6 +34,7 @@ export default function Loader({ onComplete }: LoaderProps) {
             duration: 1.4,
             ease: "easeInOut",
           },
+          layout: { duration: 0.8, ease: "easeInOut" },
         }}
       >
         <Image
