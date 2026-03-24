@@ -106,6 +106,7 @@ export default function Hero() {
               key={slide.id}
               className={`${styles.slide} ${styles[pos]}`}
             >
+            <div className={styles.imageWrapper}>
               <Image
                 src={slide.image}
                 alt={slide.title}
@@ -114,6 +115,7 @@ export default function Hero() {
                 priority={i === 0}
                 className={styles.image}
               />
+              </div>
 
               <div className={`${styles.fadeMask} ${styles[pos]}`} />
               <div className={`${styles.blurMask} ${styles[pos]}`} />

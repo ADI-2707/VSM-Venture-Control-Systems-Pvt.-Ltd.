@@ -17,12 +17,10 @@
   z-index: 0;
   pointer-events: none;
 
-  background: radial-gradient(
-    circle at center,
-    #e5e5e5 0%,
-    #f2f2f2 45%,
-    #f5f4f4 90%
-  );
+  background: radial-gradient(circle at center,
+      #e5e5e5 0%,
+      #f2f2f2 45%,
+      #f5f4f4 90%);
 
   transform: translateY(var(--bg-shift, 0));
   transition: transform 1.2s ease-out;
@@ -37,12 +35,10 @@
   height: 200px;
   pointer-events: none;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(245,244,244,0),
-    rgba(245,244,244,0.6) 50%,
-    rgba(245,244,244,1)
-  );
+  background: linear-gradient(to bottom,
+      rgba(245, 244, 244, 0),
+      rgba(245, 244, 244, 0.6) 50%,
+      rgba(245, 244, 244, 1));
 }
 
 .slider {
@@ -83,18 +79,23 @@
   border-radius: 50%;
 
   background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,0.16) 0%,
-      rgba(0,0,0,0.10) 35%,
-      rgba(0,0,0,0.05) 60%,
-      transparent 100%
-    );
+    radial-gradient(ellipse at center,
+      rgba(0, 0, 0, 0.16) 0%,
+      rgba(0, 0, 0, 0.10) 35%,
+      rgba(0, 0, 0, 0.05) 60%,
+      transparent 100%);
 
   filter: blur(12px);
   opacity: 0;
   transition: opacity 0.9s ease;
   pointer-events: none;
+}
+
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .image {
@@ -131,7 +132,7 @@
   opacity: 1;
   z-index: 5;
   border-radius: 32px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   filter: none;
 }
 
@@ -144,18 +145,11 @@
 }
 
 .left {
-  transform: translateX(clamp(-60%, -78%, -78%)) 
-             scale(0.92) 
-             rotateY(25deg) 
-             translateZ(-80px);
-
+  transform: translateX(clamp(-60%, -78%, -78%)) scale(0.92) rotateY(25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
-
   filter:
-    brightness(0.82)
-    contrast(0.88)
-    blur(1.2px);
+    brightness(0.82) contrast(0.88) blur(1.2px);
 }
 
 .left .image {
@@ -163,18 +157,11 @@
 }
 
 .right {
-  transform: translateX(clamp(60%, 78%, 78%)) 
-             scale(0.92) 
-             rotateY(-25deg) 
-             translateZ(-80px);
-
+  transform: translateX(clamp(60%, 78%, 78%)) scale(0.92) rotateY(-25deg) translateZ(-80px);
   opacity: 0.45;
   z-index: 3;
-
   filter:
-    brightness(0.82)
-    contrast(0.88)
-    blur(1.2px);
+    brightness(0.82) contrast(0.88) blur(1.2px);
 }
 
 .right .image {
@@ -197,7 +184,7 @@
   position: absolute;
   inset: 0;
   backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.01);
+  background: rgba(255, 255, 255, 0.01);
   pointer-events: none;
   z-index: 2;
   transform: scale(1.04);
@@ -237,19 +224,15 @@
 }
 
 .fadeMask.left {
-  background: linear-gradient(
-    to left,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.85)
-  );
+  background: linear-gradient(to left,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.85));
 }
 
 .fadeMask.right {
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.85)
-  );
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.85));
 }
 
 .fadeMask.left,
@@ -272,12 +255,12 @@
   font-size: clamp(18px, 2vw, 28px);
   font-weight: 600;
   cursor: pointer;
-  background: rgba(255,255,255,0.65);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(10px);
 
   box-shadow:
-    0 8px 22px rgba(0,0,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+    0 8px 22px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   transition:
     transform 0.25s ease,
@@ -291,11 +274,11 @@
 
 .navButton:hover {
   transform: translateY(-50%) scale(1.08);
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
 
   box-shadow:
-    0 12px 28px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.7);
+    0 12px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .navButton:active {
@@ -341,24 +324,6 @@
 }
 
 @media (max-width: 768px) {
-  .slide {
-    width: 92%;
-  }
-
-  .left,
-  .right {
-    opacity: 0.2;
-    transform: scale(0.85);
-  }
-
-  .overlay {
-    text-align: center;
-    left: 16px;
-    right: 16px;
-  }
-}
-
-@media (max-width: 768px) {
 
   .hero {
     height: clamp(260px, 42vh, 380px);
@@ -367,38 +332,48 @@
     margin-top: 0;
   }
 
-  .image {
-    transform: scale(1.01);
-  }
-
-  .center .image {
-    transform: scale(1.03);
-  }
-
-  .image {
-    backface-visibility: hidden;
-    transform: translateZ(0) scale(1.01);
-  }
-
-  .center .image {
-    transform: translateZ(0) scale(1.03);
-  }
-
-  .slide {
-    width: 94%;
-    overflow: hidden;
-    border-radius: 20px;
-  }
-
   .slider {
     overflow: hidden;
   }
 
+  .slide {
+    width: 94%;
+    transform: none !important;
+    opacity: 0;
+
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+                
+    position: absolute;
+  }
+
+  .center {
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 2;
+    animation: mobileFadeSoft 0.6s ease;
+  }
+
+  .hidden {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
   .left,
   .right {
-    opacity: 0;
-    transform: scale(0.9);
-    pointer-events: none;
+    display: none;
+  }
+
+  .image {
+    transform: none !important;
+    transition: opacity 0.5s ease;
+    backface-visibility: hidden;
+    will-change: opacity;
+  }
+
+  .blurMask,
+  .fadeMask {
+    display: none;
   }
 
   .overlay {
@@ -420,5 +395,17 @@
     width: 34px;
     height: 34px;
     font-size: 18px;
+  }
+
+  @keyframes mobileFadeSoft {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
