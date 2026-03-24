@@ -9,6 +9,7 @@ import { heroSlides } from "./sliderData";
 export default function Hero() {
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(true);
+  const [prevIndex, setPrevIndex] = useState(0);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -36,6 +37,7 @@ export default function Hero() {
   useEffect(() => {
     if (inView) {
       intervalRef.current = setInterval(() => {
+        setPrevIndex(index);
         setIndex((prev) => (prev + 1) % total);
       }, 4000);
     } else {
@@ -45,7 +47,7 @@ export default function Hero() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [inView, total]);
+  }, [inView, total, index]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,10 +65,12 @@ export default function Hero() {
   }, []);
 
   const nextSlide = () => {
+    setPrevIndex(index);
     setIndex((prev) => (prev + 1) % total);
   };
 
   const prevSlide = () => {
+    setPrevIndex(index);
     setIndex((prev) => (prev - 1 + total) % total);
   };
 
@@ -94,8 +98,17 @@ export default function Hero() {
   };
 
   const getPosition = (i: number) => {
+    const isMobile =
+      typeof window !== "undefined" && window.innerWidth <= 768;
+
     const prev = (index - 1 + total) % total;
     const next = (index + 1) % total;
+
+    if (isMobile) {
+      if (i === index) return "center";
+      if (i === prevIndex) return "prev";
+      return "hidden";
+    }
 
     if (i === index) return "center";
     if (i === prev) return "left";
