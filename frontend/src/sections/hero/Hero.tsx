@@ -30,7 +30,6 @@ export default function Hero() {
     );
 
     observer.observe(heroRef.current);
-
     return () => observer.disconnect();
   }, []);
 
@@ -94,19 +93,10 @@ export default function Hero() {
   };
 
   const getPosition = (i: number) => {
-    const isMobile =
-      typeof window !== "undefined" && window.innerWidth <= 768;
-
     const prev = (index - 1 + total) % total;
     const next = (index + 1) % total;
 
-    if (isMobile) {
-      if (i === index) return "center";
-      if (i === prevIndex) return "prev";
-      return "hidden";
-    }
-
-    if (i === index) return "center";
+    if (i === index || total === 1) return "center";
     if (i === prev) return "left";
     if (i === next) return "right";
     return "hidden";
@@ -114,88 +104,91 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
-      <div className={styles.progressContainer}>
-        {heroSlides.map((_, i) => (
-          <div key={i} className={styles.progressSegment}>
-            <div
-              className={`
-                ${styles.progressFill}
-                ${i < index ? styles.filled : ""}
-                ${i === index ? styles.animate : ""}
-              `}
-            />
-          </div>
-        ))}
-      </div>
+      <div className={styles.heroInner}>
 
-      <div
-        className={styles.slider}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <button
-          className={`${styles.navButton} ${styles.navLeft}`}
-          onClick={prevSlide}
-        >
-          ‹
-        </button>
-
-        <button
-          className={`${styles.navButton} ${styles.navRight}`}
-          onClick={nextSlide}
-        >
-          ›
-        </button>
-
-        {heroSlides.map((slide, i) => {
-          const pos = getPosition(i);
-          const isCenter = pos === "center";
-
-          return (
-            <div key={slide.id} className={`${styles.slide} ${styles[pos]}`}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={slide.image}
-                  alt={slide.title}
-                  fill
-                  sizes="(max-width: 1200px) 90vw, 70vw"
-                  priority={i === 0}
-                  className={styles.image}
-                />
-              </div>
-
-              <div className={`${styles.fadeMask} ${styles[pos]}`} />
-              <div className={`${styles.blurMask} ${styles[pos]}`} />
-
-              <div className={styles.overlay}>
-                <motion.h1
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={
-                    isCenter
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: 40 }
-                  }
-                  transition={{ duration: 0.8 }}
-                >
-                  {slide.title}
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={
-                    isCenter
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: 40 }
-                  }
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  {slide.subtitle}
-                </motion.p>
-              </div>
+        <div className={styles.progressContainer}>
+          {heroSlides.map((_, i) => (
+            <div key={i} className={styles.progressSegment}>
+              <div
+                className={`
+                  ${styles.progressFill}
+                  ${i < index ? styles.filled : ""}
+                  ${i === index ? styles.animate : ""}
+                `}
+              />
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        <div
+          className={styles.slider}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <button
+            className={`${styles.navButton} ${styles.navLeft}`}
+            onClick={prevSlide}
+          >
+            ‹
+          </button>
+
+          <button
+            className={`${styles.navButton} ${styles.navRight}`}
+            onClick={nextSlide}
+          >
+            ›
+          </button>
+
+          {heroSlides.map((slide, i) => {
+            const pos = getPosition(i);
+            const isCenter = pos === "center";
+
+            return (
+              <div key={slide.id} className={`${styles.slide} ${styles[pos]}`}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    sizes="(max-width: 1200px) 90vw, 70vw"
+                    priority={i === 0}
+                    className={styles.image}
+                  />
+                </div>
+
+                <div className={`${styles.fadeMask} ${styles[pos]}`} />
+                <div className={`${styles.blurMask} ${styles[pos]}`} />
+
+                <div className={styles.overlay}>
+                  <motion.h1
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={
+                      isCenter
+                        ? { opacity: 1, y: 0 }
+                        : { opacity: 0, y: 40 }
+                    }
+                    transition={{ duration: 0.8 }}
+                  >
+                    {slide.title}
+                  </motion.h1>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={
+                      isCenter
+                        ? { opacity: 1, y: 0 }
+                        : { opacity: 0, y: 40 }
+                    }
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                  >
+                    {slide.subtitle}
+                  </motion.p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

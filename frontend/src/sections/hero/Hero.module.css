@@ -51,13 +51,14 @@
   align-items: center;
   justify-content: center;
   overflow: visible;
+  padding-top: clamp(8px, 1.5vw, 18px);
 }
 
 .slide {
   position: absolute;
   border-radius: clamp(16px, 2vw, 32px);
-  width: clamp(85%, 74%, 74%);
   height: 100%;
+  width: min(100%, 900px);
   overflow: visible;
   will-change: transform;
   transform-style: preserve-3d;
@@ -293,14 +294,21 @@
   right: clamp(10px, 4vw, 70px);
 }
 
+.heroInner {
+  width: clamp(85%, 74%, 74%);
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+}
+
 .progressContainer {
   position: relative;
+  max-width: 900px;
   width: 100%;
-  max-width: clamp(85%, 74%, 74%);
   margin: 0 auto 14px auto;
   display: flex;
   gap: 6px;
-  z-index: 10;
+  margin-bottom: clamp(12px, 2vw, 24px);
 }
 
 .progressSegment {
@@ -440,5 +448,16 @@
 
   .navButton {
     display: none;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 769px) {
+  .center {
+    transform: translateX(0) scale(1.02) rotateY(0deg) translateZ(20px);
+  }
+
+  .left,
+  .right {
+    transform: scale(0.9) translateZ(-60px);
   }
 }
