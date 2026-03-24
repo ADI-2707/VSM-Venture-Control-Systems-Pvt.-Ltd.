@@ -16,7 +16,7 @@
 }
 
 .carouselViewport {
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -35,6 +35,12 @@
 .carouselItem {
   min-width: calc((100% - 84px) / 4);
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.carouselItem:hover {
+  z-index: 20;
 }
 
 .controls {
