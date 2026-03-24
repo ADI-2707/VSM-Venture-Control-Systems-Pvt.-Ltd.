@@ -1,6 +1,23 @@
 .testimonials {
   padding: 120px 24px;
-  background: #ffffff;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f8fafc 100%
+  );
+  position: relative;
+}
+
+.testimonials::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(0,0,0,0.03) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  pointer-events: none;
 }
 
 .container {
@@ -15,6 +32,18 @@
 .headingBlock {
   position: sticky;
   top: 120px;
+  padding-left: 20px;
+  border-left: 3px solid #1f8acb;
+}
+
+.label {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #1f8acb;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
 .title {
@@ -27,12 +56,36 @@
 .subtitle {
   color: #6b7280;
   font-size: 16px;
+  margin-top: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .scrollerWrapper {
   height: 420px;
   overflow: hidden;
   position: relative;
+}
+
+.scrollerWrapper::before,
+.scrollerWrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.scrollerWrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #ffffff, transparent);
+}
+
+.scrollerWrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #ffffff, transparent);
 }
 
 .scroller {
@@ -64,10 +117,11 @@
 
 .card {
   position: relative;
-  background: linear-gradient(180deg, #f9fbfd, #f4f7fa);
+  background: linear-gradient(180deg, #ffffff, #f4f7fa);
   padding: 26px;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   overflow: hidden;
 
   transition:
@@ -154,6 +208,16 @@
   line-height: 1.7;
   color: #374151;
   margin-bottom: 18px;
+}
+
+.quote::before {
+  content: "“";
+  font-size: 40px;
+  color: #1f8acb;
+  opacity: 0.15;
+  position: absolute;
+  top: 10px;
+  left: 14px;
 }
 
 .author {
