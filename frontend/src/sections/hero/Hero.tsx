@@ -11,6 +11,7 @@ export default function Hero() {
   const [inView, setInView] = useState(true);
   const [prevIndex, setPrevIndex] = useState(0);
   const [showControls, setShowControls] = useState(true);
+  const [isHoveringImage, setIsHoveringImage] = useState(false);
 
   const idleTimer = useRef<NodeJS.Timeout | null>(null);
 
@@ -153,7 +154,10 @@ export default function Hero() {
           <button
             className={`${styles.navButton} ${styles.navLeft}`}
             onClick={prevSlide}
-            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none", }}
+            style={{
+              opacity: showControls && isHoveringImage ? 1 : 0,
+              pointerEvents: showControls && isHoveringImage ? "auto" : "none",
+            }}
           >
             ‹
           </button>
@@ -161,7 +165,10 @@ export default function Hero() {
           <button
             className={`${styles.navButton} ${styles.navRight}`}
             onClick={nextSlide}
-            style={{ opacity: showControls ? 1 : 0, pointerEvents: showControls ? "auto" : "none", }}
+            style={{
+              opacity: showControls && isHoveringImage ? 1 : 0,
+              pointerEvents: showControls && isHoveringImage ? "auto" : "none",
+            }}
           >
             ›
           </button>
@@ -172,7 +179,13 @@ export default function Hero() {
 
             return (
               <div key={slide.id} className={`${styles.slide} ${styles[pos]}`}>
-                <div className={styles.imageWrapper}>
+                <div
+                  className={styles.imageWrapper}
+                  onMouseEnter={() => {
+                    if (pos === "center") setIsHoveringImage(true);
+                  }}
+                  onMouseLeave={() => setIsHoveringImage(false)}
+                >
                   <Image
                     src={slide.image}
                     alt={slide.title}
