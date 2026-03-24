@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loader from "@/features/loader/Loader";
@@ -36,11 +37,18 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className={styles.root}>
-      {showLoaderSafe && (
-        <div className={styles.loaderOverlay}>
-          <Loader onComplete={() => setShowLoader(false)} />
-        </div>
-      )}
+      <AnimatePresence>
+        {showLoaderSafe && (
+          <motion.div
+            className={styles.loaderOverlay}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Loader onComplete={() => setShowLoader(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className={styles.wrapper}>
         <Navbar />
