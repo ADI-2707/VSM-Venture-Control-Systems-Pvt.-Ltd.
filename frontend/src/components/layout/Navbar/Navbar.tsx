@@ -81,7 +81,7 @@ export default function Navbar() {
         <div className={styles.inner}>
           <div className={styles.left}>
             <Link href="/" className={styles.logo}>
-              <Image src="/logo1.jpg" alt="VSM" width={160} height={50} priority />
+              <Image src="/logo2.png" alt="VSM" width={130} height={45} priority />
             </Link>
           </div>
 
