@@ -367,8 +367,31 @@
     margin-top: 0;
   }
 
+  .image {
+    transform: scale(1.01);
+  }
+
+  .center .image {
+    transform: scale(1.03);
+  }
+
+  .image {
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(1.01);
+  }
+
+  .center .image {
+    transform: translateZ(0) scale(1.03);
+  }
+
   .slide {
     width: 94%;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .slider {
+    overflow: hidden;
   }
 
   .left,
