@@ -293,15 +293,23 @@
   right: clamp(10px, 4vw, 70px);
 }
 
-.progressBar {
+.progressContainer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  display: flex;
+  gap: 6px;
   z-index: 20;
+}
+
+.progressSegment {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.25);
   overflow: hidden;
+  border-radius: 2px;
 }
 
 .progressFill {
@@ -310,7 +318,11 @@
   background: white;
 }
 
-.progressFill.animate {
+.filled {
+  width: 100%;
+}
+
+.animate {
   animation: progressAnim 4s linear forwards;
 }
 

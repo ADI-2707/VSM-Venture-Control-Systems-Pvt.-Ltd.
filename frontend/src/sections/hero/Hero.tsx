@@ -130,12 +130,18 @@ export default function Hero() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-
-        <div className={styles.progressBar}>
-          <div
-            key={index}
-            className={`${styles.progressFill} ${!isPaused ? styles.animate : ""}`}
-          />
+        <div className={styles.progressContainer}>
+          {heroSlides.map((_, i) => (
+            <div key={i} className={styles.progressSegment}>
+              <div
+                className={`
+          ${styles.progressFill}
+          ${i < index ? styles.filled : ""}
+          ${i === index && !isPaused ? styles.animate : ""}
+        `}
+              />
+            </div>
+          ))}
         </div>
 
         <button
