@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Navbar.module.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -26,9 +26,13 @@ const secondaryNav = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -72,8 +76,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrolled]);
 
-  const isMobile = useIsMobile();
-
   if (isMobile === null) return null;
 
   return (
@@ -86,13 +88,29 @@ export default function Navbar() {
       >
         <div className={styles.inner}>
           <div className={styles.left}>
-            <Link href="/" className={styles.logo}>
 
+            <Link
+              href="/"
+              className={styles.logo}
+              onClick={(e) => {
+                if (pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                } else {
+                  e.preventDefault();
+                  router.push("/");
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0 });
+                  }, 50);
+                }
+              }}
+            >
               <motion.div
                 layoutId={isMobile ? undefined : "logo"}
                 transition={{
-                  layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1], },
-              }}>
+                  layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
                 <Image
                   src="/logo2.png"
                   alt="VSM"
