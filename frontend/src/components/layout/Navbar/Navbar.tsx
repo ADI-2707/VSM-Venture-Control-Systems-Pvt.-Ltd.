@@ -6,6 +6,7 @@ import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const primaryNav = [
   { label: "Home", href: "/" },
@@ -71,6 +72,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrolled]);
 
+  const isMobile = useIsMobile();
+
+  if (isMobile === null) return null;
+
   return (
     <>
       <header
@@ -83,8 +88,10 @@ export default function Navbar() {
           <div className={styles.left}>
             <Link href="/" className={styles.logo}>
 
-              <motion.div layoutId="logo" transition={{
-                layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1], },
+              <motion.div
+                layoutId={isMobile ? undefined : "logo"}
+                transition={{
+                  layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1], },
               }}>
                 <Image
                   src="/logo2.png"
