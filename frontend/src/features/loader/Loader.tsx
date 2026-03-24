@@ -20,21 +20,16 @@ export default function Loader({ onComplete }: LoaderProps) {
 
   return (
     <div className={styles.overlay}>
+
       <motion.div
         layoutId="logo"
         className={styles.logoWrapper}
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={{
-          opacity: 1,
-          scale: [1, 1.05, 1],
-        }}
+        animate={{ opacity: 1, scale: [1, 1.08, 1], y: [0, -4, 0], }}
         transition={{
-          opacity: { duration: 0.6, ease: "easeOut" },
-          scale: {
-            duration: 1.4,
-            ease: "easeInOut",
-          },
-          layout: { duration: 0.8, ease: "easeInOut" },
+          opacity: { duration: 0.5, ease: "easeOut" },
+          scale: { duration: 1.2, ease: [0.22, 1, 0.36, 1], },
+          layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1], }
         }}
       >
         <Image

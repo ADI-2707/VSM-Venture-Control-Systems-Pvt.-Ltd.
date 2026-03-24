@@ -82,8 +82,9 @@ export default function Navbar() {
         <div className={styles.inner}>
           <div className={styles.left}>
             <Link href="/" className={styles.logo}>
+
               <motion.div layoutId="logo" transition={{
-                layout: { duration: 0.8, ease: "easeInOut" },
+                layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1], },
               }}>
                 <Image
                   src="/logo2.png"
