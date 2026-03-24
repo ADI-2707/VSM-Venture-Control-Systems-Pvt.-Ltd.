@@ -110,8 +110,8 @@
 .overlay {
   position: absolute;
   bottom: clamp(30px, 6vw, 70px);
-  left: clamp(20px, 5vw, 60px);
-  right: clamp(20px, 5vw, 60px);
+  left: clamp(80px, 10vw, 140px);
+  right: clamp(80px, 10vw, 140px);
   color: white;
   z-index: 5;
 }
@@ -287,11 +287,11 @@
 }
 
 .navLeft {
-  left: clamp(10px, 4vw, 70px);
+  left: clamp(12px, 3vw, 40px);
 }
 
 .navRight {
-  right: clamp(10px, 4vw, 70px);
+  right: clamp(12px, 3vw, 40px);
 }
 
 .heroInner {
