@@ -294,28 +294,27 @@
 }
 
 .progressContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  padding: 6px 10px;
+  max-width: clamp(85%, 74%, 74%);
+  margin: 0 auto 14px auto;
   display: flex;
   gap: 6px;
-  z-index: 20;
+  z-index: 10;
 }
 
 .progressSegment {
   flex: 1;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.25);
-  overflow: hidden;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 2px;
+  overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
   width: 0%;
-  background: white;
+  background: #2563eb;
 }
 
 .filled {

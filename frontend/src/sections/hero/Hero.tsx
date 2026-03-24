@@ -10,7 +10,6 @@ export default function Hero() {
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(true);
   const [prevIndex, setPrevIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   const heroRef = useRef<HTMLElement | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -36,7 +35,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (inView && !isPaused) {
+    if (inView) {
       intervalRef.current = setInterval(() => {
         setPrevIndex(index);
         setIndex((prev) => (prev + 1) % total);
@@ -48,21 +47,17 @@ export default function Hero() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [inView, total, index, isPaused]);
+  }, [inView, total, index]);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!heroRef.current) return;
-
       const offset = window.scrollY * 0.05;
       heroRef.current.style.setProperty("--bg-shift", `${offset}px`);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const nextSlide = () => {
@@ -76,14 +71,15 @@ export default function Hero() {
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setIsPaused(true);
     touchStartX.current = e.touches[0].clientX;
     touchStartTime.current = Date.now();
   };
 
-  const handleTouchEnd = () => {
-    setIsPaused(false);
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
 
+  const handleTouchEnd = () => {
     const distance = touchStartX.current - touchEndX.current;
     const time = Date.now() - touchStartTime.current;
 
@@ -95,10 +91,6 @@ export default function Hero() {
     } else if (distance < 0 && (isFastSwipe || isNormalSwipe)) {
       prevSlide();
     }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
   };
 
   const getPosition = (i: number) => {
@@ -122,42 +114,38 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className={styles.hero}>
+      <div className={styles.progressContainer}>
+        {heroSlides.map((_, i) => (
+          <div key={i} className={styles.progressSegment}>
+            <div
+              className={`
+                ${styles.progressFill}
+                ${i < index ? styles.filled : ""}
+                ${i === index ? styles.animate : ""}
+              `}
+            />
+          </div>
+        ))}
+      </div>
+
       <div
         className={styles.slider}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className={styles.progressContainer}>
-          {heroSlides.map((_, i) => (
-            <div key={i} className={styles.progressSegment}>
-              <div
-                className={`
-          ${styles.progressFill}
-          ${i < index ? styles.filled : ""}
-          ${i === index && !isPaused ? styles.animate : ""}
-        `}
-              />
-            </div>
-          ))}
-        </div>
-
         <button
           className={`${styles.navButton} ${styles.navLeft}`}
           onClick={prevSlide}
-          aria-label="Previous slide"
         >
-          <span>‹</span>
+          ‹
         </button>
 
         <button
           className={`${styles.navButton} ${styles.navRight}`}
           onClick={nextSlide}
-          aria-label="Next slide"
         >
-          <span>›</span>
+          ›
         </button>
 
         {heroSlides.map((slide, i) => {
@@ -165,10 +153,7 @@ export default function Hero() {
           const isCenter = pos === "center";
 
           return (
-            <div
-              key={slide.id}
-              className={`${styles.slide} ${styles[pos]}`}
-            >
+            <div key={slide.id} className={`${styles.slide} ${styles[pos]}`}>
               <div className={styles.imageWrapper}>
                 <Image
                   src={slide.image}
@@ -191,10 +176,7 @@ export default function Hero() {
                       ? { opacity: 1, y: 0 }
                       : { opacity: 0, y: 40 }
                   }
-                  transition={{
-                    duration: 0.8,
-                    ease: "easeOut"
-                  }}
+                  transition={{ duration: 0.8 }}
                 >
                   {slide.title}
                 </motion.h1>
@@ -206,11 +188,7 @@ export default function Hero() {
                       ? { opacity: 1, y: 0 }
                       : { opacity: 0, y: 40 }
                   }
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.3,
-                    ease: "easeOut"
-                  }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
                 >
                   {slide.subtitle}
                 </motion.p>
