@@ -309,6 +309,7 @@
   display: flex;
   gap: 6px;
   margin-bottom: clamp(12px, 2vw, 24px);
+  display: none;
 }
 
 .progressSegment {
@@ -449,6 +450,10 @@
   .navButton {
     display: none;
   }
+
+  .progressContainer {
+    display: flex;
+  }
 }
 
 @media (max-width: 1100px) and (min-width: 769px) {
@@ -459,5 +464,11 @@
   .left,
   .right {
     transform: scale(0.9) translateZ(-60px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .progressContainer {
+    display: flex;
   }
 }
