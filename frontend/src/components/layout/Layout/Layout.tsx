@@ -14,13 +14,17 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { showLoader, setShowLoader } = useLoader();
 
-  if (showLoader === null) {
-    return null;
-  }
+  if (showLoader === null) return null;
 
   return (
     <LayoutGroup>
       <div className={styles.root}>
+
+        <div className={styles.wrapper}>
+          <Navbar />
+          <main className={styles.content}>{children}</main>
+          <Footer />
+        </div>
 
         <AnimatePresence>
           {showLoader && (
@@ -28,25 +32,13 @@ export default function Layout({ children }: LayoutProps) {
               className={styles.loaderOverlay}
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
               <Loader onComplete={() => setShowLoader(false)} />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {!showLoader && (
-          <motion.div
-            className={styles.wrapper}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Navbar />
-            <main className={styles.content}>{children}</main>
-            <Footer />
-          </motion.div>
-        )}
       </div>
     </LayoutGroup>
   );
