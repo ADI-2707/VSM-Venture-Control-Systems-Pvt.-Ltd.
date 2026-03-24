@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useLoader() {
-  const [showLoader, setShowLoader] = useState(() => {
-    if (typeof window === "undefined") return false;
+  const [showLoader, setShowLoader] = useState<boolean | null>(null);
 
+  useEffect(() => {
     const hasVisited = sessionStorage.getItem("vsm_loader_seen");
+    const shouldShow = !hasVisited;
 
-    if (!hasVisited) {
+    if (shouldShow) {
       sessionStorage.setItem("vsm_loader_seen", "true");
-      return true;
     }
 
-    return false;
-  });
+    const id = setTimeout(() => {
+      setShowLoader(shouldShow);
+    }, 0);
+
+    return () => clearTimeout(id);
+  }, []);
 
   return { showLoader, setShowLoader };
 }

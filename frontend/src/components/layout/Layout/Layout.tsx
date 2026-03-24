@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -14,31 +13,16 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const { showLoader, setShowLoader } = useLoader();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setMounted(true);
-    });
-    return () => cancelAnimationFrame(id);
-  }, []);
-
-  useEffect(() => {
-    if (showLoader) {
-      const timer = setTimeout(() => {
-        setShowLoader(false);
-      }, 1500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [showLoader, setShowLoader]);
-
-  const showLoaderSafe = mounted && showLoader;
+  if (showLoader === null) {
+    return null;
+  }
 
   return (
     <div className={styles.root}>
+      
       <AnimatePresence>
-        {showLoaderSafe && (
+        {showLoader && (
           <motion.div
             className={styles.loaderOverlay}
             initial={{ opacity: 1 }}
@@ -50,11 +34,18 @@ export default function Layout({ children }: LayoutProps) {
         )}
       </AnimatePresence>
 
-      <div className={styles.wrapper}>
-        <Navbar />
-        <main className={styles.content}>{children}</main>
-        <Footer />
-      </div>
+      {!showLoader && (
+        <motion.div
+          className={styles.wrapper}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Navbar />
+          <main className={styles.content}>{children}</main>
+          <Footer />
+        </motion.div>
+      )}
     </div>
   );
 }
