@@ -6,7 +6,7 @@ import IndustriesPanel from "./IndustriesPanel";
 export default function IndustriesSection() {
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      <div className="container">
 
         <div className={styles.header}>
           <h2>Industries We Serve</h2>
