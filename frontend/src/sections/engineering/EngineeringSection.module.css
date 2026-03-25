@@ -3,13 +3,6 @@
   background: #f5f5f5;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2px;
-  text-align: center;
-}
-
 .title {
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 600;
@@ -53,9 +46,7 @@
   position: relative;
   perspective: 900px;
   z-index: 1;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
 }
 
 .metrics::before {

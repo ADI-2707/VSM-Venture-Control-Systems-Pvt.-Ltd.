@@ -72,7 +72,7 @@ export default function EngineeringSection() {
 
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      <div className="container">
         <h2 className={styles.title}>
           Engineering Automation for Modern Industry
         </h2>
