@@ -73,7 +73,7 @@ export default function Projects() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} section-divider`}>
       <div className="container">
         <h2 className={styles.title}>
           Latest Projects And Updates.

@@ -57,3 +57,24 @@ a {
   margin: 0 auto;
   padding: 0 24px;
 }
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0.08),
+    rgba(0,0,0,0)
+  );
+}

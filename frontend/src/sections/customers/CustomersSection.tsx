@@ -9,7 +9,7 @@ export default function CustomersSection() {
   const { ref, isVisible } = useInView<HTMLDivElement>();
 
   return (
-    <section ref={ref} className={styles.section}>
+    <section ref={ref} className={`${styles.section} section-divider`}>
       <div className="container">
         {customerGroups.map((group, index) => (
           <div key={group.title} className={styles.group}>

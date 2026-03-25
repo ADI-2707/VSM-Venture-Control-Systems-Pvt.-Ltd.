@@ -46,7 +46,7 @@ export default function Capabilities() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} section-divider`}>
       <div className={styles.container} ref={containerRef}>
 
         <h2 className={styles.title}>

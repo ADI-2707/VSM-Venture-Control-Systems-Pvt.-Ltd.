@@ -5,7 +5,7 @@ import IndustriesPanel from "./IndustriesPanel";
 
 export default function IndustriesSection() {
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} section-divider`}>
       <div className="container">
 
         <div className={styles.header}>
