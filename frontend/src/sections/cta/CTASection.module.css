@@ -43,14 +43,14 @@
 }
 
 .title {
-  font-size: 38px;
+  font-size: clamp(26px, 3vw, 40px);
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 16px;
 }
 
 .subtitle {
-  font-size: 18px;
+  font-size: clamp(15px, 1.4vw, 18px);
   color: #4b5563;
   max-width: 720px;
   margin: 0 auto 36px;
