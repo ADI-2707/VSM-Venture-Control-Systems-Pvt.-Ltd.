@@ -30,7 +30,13 @@
   inset: 0;
   border-radius: 12px;
 
-  background: linear-gradient(120deg, #00c853, #00e5ff, #00c853, #00e5ff);
+  background: linear-gradient(
+    120deg,
+    #00c853,
+    #00e5ff,
+    #00c853,
+    #00e5ff
+  );
 
   background-size: 300% 300%;
   opacity: 0;
