@@ -73,16 +73,18 @@ export default function EngineeringSection() {
   return (
     <section className={styles.section}>
       <div className="container">
-        <h2 className={styles.title}>
-          Engineering Automation for Modern Industry
-        </h2>
+        <div className={styles.header}>
+          <h2 className={styles.title}>
+            Engineering Automation for Modern Industry
+          </h2>
 
-        <p className={styles.description}>
-          VSM Venture delivers reliable industrial automation, control systems,
-          and system integration solutions designed to improve productivity,
-          efficiency, and operational safety across complex manufacturing
-          environments.
-        </p>
+          <p className={styles.description}>
+            VSM Venture delivers reliable industrial automation, control systems,
+            and system integration solutions designed to improve productivity,
+            efficiency, and operational safety across complex manufacturing
+            environments.
+          </p>
+        </div>
 
         <div
           ref={metricsRef}
