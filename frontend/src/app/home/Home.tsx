@@ -26,11 +26,11 @@ export default function Home() {
       </Reveal>
 
       <Reveal>
-        <CustomersSection />
+        <Projects />
       </Reveal>
 
       <Reveal>
-        <Projects />
+        <CustomersSection />
       </Reveal>
 
       <Reveal>
