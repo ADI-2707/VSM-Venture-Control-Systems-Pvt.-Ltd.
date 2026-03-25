@@ -9,4 +9,7 @@
 
   --container-width: 1280px;
   --section-spacing: 120px;
+  --section-lg: 100px;
+  --section-md: 80px;
+  --section-sm: 60px;
 }
