@@ -43,6 +43,11 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
+
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .card::before {
@@ -52,6 +57,13 @@
   border-radius: 12px;
   opacity: 1;
   z-index: 0;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: 2;
 }
 
 .grid .card:nth-child(1)::before {
@@ -122,7 +134,7 @@
 
 .card:hover,
 .active {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(-6px) scale(1.015);
 
   box-shadow:
     0 12px 28px rgba(0,0,0,0.12);
