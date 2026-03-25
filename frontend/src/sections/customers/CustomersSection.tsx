@@ -10,7 +10,7 @@ export default function CustomersSection() {
 
   return (
     <section ref={ref} className={styles.section}>
-      <div className={styles.container}>
+      <div className="container">
         {customerGroups.map((group, index) => (
           <div key={group.title} className={styles.group}>
             <h2 className={styles.title}>{group.title}</h2>
