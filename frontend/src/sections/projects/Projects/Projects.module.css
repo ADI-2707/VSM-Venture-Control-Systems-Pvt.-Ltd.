@@ -16,25 +16,26 @@
 }
 
 .carouselViewport {
-  overflow: visible;
+  overflow: hidden;
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 .carouselTrack {
   display: flex;
   gap: 28px;
-  padding-right: 2px;
   transition: transform 0.45s cubic-bezier(0.22, 0.9, 0.3, 1);
   will-change: transform;
 }
 
 .carouselItem {
-  min-width: calc((100% - 84px) / 4);
-  flex-shrink: 0;
+  flex: 0 0 calc(25% - 21px); 
+  max-width: calc(25% - 21px);
   position: relative;
   z-index: 1;
 }
@@ -79,12 +80,14 @@
 
 @media (max-width: 1024px) {
   .carouselItem {
-    min-width: calc((100% - 28px) / 2);
+    flex: 0 0 calc(50% - 14px);
+    max-width: calc(50% - 14px);
   }
 }
 
 @media (max-width: 600px) {
   .carouselItem {
-    min-width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }

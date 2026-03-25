@@ -74,7 +74,7 @@ export default function Projects() {
 
   return (
     <section className={styles.section}>
-      <div className={styles.container}>
+      <div className="container">
         <h2 className={styles.title}>
           Latest Projects And Updates.
         </h2>
