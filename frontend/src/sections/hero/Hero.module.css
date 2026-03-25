@@ -58,7 +58,7 @@
   position: absolute;
   border-radius: clamp(16px, 2vw, 32px);
   height: 100%;
-  width: min(100%, 900px);
+  width: 100%;
   overflow: visible;
   will-change: transform;
   transform-style: preserve-3d;
@@ -242,7 +242,7 @@
 }
 
 .heroInner {
-  width: clamp(85%, 74%, 74%);
+  width: clamp(85%, 74%, 1200px);
   margin: 0 auto;
   height: 100%;
   position: relative;
