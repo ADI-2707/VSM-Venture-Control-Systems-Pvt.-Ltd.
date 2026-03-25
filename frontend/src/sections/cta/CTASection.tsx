@@ -21,7 +21,7 @@ export default function CTASection() {
   }, []);
 
   return (
-    <section ref={ref} className={`${styles.section} section-divider`}>
+    <section ref={ref} className={`${styles.section} ${styles.cta} section-divider`}>
       <div
         className={`${styles.container} ${
           visible ? styles.visible : styles.hidden
