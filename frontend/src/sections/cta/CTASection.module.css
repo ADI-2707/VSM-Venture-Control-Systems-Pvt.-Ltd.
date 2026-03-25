@@ -22,7 +22,7 @@
 .inner {
   position: relative;
   text-align: center;
-  padding: 60px 40px;
+  padding: clamp(32px, 5vw, 60px) clamp(20px, 4vw, 40px);
   border-radius: 16px;
   background: white;
 
