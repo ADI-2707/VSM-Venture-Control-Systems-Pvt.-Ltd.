@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
 
   return (
     <section ref={sectionRef} className={styles.testimonials}>
-      <div className={styles.container}>
+      <div className="container">
         <div
           className={`${styles.scrollerWrapper} ${isVisible ? styles.scrollerVisible : styles.scrollerHidden
             }`}
