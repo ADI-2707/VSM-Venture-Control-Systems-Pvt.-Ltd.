@@ -3,7 +3,7 @@
   min-height: clamp(520px, 70vh, 720px);
   height: clamp(520px, 78vh, 820px);
   padding-bottom: clamp(80px, 10vw, 140px);
-  margin-bottom: clamp(8px, 2vw, 12px);
+  margin-bottom: var(--section-sm);
   margin-top: calc(var(--navbar-height) * -0.2);
   overflow: visible;
   position: relative;

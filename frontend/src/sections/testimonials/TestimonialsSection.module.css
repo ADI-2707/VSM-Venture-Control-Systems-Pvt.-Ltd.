@@ -1,5 +1,5 @@
 .testimonials {
-  padding: 120px 24px;
+  padding: var(--section-lg) 24px;
   background: linear-gradient(
     to bottom,
     #ffffff 0%,
