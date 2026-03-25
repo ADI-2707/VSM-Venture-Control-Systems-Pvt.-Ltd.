@@ -12,7 +12,7 @@
 .title {
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 600;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   line-height: 1.2;
   color: #111;
   text-align: center;
@@ -24,6 +24,7 @@
   color: #555;
   max-width: 720px;
   margin: 0;
+  margin-bottom: 48px;
 }
 
 .section::before {
