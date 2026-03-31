@@ -1,29 +1,28 @@
 .section {
-  padding: var(--section-lg) 0;
+  padding: var(--section-md) 0;
 }
 
 .title {
   font-size: 28px;
   font-weight: 600;
   color: var(--color-text-primary);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  gap: 20px;
 }
 
 .card {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-
   background: var(--color-background);
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  padding: 20px;
+  padding: 16px;
 }
 
 .imageWrapper {

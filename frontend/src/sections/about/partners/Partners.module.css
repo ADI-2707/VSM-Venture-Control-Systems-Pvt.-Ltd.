@@ -1,5 +1,5 @@
 .section {
-  padding: var(--section-lg) 0;
+  padding: var(--section-md) 0;
 }
 
 .title {
@@ -13,12 +13,12 @@
   font-size: 16px;
   color: var(--color-text-secondary);
   max-width: 600px;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .grid {
   display: flex;
-  gap: 40px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
