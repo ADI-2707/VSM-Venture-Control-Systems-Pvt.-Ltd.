@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, LayoutGroup } from "framer-motion";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -14,6 +15,9 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { showLoader, setShowLoader } = useLoader();
 
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   if (showLoader === null) return null;
 
   return (
@@ -22,7 +26,7 @@ export default function Layout({ children }: LayoutProps) {
 
         <div className={styles.wrapper}>
           <Navbar />
-          <main className={styles.content}>{children}</main>
+          <main className={`${styles.content} ${styles.withOffset}`}>{children}</main>
           <Footer />
         </div>
 

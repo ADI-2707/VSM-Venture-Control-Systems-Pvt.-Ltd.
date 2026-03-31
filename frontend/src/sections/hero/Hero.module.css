@@ -2,12 +2,12 @@
   width: 100%;
   min-height: clamp(520px, 70vh, 720px);
   height: clamp(520px, 78vh, 820px);
-  padding-bottom: clamp(80px, 10vw, 140px);
-  margin-bottom: var(--section-sm);
-  margin-top: calc(var(--navbar-height) * -0.2);
+  padding-bottom: clamp(40px, 6vw, 80px);
+  margin-bottom: 0;
   overflow: visible;
   position: relative;
   isolation: isolate;
+  padding-top: clamp(14px, 2vw, 36px);
 }
 
 .hero::before {
@@ -43,10 +43,12 @@
   z-index: 1;
   perspective: 1800px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   overflow: visible;
-  padding-top: clamp(8px, 1.5vw, 18px);
+  /* padding-top: clamp(8px, 1.5vw, 18px); */
+  align-items: flex-start;
+  padding-top: 0;
 }
 
 .slide {
@@ -241,6 +243,7 @@
   margin: 0 auto;
   height: 100%;
   position: relative;
+  padding-top: 16px;
 }
 
 .progressContainer {
@@ -394,5 +397,11 @@
 @media (max-width: 1024px) {
   .progressContainer {
     display: flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-top: clamp(28px, 3vw, 60px);
   }
 }
