@@ -8,12 +8,19 @@ const Leadership = dynamic(() => import("@/sections/about/leadership/Leadership"
 export default function About() {
   return (
     <main className={styles.container}>
-      <Reveal>
-        <AboutIntro />
-      </Reveal>
-      <Reveal>
-        <Leadership />
-      </Reveal>
+
+      <section className="section-divider">
+        <Reveal>
+          <AboutIntro />
+        </Reveal>
+      </section>
+
+      <section className="section-divider">
+        <Reveal>
+          <Leadership />
+        </Reveal>
+      </section>
+
     </main>
   );
 }
