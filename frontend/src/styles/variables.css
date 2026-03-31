@@ -13,4 +13,11 @@
   --section-lg: clamp(60px, 8vw, 100px);
   --section-md: clamp(48px, 6vw, 80px);
   --section-sm: clamp(32px, 4vw, 60px);
+
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
 }

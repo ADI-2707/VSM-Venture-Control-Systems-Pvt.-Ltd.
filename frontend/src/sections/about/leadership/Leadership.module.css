@@ -1,12 +1,12 @@
 .section {
-  padding: var(--section-md) 0;
+  padding: 0;
 }
 
 .title {
   font-size: 28px;
   font-weight: 600;
   color: var(--color-text-primary);
-  margin-bottom: 24px;
+  margin-bottom: var(--space-md);
 }
 
 .grid {

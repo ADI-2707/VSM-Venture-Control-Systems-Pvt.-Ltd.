@@ -1,3 +1,15 @@
 .container {
   width: 100%;
 }
+
+.section {
+  padding: 0;
+}
+
+.section + .section {
+  margin-top: var(--space-2xl);
+}
+
+.section:first-child {
+  margin-top: var(--space-2xl);
+}
