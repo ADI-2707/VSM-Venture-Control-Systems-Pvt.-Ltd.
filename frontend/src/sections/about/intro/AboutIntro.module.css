@@ -1,0 +1,33 @@
+.section {
+  padding: var(--section-lg) 0;
+}
+
+.title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 24px;
+}
+
+.description {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+  max-width: 800px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.highlights {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.highlights span {
+  padding: 8px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 14px;
+}
