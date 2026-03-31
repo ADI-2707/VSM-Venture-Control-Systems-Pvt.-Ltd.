@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 
 const AboutIntro = dynamic(() => import("@/sections/about/intro/AboutIntro"));
 const Leadership = dynamic(() => import("@/sections/about/leadership/Leadership"));
+const Partners = dynamic(() => import("@/sections/about/partners/Partners"));
 
 export default function About() {
   return (
@@ -18,6 +19,12 @@ export default function About() {
       <section className="section-divider">
         <Reveal>
           <Leadership />
+        </Reveal>
+      </section>
+
+      <section className="section-divider">
+        <Reveal>
+          <Partners />
         </Reveal>
       </section>
 

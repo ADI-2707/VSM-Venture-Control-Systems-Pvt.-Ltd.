@@ -1,0 +1,29 @@
+.section {
+  padding: var(--section-lg) 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--color-text-primary);
+}
+
+.description {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.grid {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.item {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
