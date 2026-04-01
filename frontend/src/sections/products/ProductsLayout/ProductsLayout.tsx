@@ -5,18 +5,20 @@ import FeaturedProduct from "../FeaturedProduct/FeaturedProduct";
 
 export default function ProductsLayout() {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h1>Products</h1>
-        <p>
-          Industrial automation solutions including drives, motors, PLCs and control panels.
-        </p>
-      </div>
+    <div className="container">
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <h1>Products</h1>
+          <p>
+            Industrial automation solutions including drives, motors, PLCs and control panels.
+          </p>
+        </div>
 
-      <div className={styles.container}>
-        <ProductSidebar />
-        <ProductGrid />
-        <FeaturedProduct />
+        <div className={styles.container}>
+          <ProductSidebar />
+          <ProductGrid />
+          <FeaturedProduct />
+        </div>
       </div>
     </div>
   );
