@@ -18,6 +18,10 @@
   background: #e2e8f0;
   margin-bottom: 10px;
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
 }
 
 .card h4 {

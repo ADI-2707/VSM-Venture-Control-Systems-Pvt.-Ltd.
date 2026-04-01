@@ -11,7 +11,7 @@ export default function ProductGrid() {
 
           <div className={styles.grid}>
             {group.items.map((item) => (
-              <ProductCard key={item} title={item} />
+              <ProductCard key={item} title={item} category={group.category} />
             ))}
           </div>
         </div>
