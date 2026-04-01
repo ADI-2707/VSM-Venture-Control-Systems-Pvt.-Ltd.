@@ -13,9 +13,18 @@
 }
 
 .logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   max-height: 50px;
   object-fit: contain;
-  z-index: 2;
+  z-index: 3;
+  transition: all 0.35s ease;
+}
+
+.card:hover .logo {
+  left: 24px;
+  transform: translateX(0);
 }
 
 .expand {
@@ -30,8 +39,7 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 0 20px;
+  padding: 0 20px 0 90px;
   opacity: 0;
   transition: width 0.35s ease, opacity 0.2s ease;
   z-index: 1;
