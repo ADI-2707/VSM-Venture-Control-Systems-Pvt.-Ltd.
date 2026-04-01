@@ -1,0 +1,32 @@
+.sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.group {
+  margin-bottom: 20px;
+}
+
+.group h4 {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.group li {
+  padding: 6px 0;
+  cursor: pointer;
+  color: #cbd5f5;
+  transition: all 0.2s ease;
+}
+
+.group li:hover {
+  color: #2563eb;
+}
