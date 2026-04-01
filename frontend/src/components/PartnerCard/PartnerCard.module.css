@@ -1,53 +1,58 @@
 .card {
   position: relative;
-  width: 220px;
-  height: 120px;
-  padding: var(--space-md);
+  width: 260px;
+  height: 110px;
   border-radius: 12px;
   background: linear-gradient(145deg, #f5f7fa, #e4ebf5);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: all 0.35s ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  height: 220px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.logoWrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+  cursor: pointer;
+  overflow: visible;
 }
 
 .logo {
   max-height: 50px;
   object-fit: contain;
+  z-index: 2;
 }
 
-.content {
+.expand {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 260px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff, #eef2f7);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-  text-align: center;
+  transition: width 0.35s ease, opacity 0.2s ease;
+  z-index: 1;
 }
 
-.card:hover .content {
+.card:hover .expand {
+  width: 720px;
   opacity: 1;
-  transform: translateY(0);
-  margin-top: var(--space-sm);
+}
+
+.text {
+  flex: 1;
 }
 
 .name {
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .description {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-secondary);
 }
