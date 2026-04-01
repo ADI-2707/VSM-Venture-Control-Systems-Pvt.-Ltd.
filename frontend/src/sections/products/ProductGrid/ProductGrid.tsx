@@ -6,12 +6,19 @@ export default function ProductGrid() {
   return (
     <div className={styles.wrapper}>
       {productsData.map((group) => (
-        <div key={group.category} className={styles.section}>
+        <div
+          id={group.category.toLowerCase()}
+          key={group.category}
+          className={styles.section}
+        >
           <h3>{group.category}</h3>
 
           <div className={styles.grid}>
             {group.items.map((item) => (
-              <ProductCard key={item} title={item} category={group.category} />
+              <ProductCard
+                key={item}
+                title={item}
+                category={group.category} />
             ))}
           </div>
         </div>

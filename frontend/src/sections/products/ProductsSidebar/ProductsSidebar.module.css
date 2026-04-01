@@ -23,10 +23,15 @@
 .group li {
   padding: 6px 0;
   cursor: pointer;
-  color: #334155;
+  color: #64748b;
   transition: all 0.2s ease;
 }
 
 .group li:hover {
-  color: #2563eb;
+  color: var(--color-primary);
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: 600;
 }
