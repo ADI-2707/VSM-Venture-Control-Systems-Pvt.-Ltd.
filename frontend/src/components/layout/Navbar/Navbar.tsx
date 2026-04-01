@@ -13,14 +13,13 @@ const primaryNav = [
   { label: "About Us", href: "/about" },
   { label: "Solutions & Services", href: "/solutions" },
   { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
+  { label: "Career", href: "/career" },
 ];
 
 const secondaryNav = [
   { label: "Application Areas", href: "/applications" },
   { label: "Gallery", href: "/gallery" },
   { label: "Clients", href: "/clients" },
-  { label: "Career", href: "/career" },
   { label: "Contact Us", href: "/contact" },
 ];
 
