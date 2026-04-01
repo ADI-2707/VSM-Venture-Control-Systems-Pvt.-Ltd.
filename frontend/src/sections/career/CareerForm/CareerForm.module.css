@@ -14,19 +14,19 @@
   gap: 12px;
 }
 
-input,
-textarea {
+.form input,
+.form textarea {
   padding: 10px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   font-size: 14px;
 }
 
-textarea {
+.form textarea {
   min-height: 100px;
 }
 
-button {
+.form button {
   width: fit-content;
   background: #020617;
   color: white;
