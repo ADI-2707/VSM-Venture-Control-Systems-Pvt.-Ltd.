@@ -1,0 +1,18 @@
+.wrapper {
+  padding-top: var(--section-md);
+  padding-bottom: var(--section-md);
+}
+
+.header {
+  margin-bottom: var(--space-lg);
+}
+
+.header h1 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.header p {
+  margin-top: 8px;
+  color: var(--color-text-secondary);
+}
