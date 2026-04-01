@@ -1,0 +1,31 @@
+.wrapper {
+  max-width: 1100px;
+}
+
+.heading {
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1e293b;
+}
+
+.description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.subheading {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.divider {
+  margin-top: 10px;
+  width: 80px;
+  height: 2px;
+  background: #0ea5e9;
+}
