@@ -20,6 +20,7 @@ export default function Partners() {
             name={partner.name}
             logo={partner.logo}
             description={partner.description}
+            variant={partner.variant}
           />
         ))}
       </div>

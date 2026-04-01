@@ -4,11 +4,12 @@ interface Props {
   name: string;
   logo: string;
   description: string;
+  variant: "abb" | "psr" | "metals";
 }
 
-export default function PartnerCard({ name, logo, description }: Props) {
+export default function PartnerCard({ name, logo, description, variant }: Props) {
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${styles[variant]}`}>
 
       <div className={styles.preview}>
         <img src={logo} alt={name} className={styles.logo} />
@@ -17,7 +18,6 @@ export default function PartnerCard({ name, logo, description }: Props) {
       <div className={styles.expand}>
         <div className={styles.expandInner}>
           
-          {/* Column 1 → Logo */}
           <div className={styles.logoCol}>
             <img src={logo} alt={name} />
           </div>

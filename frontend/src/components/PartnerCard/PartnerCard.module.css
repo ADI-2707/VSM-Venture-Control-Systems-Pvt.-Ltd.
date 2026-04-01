@@ -87,5 +87,32 @@
 }
 
 .card:hover .preview {
-  opacity: 0; /* REMOVE CENTER LOGO CLEANLY */
+  opacity: 0;
+}
+
+.abb {
+  --hover-color: rgba(240, 3, 3, 0.06);
+  --hover-glow: rgba(240, 3, 3, 0.12);
+}
+
+.psr {
+  --hover-color: rgba(255, 204, 0, 0.08);
+  --hover-glow: rgba(255, 204, 0, 0.16);
+}
+
+.metals {
+  --hover-color: rgba(0, 140, 255, 0.06);
+  --hover-glow: rgba(0, 140, 255, 0.12);
+}
+
+.card:hover .expand {
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    var(--hover-color)
+  );
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    0 0 25px var(--hover-glow);
 }
