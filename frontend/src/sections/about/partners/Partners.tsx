@@ -1,4 +1,6 @@
 import styles from "./Partners.module.css";
+import PartnerCard from "@/components/PartnerCard/PartnerCard";
+import { partners } from "@/constants/partners";
 
 export default function Partners() {
   return (
@@ -7,14 +9,19 @@ export default function Partners() {
       <h2 className={styles.title}>Technology Partnerships</h2>
 
       <p className={styles.description}>
-        We collaborate with global technology leaders to deliver reliable, 
+        We collaborate with global technology leaders to deliver reliable,
         high-performance industrial automation solutions.
       </p>
 
       <div className={styles.grid}>
-        <div className={styles.item}>ABB</div>
-        <div className={styles.item}>PSR</div>
-        <div className={styles.item}>metals-PAS</div>
+        {partners.map((partner) => (
+          <PartnerCard
+            key={partner.name}
+            name={partner.name}
+            logo={partner.logo}
+            description={partner.description}
+          />
+        ))}
       </div>
 
     </section>
