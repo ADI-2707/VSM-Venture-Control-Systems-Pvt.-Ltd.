@@ -15,6 +15,12 @@ export default function CareerHero() {
 
       <div className={styles.content}>
         <h1>Why Join Us</h1>
+
+        <div className={styles.qMarks}>
+          <span>?</span>
+          <span>?</span>
+          <span>?</span>
+        </div>
       </div>
     </div>
   );
