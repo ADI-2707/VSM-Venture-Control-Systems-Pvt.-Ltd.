@@ -16,3 +16,13 @@
   margin-top: 8px;
   color: var(--color-text-secondary);
 }
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .header p {
+    font-size: 14px;
+  }
+}

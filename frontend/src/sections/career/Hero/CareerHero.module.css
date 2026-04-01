@@ -97,3 +97,37 @@
     transform: translateX(0) scale(1);
   }
 }
+
+@media (max-width: 768px) {
+  .wrapper {
+    height: 220px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 22px;
+    gap: 4px;
+  }
+
+  .qMarks span {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 20px;
+  }
+
+  .qMarks span {
+    font-size: 20px;
+  }
+}
