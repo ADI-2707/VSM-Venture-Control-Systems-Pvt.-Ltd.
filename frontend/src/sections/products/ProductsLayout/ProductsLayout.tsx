@@ -1,9 +1,14 @@
+"use client";
+
 import styles from "./ProductsLayout.module.css";
 import ProductSidebar from "../ProductsSidebar/ProductsSidebar";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import FeaturedProduct from "../FeaturedProduct/FeaturedProduct";
+import { useState } from "react";
 
 export default function ProductsLayout() {
+  const [activeCategory, setActiveCategory] = useState("drives");
+
   return (
     <div className="container">
       <div className={styles.wrapper}>
@@ -15,8 +20,13 @@ export default function ProductsLayout() {
         </div>
 
         <div className={styles.container}>
-          <ProductSidebar />
-          <ProductGrid />
+          <ProductSidebar
+            active={activeCategory}
+            setActive={setActiveCategory}
+          />
+
+          <ProductGrid active={activeCategory} />
+
           <FeaturedProduct />
         </div>
       </div>
