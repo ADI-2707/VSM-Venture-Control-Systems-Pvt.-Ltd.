@@ -9,12 +9,24 @@ interface Props {
 export default function PartnerCard({ name, logo, description }: Props) {
   return (
     <div className={styles.card}>
-      <img src={logo} alt={name} className={styles.logo} />
+
+      <div className={styles.preview}>
+        <img src={logo} alt={name} className={styles.logo} />
+      </div>
 
       <div className={styles.expand}>
-        <div className={styles.text}>
-          <div className={styles.name}>{name}</div>
-          <div className={styles.description}>{description}</div>
+        <div className={styles.expandInner}>
+          
+          {/* Column 1 → Logo */}
+          <div className={styles.logoCol}>
+            <img src={logo} alt={name} />
+          </div>
+
+          <div className={styles.textCol}>
+            <div className={styles.name}>{name}</div>
+            <div className={styles.description}>{description}</div>
+          </div>
+
         </div>
       </div>
 
