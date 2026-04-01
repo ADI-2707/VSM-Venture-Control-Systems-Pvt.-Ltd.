@@ -9,13 +9,11 @@ export default function AboutIntro() {
       </h1>
 
       <p className={styles.description}>
-        VSM Venture Control Systems Pvt. Ltd. delivers advanced industrial 
-        automation and drive control solutions tailored for modern manufacturing environments.
+        VSM Venture Control Systems Pvt. Ltd. (VCS) is based in the National Capital Region of India and solutions and services in the Industry Drive Controls segment in the Industrial Controls and Factory Automation market since 2001. VSM has a presence in the local markets in India as well as in markets such as SE Asia, Africa, Middle East and Central Asia. Currently, nearly half of VCS revenues come from international customers. VCS now is already a reputed name in the field of Industrial Automation.
       </p>
 
       <p className={styles.description}>
-        With strong engineering expertise and domain knowledge, we design and deploy 
-        scalable systems that enhance productivity, precision, and operational reliability.
+        A critical factor in the success of VSM Venture Control Systems Pvt. Ltd. (VCS) inacquiring customers has been a deep understanding of the business and technological challenges that our customers face while considering, designing and deploying drive control systems. Developing domain knowledge, working and partnering closely with customers has been a mantra for operations across VCS. Some of the industries that have been covered by VCS include:
       </p>
 
       <div className={styles.highlights}>
