@@ -1,22 +1,23 @@
 .card {
   position: relative;
   width: 320px;
-  height: 200px;
+  height: 250px;
   border-radius: 14px;
   background: linear-gradient(145deg, #f5f7fa, #e4ebf5);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .content {
   position: absolute;
   inset: 0;
-  padding: 18px 18px 70px 18px;
+  padding: 20px 20px 90px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
 
 .name {
@@ -28,11 +29,9 @@
 .description {
   font-size: 14px;
   color: var(--color-text-secondary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  max-height: 42px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: max-height 0.4s ease;
 }
 
 .logoLayer {
@@ -40,24 +39,23 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
 
   background: linear-gradient(
     to top,
-    rgba(245, 247, 250, 1) 65%,
+    rgba(245, 247, 250, 1) 70%,
     rgba(245, 247, 250, 0)
   );
 
-  transform: translateY(0);
-  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom;
+  will-change: transform;
 }
 
 .logoLayer img {
   max-height: 45px;
-  object-fit: contain;
 }
 
 .card:hover .logoLayer {
@@ -65,7 +63,7 @@
 }
 
 .card:hover .description {
-  -webkit-line-clamp: unset;
+  max-height: 140px;
 }
 
 .abb {
@@ -88,5 +86,6 @@
 
   box-shadow:
     0 12px 28px rgba(0, 0, 0, 0.12),
-    0 0 20px var(--hover-glow);
+    0 0 20px var(--hover-glow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
