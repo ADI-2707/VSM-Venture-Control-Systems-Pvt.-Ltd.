@@ -1,15 +1,11 @@
-.container {
+.page {
   width: 100%;
 }
 
 .section {
-  padding: 0;
+  padding: clamp(20px, 3vw, 40px) 0;
 }
 
 .section + .section {
-  margin-top: clamp(30px, 4vw, 60px);
-}
-
-.section:first-child {
-  margin-top: clamp(20px, 3vw, 40px);
+  padding-top: clamp(10px, 2vw, 20px);
 }

@@ -6,18 +6,24 @@ import ServicesGrid from "@/sections/solutionServices/ServicesGrid/ServicesGrid"
 
 export default function SolutionServicesPage() {
   return (
-    <div className={styles.container}>
+    <div className={styles.page}>
+      
       <section className={styles.section}>
-        <Reveal>
-          <SolutionServicesIntro />
-        </Reveal>
+        <div className="container">
+          <Reveal>
+            <SolutionServicesIntro />
+          </Reveal>
+        </div>
       </section>
 
       <section className={styles.section}>
-        <Reveal>
-          <ServicesGrid />
-        </Reveal>
+        <div className="container">
+          <Reveal>
+            <ServicesGrid />
+          </Reveal>
+        </div>
       </section>
+
     </div>
   );
 }
