@@ -1,0 +1,13 @@
+.wrapper {
+  margin-bottom: 48px;
+}
+
+.wrapper h2 {
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
