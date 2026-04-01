@@ -14,13 +14,14 @@ export default function CareerHero() {
       <div className={styles.overlay} />
 
       <div className={styles.content}>
-        <h1>Why Join Us</h1>
-
-        <div className={styles.qMarks}>
-          <span>?</span>
-          <span>?</span>
-          <span>?</span>
-        </div>
+        <h1 className={styles.heading}>
+          Why Join Us
+          <span className={styles.qMarks}>
+            <span>?</span>
+            <span>?</span>
+            <span>?</span>
+          </span>
+        </h1>
       </div>
     </div>
   );
