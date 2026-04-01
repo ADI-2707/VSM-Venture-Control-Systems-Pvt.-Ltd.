@@ -24,6 +24,34 @@
   gap: var(--space-lg);
 }
 
+.hamburger {
+  display: none;
+  margin-bottom: 12px;
+  background: #e2e8f0;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.sidebarDrawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 260px;
+  height: 100vh;
+  background: white;
+  z-index: 1000;
+  padding: 20px;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+}
+
+.sidebarDrawer.open {
+  left: 0;
+}
+
 @media (max-width: 1100px) {
   .container {
     grid-template-columns: 220px 1fr;
@@ -33,5 +61,32 @@
 @media (max-width: 768px) {
   .container {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredMobile {
+    display: block;
+    margin-top: 24px;
+  }
+}
+
+.featuredMobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container > aside {
+    display: none;
   }
 }
