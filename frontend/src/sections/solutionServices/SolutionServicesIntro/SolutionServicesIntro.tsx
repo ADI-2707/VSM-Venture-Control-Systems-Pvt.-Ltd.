@@ -15,7 +15,7 @@ export default function SolutionServicesIntro() {
       <p className={styles.description}>
         With expertise in ABB software and field execution, our engineers handle
         commissioning, PLC integration, cabling, and operator stations—ensuring
-        complete project execution aligned with process requirements.
+        complete project execution aligned with process requirements. VCS also uses latest ABB software to ensure that we are always ahead and provide the latest solution to our customers. VCS has built a team of experienced and well-trained engineers who look after the commissioning and prepare the project execution plan considering the process philosophy, its need, supervision of erection & commissioning of drives and PLC, cabling and Operator stations. Hence, ensures that all the requirements are met.
       </p>
 
       <h3 className={styles.subheading}>These Services Include</h3>

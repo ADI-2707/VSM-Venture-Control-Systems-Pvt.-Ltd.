@@ -6,12 +6,30 @@
 }
 
 .item {
+  position: relative;
+  border-bottom: none;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 0;
+  cursor: pointer;
   border-bottom: 1px solid #e5e7eb;
   transition: all 0.2s ease;
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 1px;
+  background: red;
+  transition: width 0.3s ease;
+}
+
+.item:hover::after {
+  width: 100%;
 }
 
 .item:hover {
@@ -28,11 +46,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.item:hover .icon {
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+  transform: scale(1.05);
 }
 
 .text {
   font-size: 14px;
   color: #334155;
+  transition: color 0.2s ease;
+}
+
+.item:hover .text {
+  color: #0ea5e9;
 }
 
 @media (max-width: 1024px) {
