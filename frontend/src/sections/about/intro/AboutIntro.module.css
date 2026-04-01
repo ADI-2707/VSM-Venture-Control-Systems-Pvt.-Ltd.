@@ -3,14 +3,14 @@
 }
 
 .title {
-  font-size: clamp(32px, 4vw, 48px);
+  font-size: var(--text-xl);
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: var(--space-md);
 }
 
 .description {
-  font-size: 18px;
+  font-size: var(--text-md);
   color: var(--color-text-secondary);
   max-width: 800px;
   margin-bottom: var(--space-xs);

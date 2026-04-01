@@ -18,7 +18,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  /* padding-top: var(--navbar-height); */
   min-height: 100vh;
   background: #f5f4f4;
   color: var(--color-text);

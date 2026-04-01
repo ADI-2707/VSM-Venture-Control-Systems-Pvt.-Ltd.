@@ -1,7 +1,9 @@
 .card {
   position: relative;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   height: 250px;
+  height: clamp(220px, 28vw, 260px);
   border-radius: 14px;
   background: linear-gradient(145deg, #f5f7fa, #e4ebf5);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -15,7 +17,14 @@
 .content {
   position: absolute;
   inset: 0;
+
   padding: 20px 20px 90px 20px;
+  padding:
+    clamp(16px, 2vw, 22px)
+    clamp(16px, 2vw, 22px)
+    clamp(80px, 10vw, 100px)
+    clamp(16px, 2vw, 22px);
+
   display: flex;
   flex-direction: column;
 }
@@ -40,6 +49,7 @@
   left: 0;
   width: 100%;
   height: 90px;
+  height: clamp(70px, 8vw, 100px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,11 +65,11 @@
 }
 
 .logoLayer img {
-  max-height: 45px;
+  max-height: 50px;
 }
 
 .card:hover .logoLayer {
-  transform: translateY(100%); /* slides down INSIDE */
+  transform: translateY(100%);
 }
 
 .card:hover .description {
