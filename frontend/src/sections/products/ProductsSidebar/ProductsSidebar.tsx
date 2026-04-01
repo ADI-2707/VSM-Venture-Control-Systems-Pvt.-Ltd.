@@ -2,21 +2,13 @@
 
 import styles from "./ProductsSidebar.module.css";
 import { productsData } from "../productData";
-import { useState } from "react";
 
-export default function ProductsSidebar() {
-  const [active, setActive] = useState("drives");
+interface SidebarProps {
+  active: string;
+  setActive: (val: string) => void;
+}
 
-  const handleClick = (category: string) => {
-    const id = category.toLowerCase();
-    setActive(id);
-
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
+export default function ProductsSidebar({ active, setActive }: SidebarProps) {
   return (
     <aside className={styles.sidebar}>
       {productsData.map((group) => {
@@ -26,12 +18,13 @@ export default function ProductsSidebar() {
         return (
           <div key={group.category} className={styles.group}>
             <h4>{group.category}</h4>
+
             <ul>
               {group.items.map((item) => (
                 <li
                   key={item}
                   className={isActive ? styles.active : ""}
-                  onClick={() => handleClick(group.category)}
+                  onClick={() => setActive(id)}
                 >
                   {item}
                 </li>
