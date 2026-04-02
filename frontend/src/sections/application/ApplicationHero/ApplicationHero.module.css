@@ -1,26 +1,60 @@
 .hero {
   position: relative;
-  height: clamp(260px, 42vw, 420px);
+  height: clamp(280px, 42vw, 420px);
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 
+.imageWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .image {
   object-fit: cover;
-  z-index: 1;
+}
+
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: white;
+}
+
+.active {
+  width: 18px;
+  border-radius: 10px;
+  background: white;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
-  
+
   background: linear-gradient(
     to right,
-    rgba(11, 46, 79, 0.85),
-    rgba(11, 46, 79, 0.5),
-    rgba(11, 46, 79, 0.2)
+    rgba(11, 46, 79, 0.75),
+    rgba(11, 46, 79, 0.45),
+    rgba(11, 46, 79, 0.15)
   );
 }
 
@@ -29,15 +63,16 @@
   z-index: 3;
   color: white;
   max-width: 700px;
+  padding-left: clamp(0px, 2vw, 10px);
 }
 
 .content h1 {
   font-size: var(--text-xl);
   font-weight: 600;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-sm); 
 }
 
 .content p {
   font-size: var(--text-md);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
 }
