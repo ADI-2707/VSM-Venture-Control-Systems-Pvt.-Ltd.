@@ -134,6 +134,15 @@ export default function ApplicationGrid() {
               )}
             </div>
           ))}
+
+          <div className={`${styles.card} ${styles.cta}`}>
+    <h3>Not sure your industry fits?</h3>
+    <p>
+      Wondering whether your industry is our expertise? Let’s discuss your
+      requirements and explore the right solution.
+    </p>
+    <button className={styles.ctaBtn}>Book a Call</button>
+  </div>
         </div>
 
       </div>

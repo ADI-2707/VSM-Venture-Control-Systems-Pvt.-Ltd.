@@ -27,7 +27,8 @@
   grid-template-areas:
     "cold hot material"
     "cold cement material"
-    "cold paper material";
+    "cold paper cta"
+    "cold paper cta";
 
   gap: var(--space-lg);
 }
@@ -57,6 +58,10 @@
 
 .paper {
   grid-area: paper;
+}
+
+.cta {
+  grid-area: cta;
 }
 
 .hot,
