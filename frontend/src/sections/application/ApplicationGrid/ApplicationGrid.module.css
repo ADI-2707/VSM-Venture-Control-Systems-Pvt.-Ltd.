@@ -187,21 +187,25 @@
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px;
+  bottom: -17px;
   width: 0%;
   height: 2px;
   background: #ef4444;
+  z-index: 2;
   transition: width 0.35s ease;
 }
 
 .card:not(.cta):hover h3::after {
   width: 100%;
+  border-radius: 2px;
 }
 
 .divider {
   height: 1px;
   background: var(--color-border);
   margin-bottom: var(--space-md);
+  position: relative;
+  z-index: 1;
 }
 
 .card ul {
