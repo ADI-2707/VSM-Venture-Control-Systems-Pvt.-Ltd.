@@ -276,19 +276,48 @@
       "cold cold"
       "material material"
       "hot cement"
-      "paper paper";
+      "paper paper"
+      "cta cta";
   }
 }
 
 @media (max-width: 640px) {
   .grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
 
-    grid-template-areas:
-      "cold"
-      "hot"
-      "material"
-      "cement"
-      "paper";
+  .card {
+    width: 100%;
+  }
+
+  .groupWrapper {
+    gap: var(--space-sm);
+  }
+
+  .group + .group {
+    padding-top: 8px;
+  }
+
+  .card li {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .cta {
+    align-items: center;
+    text-align: center;
+  }
+
+  .ctaBtn {
+    align-self: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hot,
+  .cement {
+    min-height: 180px;
   }
 }
