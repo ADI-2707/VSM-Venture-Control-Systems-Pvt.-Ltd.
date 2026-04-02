@@ -26,8 +26,8 @@
 
   grid-template-areas:
     "cold hot material"
-    "cold hot material"
-    "cement paper material";
+    "cold cement material"
+    "cold paper material";
 
   gap: var(--space-lg);
 }
@@ -42,6 +42,13 @@
 
 .material {
   grid-area: material;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.material ul {
+  margin-top: auto;
 }
 
 .cement {
@@ -50,6 +57,12 @@
 
 .paper {
   grid-area: paper;
+}
+
+.hot,
+.cement,
+.paper {
+  min-height: 140px;
 }
 
 .card {
@@ -89,7 +102,7 @@
 .cold ul {
   display: flex;
   flex-direction: column;
-  max-width: 95%;
+  gap: 10px;
 }
 
 .card li {
@@ -103,6 +116,8 @@
 
 .cold li {
   align-items: flex-start;
+  padding-left: 2px;
+  line-height: 1.4;
 }
 
 .check {
@@ -116,8 +131,9 @@
 
     grid-template-areas:
       "cold cold"
-      "hot material"
-      "cement paper";
+      "material material"
+      "hot cement"
+      "paper paper";
   }
 }
 
@@ -131,20 +147,5 @@
       "material"
       "cement"
       "paper";
-  }
-}
-
-@media (min-width: 768px) {
-  .cold ul {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: auto;
-
-    gap: 8px 16px;
-  }
-
-  .cold li {
-    margin-bottom: 0;
   }
 }

@@ -17,6 +17,7 @@ const sections = [
       "Edge Trimming Lines",
       "Rewinding Lines",
       "Tension Leveling Lines",
+      "Acid Regeneration Plant",
     ],
   },
   {
