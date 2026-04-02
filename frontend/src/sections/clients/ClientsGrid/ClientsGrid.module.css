@@ -1,0 +1,107 @@
+.section {
+  padding: var(--section-lg) 0;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.header h1 {
+  font-size: var(--text-xl);
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.block {
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-left: 12px;
+  border-left: 4px solid red;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 220px);
+  justify-content: center;
+  gap: 24px;
+}
+
+.card {
+  width: 220px;
+  height: 140px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
+}
+
+.card img {
+  max-width: 120px;
+  max-height: 50px;
+  object-fit: contain;
+  filter: grayscale(33%);
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
+}
+
+.card:hover img {
+  filter: grayscale(0%);
+}
+
+.card:hover p {
+  color: black;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 200px);
+  }
+
+  .card {
+    width: 200px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 150px);
+  }
+
+  .card {
+    width: 150px;
+    height: 110px;
+  }
+
+  .card img {
+    max-width: 90px;
+  }
+}
