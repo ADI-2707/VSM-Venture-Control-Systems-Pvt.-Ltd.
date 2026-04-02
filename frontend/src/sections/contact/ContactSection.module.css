@@ -47,6 +47,15 @@
   font-weight: 600;
 }
 
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.cta:hover .arrow {
+  transform: translateX(6px);
+}
+
 .formWrapper {
   flex: 2;
   width: 100%;
@@ -79,6 +88,34 @@
   color: white;
   border: none;
   cursor: pointer;
+}
+
+.cta,
+.submit {
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.submit:hover {
+  transform: translateY(-2px);
+  background: #111;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.submit:hover .arrow {
+  transform: translateX(6px);
+}
+
+.cta:active,
+.submit:active {
+  transform: translateY(0px) scale(0.98);
 }
 
 .form input,

@@ -26,7 +26,7 @@ export default function ContactSection() {
                     </div>
 
                     <button className={styles.cta}>
-                        Get Started Now →
+                        Get Started Now <span className={styles.arrow}>→</span>
                     </button>
                 </div>
 
@@ -46,7 +46,7 @@ export default function ContactSection() {
                         <textarea placeholder="Message" rows={5}></textarea>
 
                         <button type="submit" className={styles.submit}>
-                            → Submit Request
+                            <span className={styles.arrow}>→</span> Submit Request
                         </button>
                     </form>
                 </div>
