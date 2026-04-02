@@ -177,6 +177,7 @@
   background: white;
   color: #2563eb;
   opacity: 0;
+  cursor: pointer;
   transform: translateX(20px);
 
   transition:
