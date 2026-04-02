@@ -65,6 +65,29 @@
   min-height: 140px;
 }
 
+.groupWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.groupTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.group + .group {
+  padding-top: 12px;
+  border-top: 1px dashed var(--color-border);
+}
+
 .card {
   background: white;
   border-radius: 14px;

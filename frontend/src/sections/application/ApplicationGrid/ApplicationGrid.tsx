@@ -1,23 +1,33 @@
 import styles from "./ApplicationGrid.module.css";
 
-const sections = [
+const sections: Section[] = [
   {
     key: "cold",
     title: "Cold Rolling & Processing Line",
-    items: [
-      "Cold Rolling Mills",
-      "Reversible Cold Rolling Mills",
-      "Annealing & Pickling Lines",
-      "Skin Pass Mill",
-      "Continuous Galvanizing Line",
-      "Continuous Tinning Line",
-      "Colour Coating Line",
-      "Cut-to-Length",
-      "HR Slitting & CR Slitting Lines",
-      "Edge Trimming Lines",
-      "Rewinding Lines",
-      "Tension Leveling Lines",
-      "Acid Regeneration Plant",
+    groups: [
+      {
+        title: "Rolling Mills",
+        items: [
+          "Cold Rolling Mills",
+          "Reversible Cold Rolling Mills",
+          "Skin Pass Mill",
+        ],
+      },
+      {
+        title: "Processing Lines",
+        items: [
+          "Annealing & Pickling Lines",
+          "Continuous Galvanizing Line",
+          "Continuous Tinning Line",
+          "Colour Coating Line",
+          "Cut-to-Length",
+          "HR Slitting & CR Slitting Lines",
+          "Edge Trimming Lines",
+          "Rewinding Lines",
+          "Tension Leveling Lines",
+          "Acid Regeneration Plant",
+        ],
+      },
     ],
   },
   {
@@ -54,6 +64,26 @@ const sections = [
   },
 ];
 
+type BaseSection = {
+  key: string;
+  title: string;
+};
+
+type ColdSection = BaseSection & {
+  key: "cold";
+  groups: {
+    title: string;
+    items: string[];
+  }[];
+};
+
+type NormalSection = BaseSection & {
+  key: Exclude<string, "cold">;
+  items: string[];
+};
+
+type Section = ColdSection | NormalSection;
+
 export default function ApplicationGrid() {
   return (
     <section className={styles.section}>
@@ -75,14 +105,33 @@ export default function ApplicationGrid() {
               <h3>{section.title}</h3>
               <div className={styles.divider} />
 
-              <ul>
-                {section.items.map((item) => (
-                  <li key={item}>
-                    <span className={styles.check}>✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              {"groups" in section ? (
+                <div className={styles.groupWrapper}>
+                  {section.groups.map((group) => (
+                    <div key={group.title} className={styles.group}>
+                      <h4 className={styles.groupTitle}>{group.title}</h4>
+
+                      <ul>
+                        {group.items.map((item) => (
+                          <li key={item}>
+                            <span className={styles.check}>✓</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ul>
+                  {section.items.map((item) => (
+                    <li key={item}>
+                      <span className={styles.check}>✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>
