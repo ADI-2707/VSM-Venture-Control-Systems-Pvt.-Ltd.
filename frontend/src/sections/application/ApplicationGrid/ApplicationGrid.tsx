@@ -2,6 +2,7 @@ import styles from "./ApplicationGrid.module.css";
 
 const sections = [
   {
+    key: "cold",
     title: "Cold Rolling & Processing Line",
     items: [
       "Cold Rolling Mills",
@@ -20,10 +21,12 @@ const sections = [
     ],
   },
   {
+    key: "hot",
     title: "Hot Rolling",
     items: ["Hot Strip Mills", "Wire & Rod Mills"],
   },
   {
+    key: "material",
     title: "Material Handling",
     items: [
       "Stacker Reclaimer",
@@ -35,10 +38,12 @@ const sections = [
     ],
   },
   {
+    key: "cement",
     title: "Cement Industry",
     items: ["Kiln", "Classifier", "Dynamic Separator, ID / FD Fan"],
   },
   {
+    key: "paper",
     title: "Paper Industry",
     items: [
       "Sectional Paper Machine",
@@ -63,7 +68,10 @@ export default function ApplicationGrid() {
 
         <div className={styles.grid}>
           {sections.map((section) => (
-            <div key={section.title} className={styles.card}>
+            <div
+              key={section.key}
+              className={`${styles.card} ${styles[section.key]}`}
+            >
               <h3>{section.title}</h3>
               <div className={styles.divider} />
 
