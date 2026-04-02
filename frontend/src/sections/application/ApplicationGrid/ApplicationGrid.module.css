@@ -177,8 +177,25 @@
 }
 
 .card h3 {
+  position: relative;
+  display: inline-block;
   font-size: var(--text-lg);
   margin-bottom: var(--space-sm);
+}
+
+.card:not(.cta) h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #ef4444;
+  transition: width 0.35s ease;
+}
+
+.card:not(.cta):hover h3::after {
+  width: 100%;
 }
 
 .divider {
@@ -217,6 +234,21 @@
 .check {
   color: #0b5ed7;
   font-weight: bold;
+}
+
+.card:not(.cta) {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card:not(.cta):hover {
+  outline: 1.5px solid #0ea5e9;
+  outline-offset: 0px;
+  transform: translateY(-6px) scale(1.01);
+
+  box-shadow: 
+    0 18px 44px rgba(0,0,0,0.12),
+    0 0 0 1px rgba(14,165,233,0.15);
 }
 
 @media (max-width: 1024px) {
