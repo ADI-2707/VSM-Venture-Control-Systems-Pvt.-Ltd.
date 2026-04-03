@@ -1,0 +1,11 @@
+.page {
+  width: 100%;
+}
+
+.section {
+  padding: var(--section-md) 0;
+}
+
+.section + .section {
+  padding-top: var(--section-sm);
+}
