@@ -50,3 +50,42 @@
 .big:hover img {
   transform: scale(1.05);
 }
+
+.seeMore {
+  position: relative;
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.2)
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.seeMore:hover .overlay {
+  opacity: 1;
+}
+
+.seeMore:hover img {
+  transform: scale(1.08);
+  filter: brightness(0.7);
+}

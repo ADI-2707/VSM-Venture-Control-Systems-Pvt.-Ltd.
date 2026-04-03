@@ -43,8 +43,11 @@ export default function GallerySection({ title, images }: Props) {
         <div className={styles.small}>
           <img src={images[5].src} alt={images[5].alt} />
         </div>
-        <div className={styles.small}>
+        <div className={`${styles.small} ${styles.seeMore}`}>
           <img src={images[6].src} alt={images[6].alt} />
+          <div className={styles.overlay}>
+            <span>See More</span>
+          </div>
         </div>
       </div>
     </div>
