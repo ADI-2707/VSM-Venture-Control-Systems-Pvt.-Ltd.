@@ -9,10 +9,11 @@ type GalleryImage = {
 
 type Props = {
   title: string;
+  subtitle?: string;
   images: GalleryImage[];
 };
 
-export default function GallerySection({ title, images }: Props) {
+export default function GallerySection({ title, subtitle, images }: Props) {
   if (images.length !== 7) {
     console.warn("GallerySection requires exactly 7 images");
   }
@@ -20,6 +21,7 @@ export default function GallerySection({ title, images }: Props) {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.heading}>{title}</h2>
+      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
 
       <div className={styles.grid}>
 

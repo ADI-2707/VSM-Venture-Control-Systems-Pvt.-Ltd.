@@ -9,6 +9,27 @@
   margin-bottom: 20px;
   color: var(--color-text-primary);
   text-align: center;
+  position: relative;
+}
+
+.heading::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: red;
+  margin: 8px auto 0;
+}
+
+.subheading {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .grid {
@@ -49,6 +70,17 @@
 .small:hover img,
 .big:hover img {
   transform: scale(1.05);
+  filter: brightness(0.9);
+}
+
+.small,
+.big {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.small:hover,
+.big:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
 .seeMore {
@@ -79,6 +111,10 @@
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
+  border: 1px solid rgba(255,255,255,0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .seeMore:hover .overlay {
