@@ -1,0 +1,47 @@
+@import "../../../styles/admin/admin.variables.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  color: var(--admin-text-primary);
+}
+
+.section {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.section h3 {
+  color: var(--admin-text-primary);
+  margin-bottom: 12px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form input {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  padding: 8px;
+  border-radius: 6px;
+  color: var(--admin-text-primary);
+}
+
+.form button {
+  background: var(--admin-accent);
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: black;
+  font-weight: 500;
+}
