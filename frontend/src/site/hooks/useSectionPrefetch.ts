@@ -16,12 +16,12 @@ export default function useSectionPrefetch() {
 
       if (velocity > 0.8) {
         import("@/site/sections/home/engineering/EngineeringSection");
-        import("@/site/sections/customers/CustomersSection");
-        import("@/site/sections/projects/Projects/Projects");
-        import("@/site/sections/capabilities/Capabilities");
-        import("@/site/sections/industries/IndustriesSection");
-        import("@/site/sections/testimonials/TestimonialsSection");
-        import("@/site/sections/cta/CTASection");
+import("@/site/sections/home/customers/CustomersSection");
+import("@/site/sections/home/projects/Projects/Projects");
+import("@/site/sections/home/capabilities/Capabilities");
+import("@/site/sections/home/industries/IndustriesSection");
+import("@/site/sections/home/testimonials/TestimonialsSection");
+import("@/site/sections/home/cta/CTASection");
       }
 
       lastY = window.scrollY;
