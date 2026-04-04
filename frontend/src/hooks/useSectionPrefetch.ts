@@ -15,7 +15,7 @@ export default function useSectionPrefetch() {
       const velocity = deltaY / deltaTime;
 
       if (velocity > 0.8) {
-        import("@/site/sections/engineering/EngineeringSection");
+        import("@/site/sections/home/engineering/EngineeringSection");
         import("@/site/sections/customers/CustomersSection");
         import("@/site/sections/projects/Projects/Projects");
         import("@/site/sections/capabilities/Capabilities");

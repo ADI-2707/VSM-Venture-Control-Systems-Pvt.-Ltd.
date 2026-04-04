@@ -1,4 +1,4 @@
-import Reveal from "@/components/Reveal/Reveal";
+import Reveal from "@/site/components/Reveal/Reveal";
 import styles from "./GalleryPage.module.css";
 
 import GallerySection from "@/site/sections/gallery/GallerySection/GallerySection";
@@ -11,7 +11,6 @@ import {
 export default function GalleryPage() {
   return (
     <div className={styles.page}>
-
       <section className={`${styles.section} section-divider`}>
         <div className="container">
           <Reveal>
@@ -47,7 +46,6 @@ export default function GalleryPage() {
           </Reveal>
         </div>
       </section>
-
     </div>
   );
 }
