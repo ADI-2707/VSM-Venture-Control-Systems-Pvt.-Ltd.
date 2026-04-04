@@ -1,17 +1,17 @@
 import styles from "./Home.module.css";
 import Reveal from "@/components/Reveal/Reveal";
-import Hero from "@/sections/hero/Hero";
+import Hero from "@/site/sections/hero/Hero";
 import PrefetchController from "@/components/PrefetchController/PrefetchController";
 
 import dynamic from "next/dynamic";
 
-const EngineeringSection = dynamic(() => import("@/sections/engineering/EngineeringSection"));
-const CustomersSection = dynamic(() => import("@/sections/customers/CustomersSection"));
-const Projects = dynamic(() => import("@/sections/projects/Projects/Projects"));
-const Capabilities = dynamic(() => import("@/sections/capabilities/Capabilities"));
-const IndustriesSection = dynamic(() => import("@/sections/industries/IndustriesSection"));
-const TestimonialsSection = dynamic(() => import("@/sections/testimonials/TestimonialsSection"));
-const CTASection = dynamic(() => import("@/sections/cta/CTASection"));
+const EngineeringSection = dynamic(() => import("@/site/sections/engineering/EngineeringSection"));
+const CustomersSection = dynamic(() => import("@/site/sections/customers/CustomersSection"));
+const Projects = dynamic(() => import("@/site/sections/projects/Projects/Projects"));
+const Capabilities = dynamic(() => import("@/site/sections/capabilities/Capabilities"));
+const IndustriesSection = dynamic(() => import("@/site/sections/industries/IndustriesSection"));
+const TestimonialsSection = dynamic(() => import("@/site/sections/testimonials/TestimonialsSection"));
+const CTASection = dynamic(() => import("@/site/sections/cta/CTASection"));
 
 export default function Home() {
   return (

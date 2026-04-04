@@ -15,13 +15,13 @@ export default function useSectionPrefetch() {
       const velocity = deltaY / deltaTime;
 
       if (velocity > 0.8) {
-        import("@/sections/engineering/EngineeringSection");
-        import("@/sections/customers/CustomersSection");
-        import("@/sections/projects/Projects/Projects");
-        import("@/sections/capabilities/Capabilities");
-        import("@/sections/industries/IndustriesSection");
-        import("@/sections/testimonials/TestimonialsSection");
-        import("@/sections/cta/CTASection");
+        import("@/site/sections/engineering/EngineeringSection");
+        import("@/site/sections/customers/CustomersSection");
+        import("@/site/sections/projects/Projects/Projects");
+        import("@/site/sections/capabilities/Capabilities");
+        import("@/site/sections/industries/IndustriesSection");
+        import("@/site/sections/testimonials/TestimonialsSection");
+        import("@/site/sections/cta/CTASection");
       }
 
       lastY = window.scrollY;

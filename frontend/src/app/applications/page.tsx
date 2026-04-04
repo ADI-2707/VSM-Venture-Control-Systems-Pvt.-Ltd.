@@ -1,5 +1,5 @@
-import ApplicationHero from "@/sections/application/ApplicationHero/ApplicationHero";
-import ApplicationGrid from "@/sections/application/ApplicationGrid/ApplicationGrid";
+import ApplicationHero from "@/site/sections/application/ApplicationHero/ApplicationHero";
+import ApplicationGrid from "@/site/sections/application/ApplicationGrid/ApplicationGrid";
 import Reveal from "@/components/Reveal/Reveal";
 
 export default function ApplicationsPage() {

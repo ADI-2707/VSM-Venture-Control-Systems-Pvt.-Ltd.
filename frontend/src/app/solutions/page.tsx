@@ -1,11 +1,11 @@
 import styles from "./SolutionServices.module.css";
 import Reveal from "@/components/Reveal/Reveal";
 
-import SolutionServicesIntro from "@/sections/solutionServices/SolutionServicesIntro/SolutionServicesIntro";
-import ServicesGrid from "@/sections/solutionServices/ServicesGrid/ServicesGrid";
-import WhyChooseUs from "@/sections/solutionServices/WhyChooseUs/WhyChooseUs";
-import Technologies from "@/sections/solutionServices/Technologies/Technologies";
-import CTA from "@/sections/solutionServices/CTA/CTA";
+import SolutionServicesIntro from "@/site/sections/solutionServices/SolutionServicesIntro/SolutionServicesIntro";
+import ServicesGrid from "@/site/sections/solutionServices/ServicesGrid/ServicesGrid";
+import WhyChooseUs from "@/site/sections/solutionServices/WhyChooseUs/WhyChooseUs";
+import Technologies from "@/site/sections/solutionServices/Technologies/Technologies";
+import CTA from "@/site/sections/solutionServices/CTA/CTA";
 
 export default function SolutionServicesPage() {
   return (

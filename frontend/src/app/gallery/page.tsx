@@ -1,12 +1,12 @@
 import Reveal from "@/components/Reveal/Reveal";
 import styles from "./GalleryPage.module.css";
 
-import GallerySection from "@/sections/gallery/GallerySection/GallerySection";
+import GallerySection from "@/site/sections/gallery/GallerySection/GallerySection";
 import {
   workplaceImages,
   teamImages,
   projectImages,
-} from "@/sections/gallery/galleryData";
+} from "@/site/sections/gallery/galleryData";
 
 export default function GalleryPage() {
   return (
