@@ -1,5 +1,4 @@
 import "./globals.css";
-import Layout from "@/site/layout/Layout/Layout";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -21,9 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>
-        <Layout>{children}</Layout>
-      </body>
+      <body className={inter.variable}>{children}</body>
     </html>
   );
 }
