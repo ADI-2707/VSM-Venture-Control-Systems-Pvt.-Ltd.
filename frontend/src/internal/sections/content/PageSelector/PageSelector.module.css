@@ -1,0 +1,21 @@
+@import "../../../../styles/admin/admin.variables.css";
+
+.wrapper {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.select {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-primary);
+  padding: 8px;
+  border-radius: var(--admin-radius);
+  width: 200px;
+}
