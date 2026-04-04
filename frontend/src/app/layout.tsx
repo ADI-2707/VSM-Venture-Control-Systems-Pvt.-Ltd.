@@ -1,5 +1,5 @@
 import "./globals.css";
-import Layout from "@/site/components/layout/Layout/Layout";
+import Layout from "@/site/layout/Layout/Layout";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
