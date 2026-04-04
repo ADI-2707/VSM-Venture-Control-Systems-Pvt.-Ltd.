@@ -1,0 +1,44 @@
+@import "@/styles/admin/admin.variables.css";
+
+.sidebar {
+  width: 240px;
+  background: var(--admin-surface);
+  border-right: 1px solid var(--admin-border);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--admin-text-primary);
+  margin-bottom: 30px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link {
+  padding: 10px 12px;
+  border-radius: var(--admin-radius);
+  color: var(--admin-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  background: var(--admin-card);
+  color: var(--admin-text-primary);
+}
+
+.active {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
