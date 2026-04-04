@@ -90,19 +90,19 @@
   color: var(--admin-text-primary);
 }
 
-table {
+.table table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th {
+.table th {
   text-align: left;
   color: var(--admin-text-secondary);
   font-size: 12px;
   padding-bottom: 8px;
 }
 
-td {
+.table td {
   padding: 8px 0;
   color: var(--admin-text-primary);
   border-top: 1px solid var(--admin-border);
