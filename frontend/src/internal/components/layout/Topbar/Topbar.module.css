@@ -1,0 +1,20 @@
+@import "@/styles/admin/admin.variables.css";
+
+.topbar {
+  height: 60px;
+  background: var(--admin-surface);
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.title {
+  color: var(--admin-text-primary);
+  font-weight: 600;
+}
+
+.user {
+  color: var(--admin-text-secondary);
+}
