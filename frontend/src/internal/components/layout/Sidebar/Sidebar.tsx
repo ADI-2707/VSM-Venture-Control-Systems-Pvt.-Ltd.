@@ -51,7 +51,6 @@ export default function Sidebar() {
               className={`${styles.link} ${active ? styles.active : ""}`}
             >
               <img src={item.icon} className={styles.icon} alt={item.label} />
-
               {!collapsed && <span className={styles.label}>{item.label}</span>}
             </Link>
           );
