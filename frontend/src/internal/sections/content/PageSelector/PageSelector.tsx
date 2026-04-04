@@ -20,7 +20,7 @@ export default function PageSelector({
 }) {
   return (
     <div className={styles.wrapper}>
-      <label>Select Page</label>
+      <label className={styles.label}>Select Page</label>
 
       <select
         value={selected}
