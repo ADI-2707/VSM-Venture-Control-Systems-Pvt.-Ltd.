@@ -1,9 +1,16 @@
-import AdminLayout from "@/internal/components/layout/AdminLayout/AdminLayout";
-
-export default function Layout({
+export default function InternalLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminLayout>{children}</AdminLayout>;
+  return (
+    <div
+      style={{
+        background: "var(--admin-bg)",
+        minHeight: "100vh",
+      }}
+    >
+      {children}
+    </div>
+  );
 }

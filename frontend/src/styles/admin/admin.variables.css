@@ -1,19 +1,31 @@
 :root {
-  --admin-bg: #0b0f14;
-  --admin-surface: #121821;
-  --admin-card: #1a2230;
+  --admin-bg: #0b1220;
+  --admin-surface: #111827;
+  --admin-card: #1f2937;
+  --admin-border: #1f2a3a;
 
-  --admin-border: rgba(255,255,255,0.06);
+  --admin-text-primary: #e5e7eb;
+  --admin-text-secondary: #9ca3af;
 
-  --admin-text-primary: #e6edf3;
-  --admin-text-secondary: #8b949e;
+  --admin-accent: #22d3ee;
+  --admin-accent-soft: rgba(34, 211, 238, 0.1);
 
-  --admin-accent: #00c2ff;
-  --admin-accent-soft: rgba(0, 194, 255, 0.15);
+  --admin-accent-danger: #ef4444;
 
-  --admin-success: #22c55e;
-  --admin-warning: #f59e0b;
-  --admin-danger: #ef4444;
+  --admin-radius: 8px;
+}
 
-  --admin-radius: 12px;
+[data-theme="light"] {
+  --admin-bg: #ffffff;
+  --admin-surface: #f9fafb;
+  --admin-card: #ffffff;
+  --admin-border: #e5e7eb;
+
+  --admin-text-primary: #111827;
+  --admin-text-secondary: #6b7280;
+
+  --admin-accent: #2563eb; /* BLUE */
+  --admin-accent-soft: rgba(37, 99, 235, 0.08);
+
+  --admin-accent-danger: #dc2626; /* RED */
 }
