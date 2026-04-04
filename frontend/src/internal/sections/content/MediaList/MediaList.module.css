@@ -1,0 +1,23 @@
+@import "../../../../styles/admin/admin.variables.css";
+
+.box {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  padding: 16px;
+  border-radius: var(--admin-radius);
+}
+
+.title {
+  color: var(--admin-text-primary);
+  margin-bottom: 10px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  color: var(--admin-text-secondary);
+  margin-bottom: 6px;
+}
