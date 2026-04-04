@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import styles from "./Loader.module.css";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMobile } from "@/site/hooks/useIsMobile";
 
 interface LoaderProps {
   onComplete: () => void;

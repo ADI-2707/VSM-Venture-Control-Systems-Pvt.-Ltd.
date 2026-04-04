@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./Footer.module.css";
-import { socialLinks } from "@/constants/socialLinks";
+import { socialLinks } from "@/site/constants/socialLinks";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 "use client";
 
-import useSectionPrefetch from "@/hooks/useSectionPrefetch";
+import useSectionPrefetch from "@/site/hooks/useSectionPrefetch";
 
 export default function PrefetchController() {
   useSectionPrefetch();

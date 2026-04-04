@@ -6,7 +6,7 @@ import styles from "./Navbar.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsMobile } from "@/site/hooks/useIsMobile";
 
 const primaryNav = [
   { label: "Home", href: "/" },

@@ -3,7 +3,7 @@
 import styles from "./CustomersSection.module.css";
 import { customerGroups } from "./customersData";
 import LogoScroller from "./components/LogoScroller/LogoScroller";
-import useInView from "@/hooks/useInView";
+import useInView from "@/site/hooks/useInView";
 
 export default function CustomersSection() {
   const { ref, isVisible } = useInView<HTMLDivElement>();

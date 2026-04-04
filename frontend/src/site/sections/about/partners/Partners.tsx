@@ -1,6 +1,6 @@
 import styles from "./Partners.module.css";
 import PartnerCard from "@/site/components/PartnerCard/PartnerCard";
-import { partners } from "@/constants/partners";
+import { partners } from "@/site/constants/partners";
 
 export default function Partners() {
   return (

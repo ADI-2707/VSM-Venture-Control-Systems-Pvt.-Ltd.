@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./ClientsGrid.module.css";
-import { clientSections } from "@/constants/clients";
+import { clientSections } from "@/site/constants/clients";
 
 export default function ClientsGrid() {
   return (
