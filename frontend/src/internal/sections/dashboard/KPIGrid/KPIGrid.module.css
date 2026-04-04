@@ -1,0 +1,27 @@
+@import "../../../../styles/admin/admin.variables.css";
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 16px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--admin-text-primary);
+  margin-top: 6px;
+}
