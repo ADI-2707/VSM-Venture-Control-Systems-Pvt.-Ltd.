@@ -16,13 +16,21 @@ const navItems = [
 export default function Sidebar() {
   const pathname = usePathname();
 
+  const isActive = (path: string) => {
+    if (path === "/internal") {
+      return pathname === "/internal" || pathname === "/internal/dashboard";
+    }
+
+    return pathname.startsWith(path);
+  };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>VSM Admin</div>
 
       <nav className={styles.nav}>
         {navItems.map((item) => {
-          const active = pathname === item.href;
+          const active = isActive(item.href);
 
           return (
             <Link
