@@ -46,6 +46,9 @@
 }
 
 .link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   position: relative;
   padding: 10px 12px;
   border-radius: var(--admin-radius);
@@ -55,14 +58,43 @@
   transition: all 0.2s ease;
 }
 
+.icon {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  opacity: 0.75;
+  transition: all 0.2s ease;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.collapsed .link {
+  justify-content: center;
+  padding: 10px;
+}
+
+.collapsed .label {
+  display: none;
+}
+
 .link:hover {
   background: var(--admin-card);
   color: var(--admin-text-primary);
 }
 
+.link:hover .icon {
+  opacity: 1;
+}
+
 .active {
   background: var(--admin-accent-soft);
   color: var(--admin-accent);
+}
+
+.active .icon {
+  opacity: 1;
 }
 
 .active::before {

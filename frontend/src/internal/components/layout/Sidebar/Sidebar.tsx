@@ -4,14 +4,15 @@ import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Tooltip from "@/components/ui/Tooltip/Tooltip";
 
 const navItems = [
-  { label: "Dashboard", href: "/internal" },
-  { label: "Content", href: "/internal/content" },
-  { label: "Media", href: "/internal/media" },
-  { label: "Analytics", href: "/internal/analytics" },
-  { label: "Monitoring", href: "/internal/monitoring" },
-  { label: "Settings", href: "/internal/settings" },
+  { label: "Dashboard", href: "/internal", icon: "/adminsidebar/dashboard.svg" },
+  { label: "Content", href: "/internal/content", icon: "/adminsidebar/content.svg" },
+  { label: "Media", href: "/internal/media", icon: "/adminsidebar/media.svg" },
+  { label: "Analytics", href: "/internal/analytics", icon: "/adminsidebar/analytics.svg" },
+  { label: "Monitoring", href: "/internal/monitoring", icon: "/adminsidebar/monitoring.svg" },
+  { label: "Settings", href: "/internal/settings", icon: "/adminsidebar/settings.svg" },
 ];
 
 export default function Sidebar() {
@@ -30,6 +31,7 @@ export default function Sidebar() {
 
       <div className={styles.header}>
         {!collapsed && <div className={styles.logo}>VSM Admin</div>}
+
         <button
           className={styles.toggle}
           onClick={() => setCollapsed(!collapsed)}
@@ -42,14 +44,24 @@ export default function Sidebar() {
         {navItems.map((item) => {
           const active = isActive(item.href);
 
-          return (
+          const link = (
             <Link
               key={item.href}
               href={item.href}
               className={`${styles.link} ${active ? styles.active : ""}`}
             >
-              {!collapsed && item.label}
+              <img src={item.icon} className={styles.icon} alt={item.label} />
+
+              {!collapsed && <span className={styles.label}>{item.label}</span>}
             </Link>
+          );
+
+          return collapsed ? (
+            <Tooltip key={item.href} label={item.label}>
+              {link}
+            </Tooltip>
+          ) : (
+            link
           );
         })}
       </nav>

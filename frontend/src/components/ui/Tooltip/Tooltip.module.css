@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tooltip {
+  position: absolute;
+  left: 60px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  border: 1px solid #1e293b;
+  z-index: 100;
+}
+
+.wrapper:hover .tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
