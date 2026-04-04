@@ -3,6 +3,7 @@
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const navItems = [
   { label: "Dashboard", href: "/internal" },
@@ -15,18 +16,27 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/internal") {
       return pathname === "/internal" || pathname === "/internal/dashboard";
     }
-
     return pathname.startsWith(path);
   };
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.logo}>VSM Admin</div>
+    <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
+
+      <div className={styles.header}>
+        {!collapsed && <div className={styles.logo}>VSM Admin</div>}
+        <button
+          className={styles.toggle}
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          ☰
+        </button>
+      </div>
 
       <nav className={styles.nav}>
         {navItems.map((item) => {
@@ -38,7 +48,7 @@ export default function Sidebar() {
               href={item.href}
               className={`${styles.link} ${active ? styles.active : ""}`}
             >
-              {item.label}
+              {!collapsed && item.label}
             </Link>
           );
         })}
