@@ -1,0 +1,81 @@
+@import "../../../styles/admin/admin.variables.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  color: var(--admin-text-primary);
+}
+
+.uptime {
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.card span {
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+}
+
+.status {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.online {
+  color: var(--admin-success);
+}
+
+.warning {
+  color: var(--admin-warning);
+}
+
+.logs {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.logsTitle {
+  margin-bottom: 10px;
+  color: var(--admin-text-primary);
+}
+
+.logsBox {
+  background: black;
+  padding: 12px;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.log {
+  font-family: monospace;
+  font-size: 12px;
+  color: #00ff9c;
+  margin-bottom: 6px;
+}
