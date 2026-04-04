@@ -1,0 +1,109 @@
+@import "../../../styles/admin/admin.variables.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  color: var(--admin-text-primary);
+}
+
+.filter {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.card span {
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 18px;
+  color: var(--admin-text-primary);
+}
+
+.chart {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.chartTitle {
+  color: var(--admin-text-primary);
+  margin-bottom: 12px;
+}
+
+.chartBox {
+  height: 200px;
+}
+
+.fakeChart {
+  height: 100%;
+  border-radius: 6px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 194, 255, 0.2),
+    transparent
+  );
+
+  border: 1px dashed var(--admin-border);
+}
+
+.table {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.tableTitle {
+  margin-bottom: 12px;
+  color: var(--admin-text-primary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  color: var(--admin-text-secondary);
+  font-size: 12px;
+  padding-bottom: 8px;
+}
+
+td {
+  padding: 8px 0;
+  color: var(--admin-text-primary);
+  border-top: 1px solid var(--admin-border);
+}
