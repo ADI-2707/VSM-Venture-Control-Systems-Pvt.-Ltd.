@@ -1,5 +1,5 @@
 import styles from "./Partners.module.css";
-import PartnerCard from "@/components/PartnerCard/PartnerCard";
+import PartnerCard from "@/site/components/PartnerCard/PartnerCard";
 import { partners } from "@/constants/partners";
 
 export default function Partners() {

@@ -1,5 +1,5 @@
 import styles from "./ContactSection.module.css";
-import Reveal from "@/components/Reveal/Reveal";
+import Reveal from "@/site/components/Reveal/Reveal";
 
 export default function ContactSection() {
     return (
