@@ -1,0 +1,19 @@
+:root {
+  --admin-bg: #0b0f14;
+  --admin-surface: #121821;
+  --admin-card: #1a2230;
+
+  --admin-border: rgba(255,255,255,0.06);
+
+  --admin-text-primary: #e6edf3;
+  --admin-text-secondary: #8b949e;
+
+  --admin-accent: #00c2ff;
+  --admin-accent-soft: rgba(0, 194, 255, 0.15);
+
+  --admin-success: #22c55e;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef4444;
+
+  --admin-radius: 12px;
+}
