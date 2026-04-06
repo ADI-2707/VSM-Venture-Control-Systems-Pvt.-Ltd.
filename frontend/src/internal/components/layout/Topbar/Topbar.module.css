@@ -13,34 +13,13 @@
   font-weight: 600;
 }
 
-.user {
-  color: var(--admin-text-secondary);
-}
-
-.wrapper {
-  position: relative;
+.actions {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
-.tooltip {
-  position: absolute;
-  left: 60px;
-  background: var(--admin-surface);
-  color: var(--admin-text-primary);
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: all 0.2s ease;
-  pointer-events: none;
-  border: 1px solid var(--admin-border);
-  z-index: 100;
-}
-
-.wrapper:hover .tooltip {
-  opacity: 1;
-  transform: translateX(0);
+.user {
+  color: var(--admin-text-secondary);
+  cursor: pointer;
 }

@@ -56,7 +56,7 @@ export default function Sidebar() {
           );
 
           return collapsed ? (
-            <Tooltip key={item.href} label={item.label}>
+            <Tooltip key={item.href} text={item.label}>
               {link}
             </Tooltip>
           ) : (

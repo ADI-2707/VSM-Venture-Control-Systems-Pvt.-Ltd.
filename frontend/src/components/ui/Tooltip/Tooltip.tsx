@@ -1,16 +1,13 @@
 "use client";
 
-import styles from "./Topbar.module.css";
-import ThemeToggle from "@/components/ui/ThemeToggle/ThemeToggle";
+import styles from "./Tooltip.module.css";
 
-export default function Topbar() {
+export default function Tooltip({ text, children, position = "right" }: any) {
   return (
-    <div className={styles.topbar}>
-      <div className={styles.title}>Dashboard</div>
-
-      <div className={styles.actions}>
-        <ThemeToggle />
-        <div className={styles.user}>Admin</div>
+    <div className={styles.wrapper}>
+      {children}
+      <div className={`${styles.tooltip} ${styles[position]}`}>
+        {text}
       </div>
     </div>
   );
