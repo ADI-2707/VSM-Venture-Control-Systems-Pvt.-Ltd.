@@ -5,10 +5,14 @@
 }
 
 .main {
-  margin-left: 240px;
   width: 100%;
+  transition: margin-left 0.25s ease;
 }
 
-.content {
-  padding: 24px;
+.expanded {
+  margin-left: 240px;
+}
+
+.collapsed {
+  margin-left: 70px;
 }

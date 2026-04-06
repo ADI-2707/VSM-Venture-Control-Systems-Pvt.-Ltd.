@@ -3,7 +3,6 @@
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import Tooltip from "@/components/ui/Tooltip/Tooltip";
 
 const navItems = [
@@ -15,9 +14,8 @@ const navItems = [
   { label: "Settings", href: "/internal/settings", icon: "/adminsidebar/settings.svg" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ collapsed, setCollapsed }: any) {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/internal") {
