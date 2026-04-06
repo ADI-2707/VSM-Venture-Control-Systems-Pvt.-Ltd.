@@ -1,5 +1,3 @@
-@import "../../../../styles/admin/admin.variables.css";
-
 .topbar {
   height: 60px;
   background: var(--admin-surface);

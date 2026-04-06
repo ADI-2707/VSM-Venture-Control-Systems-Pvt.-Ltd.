@@ -1,5 +1,3 @@
-@import "../../../../styles/admin/admin.variables.css";
-
 .sidebar {
   width: 240px;
   background: var(--admin-surface);
@@ -107,8 +105,4 @@
   width: 3px;
   border-radius: 4px;
   background: var(--admin-accent);
-}
-
-[data-theme="light"] .active::before {
-  background: var(--admin-accent-danger);
 }

@@ -1,5 +1,3 @@
-@import "../../../../styles/admin/admin.variables.css";
-
 .panel {
   background: var(--admin-card);
   border: 1px solid var(--admin-border);

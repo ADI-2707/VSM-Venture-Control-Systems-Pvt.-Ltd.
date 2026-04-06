@@ -24,8 +24,8 @@
   --admin-text-primary: #111827;
   --admin-text-secondary: #6b7280;
 
-  --admin-accent: #2563eb; /* BLUE */
+  --admin-accent: #2563eb;
   --admin-accent-soft: rgba(37, 99, 235, 0.08);
 
-  --admin-accent-danger: #dc2626; /* RED */
+  --admin-accent-danger: #dc2626;
 }

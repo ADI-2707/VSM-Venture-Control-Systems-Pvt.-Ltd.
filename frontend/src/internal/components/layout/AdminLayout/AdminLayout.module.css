@@ -1,5 +1,3 @@
-@import "../../../../styles/admin/admin.variables.css";
-
 .root {
   display: flex;
   background: var(--admin-bg);
