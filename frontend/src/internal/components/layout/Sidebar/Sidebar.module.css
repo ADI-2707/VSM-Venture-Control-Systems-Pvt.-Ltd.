@@ -77,6 +77,10 @@
   display: none;
 }
 
+.collapsed .header {
+  justify-content: center;
+}
+
 .link:hover {
   background: var(--admin-accent-soft);
   color: var(--admin-text-primary);
