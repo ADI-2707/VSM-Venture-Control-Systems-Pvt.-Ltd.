@@ -16,6 +16,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("auth");
 
+    if (pathname === "/internal") return;
+
     if (!isLoggedIn) {
       router.push("/internal");
     } else {
@@ -23,7 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [pathname]);
 
-  if (!authorized) return null;
+  if (pathname !== "/internal" && !authorized) return null;
 
   return (
     <div className={styles.root}>
