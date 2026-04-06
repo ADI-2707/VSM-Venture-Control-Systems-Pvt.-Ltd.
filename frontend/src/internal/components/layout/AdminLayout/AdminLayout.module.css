@@ -7,6 +7,8 @@
 .main {
   width: 100%;
   transition: margin-left 0.25s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .expanded {
@@ -15,4 +17,16 @@
 
 .collapsed {
   margin-left: 70px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 24px 24px;
+  box-sizing: border-box;
+}
+
+.content {
+  width: 100%;
 }

@@ -13,11 +13,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div
-        className={`${styles.main} ${collapsed ? styles.collapsed : styles.expanded
-          }`}
+        className={`${styles.main} ${
+          collapsed ? styles.collapsed : styles.expanded
+        }`}
       >
         <Topbar />
-        <div className={styles.content}>{children}</div>
+
+        <div className={styles.container}>
+          <div className={styles.content}>{children}</div>
+        </div>
       </div>
     </div>
   );
