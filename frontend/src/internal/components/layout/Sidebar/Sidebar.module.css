@@ -78,7 +78,7 @@
 }
 
 .link:hover {
-  background: var(--admin-card);
+  background: var(--admin-accent-soft);
   color: var(--admin-text-primary);
 }
 
@@ -89,7 +89,7 @@
 .active {
   background: var(--admin-accent-soft);
   color: var(--admin-accent);
-  box-shadow: inset 0 0 0 1px var(--admin-accent-soft);
+  font-weight: 500;
 }
 
 .active .icon {

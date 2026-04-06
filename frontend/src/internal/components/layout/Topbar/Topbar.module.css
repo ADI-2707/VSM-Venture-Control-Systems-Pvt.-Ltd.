@@ -19,6 +19,7 @@
 .title {
   color: var(--admin-text-primary);
   font-weight: 600;
+  font-size: 15px;
 }
 
 .actions {
@@ -29,5 +30,6 @@
 
 .user {
   color: var(--admin-text-secondary);
+  font-size: 14px;
   cursor: pointer;
 }
