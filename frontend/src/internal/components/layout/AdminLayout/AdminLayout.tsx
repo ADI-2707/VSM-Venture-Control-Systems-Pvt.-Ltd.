@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
 import styles from "./AdminLayout.module.css";
@@ -11,29 +11,27 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [authorized, setAuthorized] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("auth");
-
-    if (pathname === "/internal") return;
 
     if (!isLoggedIn) {
       router.push("/internal");
     } else {
       setAuthorized(true);
     }
-  }, [pathname]);
+  }, []);
 
-  if (pathname !== "/internal" && !authorized) return null;
+  if (!authorized) return null;
 
   return (
     <div className={styles.root}>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div
-        className={`${styles.main} ${collapsed ? styles.collapsed : styles.expanded
-          }`}
+        className={`${styles.main} ${
+          collapsed ? styles.collapsed : styles.expanded
+        }`}
       >
         <Topbar />
 

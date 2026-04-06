@@ -6,6 +6,19 @@
   background: #f8fafc;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
 .card {
   background: white;
   border: 1px solid #e2e8f0;
