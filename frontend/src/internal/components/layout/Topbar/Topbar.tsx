@@ -44,7 +44,7 @@ export default function Topbar() {
             {user?.name || "User"}
           </div>
 
-          <div className={styles.role}>
+          <div className={styles.roleBadge}>
             {user?.role?.toUpperCase() || "ROLE"}
           </div>
 

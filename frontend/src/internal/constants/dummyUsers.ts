@@ -4,13 +4,13 @@ export const DUMMY_USERS = [
     username: "admin",
     password: "admin123",
     role: "admin",
-    name: "System Admin",
+    name: "Aditya.S",
   },
   {
     id: 2,
     username: "analyst",
     password: "analyst123",
     role: "analyst",
-    name: "Data Analyst",
+    name: "S.Kumar",
   },
 ];
