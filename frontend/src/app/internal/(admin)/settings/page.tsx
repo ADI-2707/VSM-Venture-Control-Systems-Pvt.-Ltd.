@@ -1,39 +1,46 @@
+"use client";
+
 import styles from "./Settings.module.css";
 
 export default function SettingsPage() {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Settings</h2>
-
-      <div className={styles.section}>
-        <h3>Profile</h3>
-
-        <div className={styles.form}>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <button>Update Profile</button>
-        </div>
+      
+      <div className={styles.header}>
+        <h1 className={styles.title}>Settings</h1>
+        <p className={styles.subtitle}>
+          Manage your account and system preferences
+        </p>
       </div>
 
-      <div className={styles.section}>
-        <h3>System Configuration</h3>
-
-        <div className={styles.form}>
-          <input type="text" placeholder="API Base URL" />
-          <input type="text" placeholder="Storage Path" />
-          <button>Save Configuration</button>
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h3>Account Security</h3>
+          <span>Update your password regularly</span>
         </div>
-      </div>
-
-      <div className={styles.section}>
-        <h3>Security</h3>
 
         <div className={styles.form}>
+          <input type="password" placeholder="Current Password" />
           <input type="password" placeholder="New Password" />
-          <input type="password" placeholder="Confirm Password" />
-          <button>Change Password</button>
+          <input type="password" placeholder="Confirm New Password" />
+
+          <button className={styles.primaryBtn}>
+            Change Password
+          </button>
         </div>
       </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <h3>Preferences</h3>
+          <span>Customize your experience</span>
+        </div>
+
+        <div className={styles.placeholder}>
+          More settings coming soon...
+        </div>
+      </div>
+
     </div>
   );
 }
