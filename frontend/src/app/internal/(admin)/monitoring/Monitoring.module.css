@@ -103,28 +103,55 @@
 .logsHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 12px;
 }
 
 .logsHeader span {
+  font-size: 10px;
+  color: var(--admin-text-secondary);
+}
+
+.logControls select {
+  background: white;
+  border: 1px solid var(--admin-border);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.logsTable {
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.logHead {
+  display: grid;
+  grid-template-columns: 100px 120px 120px 1fr;
+  background: #f9fafb;
+  padding: 10px 12px;
   font-size: 12px;
   color: var(--admin-text-secondary);
 }
 
-.logsBox {
-  background: #0b0f14;
-  border-radius: 10px;
-  padding: 12px;
-  max-height: 240px;
+.logBody {
+  max-height: 260px;
   overflow-y: auto;
 }
 
 .logRow {
-  display: flex;
-  gap: 10px;
-  font-family: monospace;
+  display: grid;
+  grid-template-columns: 100px 120px 120px 1fr;
+  padding: 10px 12px;
   font-size: 12px;
-  margin-bottom: 6px;
+  font-family: monospace;
+  border-top: 1px solid var(--admin-border);
+  transition: background 0.2s ease;
+}
+
+.logRow:hover {
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .time {
@@ -134,6 +161,14 @@
 .logType {
   text-transform: uppercase;
   font-size: 10px;
+}
+
+.service {
+  color: #3b82f6;
+}
+
+.level {
+  font-weight: 600;
 }
 
 .success {
@@ -149,5 +184,5 @@
 }
 
 .message {
-  color: #e5e7eb;
+  color: var(--admin-text-primary);
 }

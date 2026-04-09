@@ -10,17 +10,17 @@ const services = [
 ];
 
 const logs = [
-  { text: "System started", type: "info", time: "12:01" },
-  { text: "API request success", type: "success", time: "12:05" },
-  { text: "Image uploaded", type: "info", time: "12:08" },
-  { text: "Storage nearing limit", type: "warning", time: "12:12" },
+  { time: "12:01", type: "info", service: "system", message: "System started" },
+  { time: "12:05", type: "success", service: "api", message: "API request success" },
+  { time: "12:08", type: "info", service: "media", message: "Image uploaded" },
+  { time: "12:12", type: "warning", service: "storage", message: "Storage nearing limit" },
 ];
 
 export default function MonitoringPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        
+
         <div>
           <h1 className={styles.title}>System Monitoring</h1>
           <p className={styles.subtitle}>
@@ -41,20 +41,18 @@ export default function MonitoringPage() {
             <div className={styles.cardHeader}>
               <span>{s.name}</span>
               <div
-                className={`${styles.dot} ${
-                  s.status === "online"
+                className={`${styles.dot} ${s.status === "online"
                     ? styles.dotOnline
                     : styles.dotWarning
-                }`}
+                  }`}
               />
             </div>
 
             <div
-              className={`${styles.status} ${
-                s.status === "online"
+              className={`${styles.status} ${s.status === "online"
                   ? styles.online
                   : styles.warning
-              }`}
+                }`}
             >
               {s.status}
             </div>
@@ -67,33 +65,58 @@ export default function MonitoringPage() {
 
         <div className={styles.logsHeader}>
           <h3>System Logs</h3>
-          <span>Live updates</span>
+          <span>LIVE SYSTEM</span>
+
+          <div className={styles.logControls}>
+            <select>
+              <option>All Levels</option>
+              <option>Info</option>
+              <option>Success</option>
+              <option>Warning</option>
+              <option>Error</option>
+            </select>
+          </div>
         </div>
 
-        <div className={styles.logsBox}>
-          {logs.map((log, i) => (
-            <div key={i} className={styles.logRow}>
+        <div className={styles.logsTable}>
 
-              <span className={styles.time}>[{log.time}]</span>
+          <div className={styles.logHead}>
+            <span>Time</span>
+            <span>Level</span>
+            <span>Service</span>
+            <span>Message</span>
+          </div>
 
-              <span
-                className={`${styles.logType} ${
-                  log.type === "success"
-                    ? styles.success
-                    : log.type === "warning"
-                    ? styles.warning
-                    : styles.info
-                }`}
-              >
-                {log.type}
-              </span>
+          <div className={styles.logBody}>
+            {logs.map((log, i) => (
+              <div key={i} className={styles.logRow}>
 
-              <span className={styles.message}>{log.text}</span>
+                <span className={styles.time}>[{log.time}]</span>
 
-            </div>
-          ))}
+                <span
+                  className={`${styles.level} ${log.type === "success"
+                      ? styles.success
+                      : log.type === "warning"
+                        ? styles.warning
+                        : styles.info
+                    }`}
+                >
+                  {log.type.toUpperCase()}
+                </span>
+
+                <span className={styles.service}>
+                  {log.service}
+                </span>
+
+                <span className={styles.message}>
+                  {log.message}
+                </span>
+
+              </div>
+            ))}
+          </div>
+
         </div>
-
       </div>
     </div>
   );
