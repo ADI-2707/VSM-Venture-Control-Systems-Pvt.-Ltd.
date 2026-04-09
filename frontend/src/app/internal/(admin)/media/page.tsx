@@ -2,21 +2,26 @@
 
 import { useState } from "react";
 import styles from "./MediaPage.module.css";
-
-const media = [
-  "/images/gallery/team/1.jfif",
-  "/images/gallery/team/2.jfif",
-  "/images/gallery/team/3.jfif",
-  "/images/gallery/team/4.jfif",
-  "/images/gallery/team/5.jfif",
-];
+import { useMedia, Media } from "@/internal/context/MediaContext";
 
 export default function MediaPage() {
+  const { state, dispatch } = useMedia();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const handleUpload = () => {
+    const newMedia: Media = {
+      id: Date.now().toString(),
+      url: "/images/gallery/team/4.jfif",
+      name: "new_upload.jpg",
+      type: "image",
+      createdAt: new Date().toISOString(),
+    };
+
+    dispatch({ type: "UPLOAD_MEDIA", payload: newMedia });
+  };
 
   return (
     <div className={styles.container}>
-
       <div className={styles.header}>
         <div>
           <h1>Media Library</h1>
@@ -25,35 +30,24 @@ export default function MediaPage() {
 
         <div className={styles.actions}>
           <input placeholder="Search media..." />
-          <button>Upload</button>
+          <button onClick={handleUpload}>Upload</button>
         </div>
       </div>
 
-      <div className={styles.infoBar}>
-        <span>{media.length} assets</span>
-        <span>Last updated just now</span>
-      </div>
+      <div className={styles.grid}>
+        {state.media.map((item) => (
+          <div
+            key={item.id}
+            className={styles.card}
+            onClick={() => setSelectedImage(item.url)}
+          >
+            <img src={item.url} alt={item.name} />
 
-      <div className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <h3>All Media</h3>
-        </div>
-
-        <div className={styles.grid}>
-          {media.map((src, i) => (
-            <div
-              key={i}
-              className={styles.card}
-              onClick={() => setSelectedImage(src)}
-            >
-              <img src={src} alt="media" />
-
-              <div className={styles.overlay}>
-                <span>View</span>
-              </div>
+            <div className={styles.overlay}>
+              <span>View</span>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {selectedImage && (
@@ -65,18 +59,11 @@ export default function MediaPage() {
             className={styles.modalContent}
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className={styles.closeBtn}
-              onClick={() => setSelectedImage(null)}
-            >
-              ✕
-            </button>
-
+            <button onClick={() => setSelectedImage(null)}>✕</button>
             <img src={selectedImage} alt="preview" />
           </div>
         </div>
       )}
-
     </div>
   );
 }
