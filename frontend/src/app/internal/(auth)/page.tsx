@@ -4,30 +4,31 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Login.module.css";
 import { DUMMY_USERS } from "@/internal/constants/dummyUsers";
+import { useAuth } from "@/internal/context/AuthContext";
 
 export default function InternalLogin() {
   const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("auth");
-    if (isLoggedIn) {
-      router.push("/internal/dashboard");
+    if (isAuthenticated) {
+      router.replace("/internal/dashboard");
     }
-  }, [router]);
+  }, [isAuthenticated, router]);
 
   const handleLogin = () => {
+    setError("");
+
     const user = DUMMY_USERS.find(
       (u) => u.username === username && u.password === password
     );
 
     if (user) {
-      localStorage.setItem("auth", "true");
-      localStorage.setItem("user", JSON.stringify(user));
-
+      login(user);
       router.push("/internal/dashboard");
     } else {
       setError("Invalid username or password");

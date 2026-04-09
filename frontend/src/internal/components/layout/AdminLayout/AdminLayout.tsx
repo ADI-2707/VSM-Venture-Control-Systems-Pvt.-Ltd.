@@ -5,24 +5,21 @@ import { useRouter } from "next/navigation";
 import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
 import styles from "./AdminLayout.module.css";
+import { useAuth } from "@/internal/context/AuthContext";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [authorized, setAuthorized] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("auth");
-
-    if (!isLoggedIn) {
+    if (!isAuthenticated) {
       router.push("/internal");
-    } else {
-      setAuthorized(true);
     }
-  }, []);
+  }, [isAuthenticated, router]);
 
-  if (!authorized) return null;
+  if (!isAuthenticated) return null;
 
   return (
     <div className={styles.root}>
