@@ -8,17 +8,17 @@ import { useAuth } from "@/internal/context/AuthContext";
 
 export default function InternalLogin() {
   const router = useRouter();
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, loading } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!loading && isAuthenticated) {
       router.replace("/internal/dashboard");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, loading, router]);
 
   const handleLogin = () => {
     setError("");
@@ -29,11 +29,13 @@ export default function InternalLogin() {
 
     if (user) {
       login(user);
-      router.push("/internal/dashboard");
+      router.replace("/internal/dashboard");
     } else {
       setError("Invalid username or password");
     }
   };
+
+  if (loading) return null;
 
   return (
     <div className={styles.wrapper}>

@@ -9,15 +9,19 @@ import { useAuth } from "@/internal/context/AuthContext";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/internal");
+    if (!loading && !isAuthenticated) {
+      router.replace("/internal");
     }
-  }, [isAuthenticated, router]);
+  }, [loading, isAuthenticated, router]);
+
+  if (loading) {
+    return <div className={styles.loader}>Loading...</div>;
+  }
 
   if (!isAuthenticated) return null;
 
