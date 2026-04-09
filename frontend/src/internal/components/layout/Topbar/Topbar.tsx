@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
 import styles from "./Topbar.module.css";
 import { useAuth } from "@/internal/context/AuthContext";
 
@@ -20,9 +19,6 @@ export default function Topbar() {
   const router = useRouter();
   const { user, logout } = useAuth();
 
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
   const getTitle = () => {
     if (routeTitleMap[pathname]) return routeTitleMap[pathname];
 
@@ -32,20 +28,6 @@ export default function Topbar() {
 
     return match ? routeTitleMap[match] : "Dashboard";
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleLogout = () => {
     logout();
@@ -58,34 +40,20 @@ export default function Topbar() {
         <div className={styles.title}>{getTitle()}</div>
 
         <div className={styles.actions}>
-          <div
-            className={styles.userWrapper}
-            ref={dropdownRef}
-          >
-            <div
-              className={styles.user}
-              onClick={() => setOpen(!open)}
-            >
-              {user?.name || "User"} ▾
-            </div>
-
-            {open && (
-              <div className={styles.dropdown}>
-                <div className={styles.dropdownItem}>
-                  {user?.role?.toUpperCase()}
-                </div>
-
-                <div className={styles.divider} />
-
-                <div
-                  className={styles.dropdownItem}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </div>
-              </div>
-            )}
+          <div className={styles.user}>
+            {user?.name || "User"}
           </div>
+
+          <div className={styles.role}>
+            {user?.role?.toUpperCase() || "ROLE"}
+          </div>
+
+          <button
+            className={styles.logout}
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
