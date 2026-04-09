@@ -1,22 +1,59 @@
-.box {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.input {
-  background: var(--admin-card);
-  color: var(--admin-text-primary);
+.card {
+  background: white;
   border: 1px solid var(--admin-border);
-  padding: 8px;
-  border-radius: var(--admin-radius);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 
-.button {
+.header {
+  margin-bottom: 12px;
+}
+
+.header h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.header span {
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.uploadArea {
+  border: 1px dashed var(--admin-border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uploadArea:hover {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.uploadArea input {
+  display: none;
+}
+
+.uploadArea p {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.uploadBtn {
   background: var(--admin-accent);
-  color: black;
+  color: white;
   border: none;
   padding: 8px 14px;
-  border-radius: var(--admin-radius);
+  border-radius: 8px;
+  font-size: 13px;
   cursor: pointer;
 }

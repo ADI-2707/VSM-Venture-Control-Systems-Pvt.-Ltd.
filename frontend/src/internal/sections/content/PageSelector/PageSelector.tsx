@@ -3,12 +3,12 @@
 import styles from "./PageSelector.module.css";
 
 const pages = [
-  "home",
-  "about",
-  "applications",
-  "gallery",
-  "products",
-  "solutions",
+  "Home",
+  "About",
+  "Applications",
+  "Gallery",
+  "Products",
+  "Solutions",
 ];
 
 export default function PageSelector({

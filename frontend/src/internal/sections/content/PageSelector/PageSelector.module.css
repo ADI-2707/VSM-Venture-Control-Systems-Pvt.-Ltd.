@@ -1,19 +1,19 @@
 .wrapper {
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .label {
-  display: block;
-  color: var(--admin-text-secondary);
   font-size: 12px;
-  margin-bottom: 6px;
+  color: var(--admin-text-secondary);
 }
 
 .select {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  color: var(--admin-text-primary);
-  padding: 8px;
-  border-radius: var(--admin-radius);
-  width: 200px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 180px;
 }

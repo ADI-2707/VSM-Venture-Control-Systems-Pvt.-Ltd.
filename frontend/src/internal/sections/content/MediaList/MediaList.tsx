@@ -8,14 +8,28 @@ const dummyMedia = [
 
 export default function MediaList({ page }: { page: string }) {
   return (
-    <div className={styles.box}>
-      <h3 className={styles.title}>Media for: {page}</h3>
+    <div className={styles.card}>
 
-      <ul className={styles.list}>
+      <div className={styles.header}>
+        <h3>Media Library</h3>
+        <span>Page: {page}</span>
+      </div>
+
+      <div className={styles.grid}>
         {dummyMedia.map((file) => (
-          <li key={file}>{file}</li>
+          <div key={file} className={styles.item}>
+            <div className={styles.preview}></div>
+
+            <div className={styles.meta}>
+              <span className={styles.name}>{file}</span>
+              <span className={styles.type}>
+                {file.split(".").pop()?.toUpperCase()}
+              </span>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+
     </div>
   );
 }
