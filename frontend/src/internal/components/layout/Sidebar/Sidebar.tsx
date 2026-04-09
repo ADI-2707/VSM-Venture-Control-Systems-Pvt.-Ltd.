@@ -28,7 +28,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
     <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
 
       <div className={styles.header}>
-        {!collapsed && <div className={styles.logo}>VSM Admin</div>}
+        {!collapsed && <div className={styles.logo}>VSM</div>}
 
         <button
           className={styles.toggle}
