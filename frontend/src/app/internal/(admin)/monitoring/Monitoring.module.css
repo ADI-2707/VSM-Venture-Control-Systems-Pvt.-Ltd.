@@ -1,79 +1,153 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.header h2 {
-  color: var(--admin-text-primary);
+.title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+  margin-top: 4px;
+}
+
+.meta {
+  text-align: right;
 }
 
 .uptime {
-  color: var(--admin-text-secondary);
   font-size: 12px;
+  color: var(--admin-text-secondary);
+}
+
+.overallStatus {
+  display: block;
+  font-size: 12px;
+  color: #16a34a;
+  margin-top: 4px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 .card {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
 }
 
-.card span {
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
   color: var(--admin-text-secondary);
-  font-size: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dotOnline {
+  background: #16a34a;
+}
+
+.dotWarning {
+  background: #f59e0b;
 }
 
 .status {
   margin-top: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
 }
 
 .online {
-  color: var(--admin-success);
+  color: #16a34a;
 }
 
 .warning {
-  color: var(--admin-warning);
+  color: #f59e0b;
 }
 
 .logs {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px;
 }
 
-.logsTitle {
-  margin-bottom: 10px;
-  color: var(--admin-text-primary);
+.logsHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.logsHeader span {
+  font-size: 12px;
+  color: var(--admin-text-secondary);
 }
 
 .logsBox {
-  background: black;
+  background: #0b0f14;
+  border-radius: 10px;
   padding: 12px;
-  border-radius: 6px;
-  max-height: 200px;
+  max-height: 240px;
   overflow-y: auto;
 }
 
-.log {
+.logRow {
+  display: flex;
+  gap: 10px;
   font-family: monospace;
   font-size: 12px;
-  color: #00ff9c;
   margin-bottom: 6px;
+}
+
+.time {
+  color: #6b7280;
+}
+
+.logType {
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.success {
+  color: #16a34a;
+}
+
+.warning {
+  color: #f59e0b;
+}
+
+.info {
+  color: #3b82f6;
+}
+
+.message {
+  color: #e5e7eb;
 }
