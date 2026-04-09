@@ -1,10 +1,10 @@
 import styles from "./Analytics.module.css";
 
 const kpis = [
-  { label: "Total Visits", value: "24,320" },
-  { label: "Unique Users", value: "8,210" },
-  { label: "Bounce Rate", value: "32%" },
-  { label: "Avg. Session", value: "3m 12s" },
+  { label: "Total Visits", value: "24,320", change: "+12%" },
+  { label: "Unique Users", value: "8,210", change: "+5%" },
+  { label: "Bounce Rate", value: "32%", change: "-2%" },
+  { label: "Avg. Session", value: "3m 12s", change: "+8%" },
 ];
 
 const pages = [
@@ -18,7 +18,13 @@ export default function AnalyticsPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2>Analytics</h2>
+
+        <div>
+          <h1 className={styles.title}>Analytics</h1>
+          <p className={styles.subtitle}>
+            Track performance, engagement and traffic trends
+          </p>
+        </div>
 
         <select className={styles.filter}>
           <option>Last 7 days</option>
@@ -30,14 +36,17 @@ export default function AnalyticsPage() {
       <div className={styles.kpiGrid}>
         {kpis.map((kpi) => (
           <div key={kpi.label} className={styles.card}>
-            <span>{kpi.label}</span>
-            <strong>{kpi.value}</strong>
+            <span className={styles.kpiLabel}>{kpi.label}</span>
+            <strong className={styles.kpiValue}>{kpi.value}</strong>
+            <span className={styles.kpiChange}>{kpi.change}</span>
           </div>
         ))}
       </div>
 
       <div className={styles.chart}>
-        <div className={styles.chartTitle}>Traffic Overview</div>
+        <div className={styles.sectionHeader}>
+          <h3>Traffic Overview</h3>
+        </div>
 
         <div className={styles.chartBox}>
           <div className={styles.fakeChart}></div>
@@ -45,7 +54,9 @@ export default function AnalyticsPage() {
       </div>
 
       <div className={styles.table}>
-        <div className={styles.tableTitle}>Page Performance</div>
+        <div className={styles.sectionHeader}>
+          <h3>Page Performance</h3>
+        </div>
 
         <table>
           <thead>
@@ -55,12 +66,15 @@ export default function AnalyticsPage() {
               <th>Bounce Rate</th>
             </tr>
           </thead>
+
           <tbody>
             {pages.map((p) => (
               <tr key={p.name}>
-                <td>{p.name}</td>
-                <td>{p.views}</td>
-                <td>{p.bounce}</td>
+                <td className={styles.pageName}>{p.name}</td>
+                <td>{p.views.toLocaleString()}</td>
+                <td>
+                  <span className={styles.badge}>{p.bounce}</span>
+                </td>
               </tr>
             ))}
           </tbody>

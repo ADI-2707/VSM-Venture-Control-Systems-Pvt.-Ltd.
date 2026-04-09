@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .header {
@@ -10,82 +10,101 @@
   align-items: center;
 }
 
-.header h2 {
-  color: var(--admin-text-primary);
+.title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+  margin-top: 4px;
 }
 
 .filter {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  color: var(--admin-text-primary);
   padding: 6px 10px;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 13px;
 }
 
 .kpiGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 .card {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  padding: 14px;
-  border-radius: 10px;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
 }
 
-.card span {
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+.kpiLabel {
   font-size: 12px;
   color: var(--admin-text-secondary);
 }
 
-.card strong {
+.kpiValue {
   display: block;
   margin-top: 6px;
-  font-size: 18px;
-  color: var(--admin-text-primary);
+  font-size: 22px;
+  font-weight: 600;
 }
 
-.chart {
-  background: var(--admin-card);
-  border: 1px solid var(--admin-border);
-  border-radius: 10px;
-  padding: 16px;
+.kpiChange {
+  font-size: 12px;
+  color: #16a34a;
 }
 
-.chartTitle {
-  color: var(--admin-text-primary);
+.sectionHeader {
   margin-bottom: 12px;
 }
 
+.chart {
+  background: white;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
 .chartBox {
-  height: 200px;
+  height: 220px;
 }
 
 .fakeChart {
   height: 100%;
-  border-radius: 6px;
+  border-radius: 10px;
 
   background: linear-gradient(
-    to top,
-    rgba(0, 194, 255, 0.2),
-    transparent
-  );
+      to top,
+      rgba(59, 130, 246, 0.2),
+      rgba(59, 130, 246, 0.05)
+    ),
+    linear-gradient(
+      to right,
+      transparent 49%,
+      rgba(0,0,0,0.04) 50%
+    );
 
-  border: 1px dashed var(--admin-border);
+  background-size: 100% 100%, 40px 100%;
+  border: 1px solid var(--admin-border);
 }
 
 .table {
-  background: var(--admin-card);
+  background: white;
   border: 1px solid var(--admin-border);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px;
-}
-
-.tableTitle {
-  margin-bottom: 12px;
-  color: var(--admin-text-primary);
 }
 
 .table table {
@@ -95,13 +114,24 @@
 
 .table th {
   text-align: left;
-  color: var(--admin-text-secondary);
   font-size: 12px;
-  padding-bottom: 8px;
+  color: var(--admin-text-secondary);
+  padding-bottom: 10px;
 }
 
 .table td {
-  padding: 8px 0;
-  color: var(--admin-text-primary);
+  padding: 12px 0;
   border-top: 1px solid var(--admin-border);
+}
+
+.pageName {
+  font-weight: 500;
+}
+
+.badge {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--admin-accent);
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
 }
