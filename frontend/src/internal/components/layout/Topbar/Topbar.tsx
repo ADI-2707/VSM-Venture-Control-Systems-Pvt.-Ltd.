@@ -34,18 +34,33 @@ export default function Topbar() {
     router.push("/internal");
   };
 
+  const getInitials = (name?: string) => {
+    if (!name) return "U";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  };
+
   return (
     <div className={styles.topbar}>
       <div className={styles.inner}>
         <div className={styles.title}>{getTitle()}</div>
 
-        <div className={styles.actions}>
-          <div className={styles.user}>
-            {user?.name || "User"}
+        <div className={styles.userMenu}>
+          <div className={styles.avatar}>
+            {getInitials(user?.name)}
           </div>
 
-          <div className={styles.roleBadge}>
-            {user?.role?.toUpperCase() || "ROLE"}
+          <div className={styles.userInfo}>
+            <div className={styles.userName}>
+              {user?.name || "User"}
+            </div>
+            <div className={styles.userRole}>
+              {user?.role?.toUpperCase() || "ROLE"}
+            </div>
           </div>
 
           <button
