@@ -3,26 +3,34 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Login.module.css";
+import { DUMMY_USERS } from "@/internal/constants/dummyUsers";
 
 export default function InternalLogin() {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("auth");
     if (isLoggedIn) {
       router.push("/internal/dashboard");
     }
-  }, []);
+  }, [router]);
 
   const handleLogin = () => {
-    if (username === "admin" && password === "admin") {
+    const user = DUMMY_USERS.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (user) {
       localStorage.setItem("auth", "true");
+      localStorage.setItem("user", JSON.stringify(user));
+
       router.push("/internal/dashboard");
     } else {
-      alert("Invalid credentials");
+      setError("Invalid username or password");
     }
   };
 
@@ -47,6 +55,8 @@ export default function InternalLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
+          {error && <p className={styles.error}>{error}</p>}
 
           <button onClick={handleLogin}>Login</button>
         </div>
