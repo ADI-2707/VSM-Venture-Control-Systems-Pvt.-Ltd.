@@ -3,79 +3,147 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0);
+  position: relative;
+  overflow: hidden;
+}
+
+.bgLayer {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(#e5eaf1 1px, transparent 1px),
+    linear-gradient(90deg, #e5eaf1 1px, transparent 1px);
+
+  background-size: 40px 40px;
+  background-color: #f8fafc;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+  z-index: 0;
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
+  animation: fadeIn 0.4s ease;
 }
 
 .brand {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
-  color: #0f172a;
-  letter-spacing: 0.5px;
+  color: #111827;
+  letter-spacing: 0.6px;
+  opacity: 0.9;
 }
 
 .card {
+  width: 360px;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  padding: 36px;
+  border: 1px solid #e5e7eb;
   border-radius: 14px;
-  width: 340px;
+  padding: 34px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  gap: 18px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+
   transition: all 0.2s ease;
 }
 
-.card:hover {
+.cardActive {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  border-color: rgba(14, 165, 233, 0.4);
+
+  box-shadow:
+    0 0 0 1px rgba(14, 165, 233, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.card h2 {
-  margin-bottom: 12px;
+.cardError {
+  border-color: rgba(239, 68, 68, 0.5);
+
+  box-shadow:
+    0 0 0 1px rgba(239, 68, 68, 0.3),
+    0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.title {
   text-align: center;
-  color: #0f172a;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
 }
 
-.card input {
-  padding: 11px;
-  border: 1px solid #cbd5f5;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.field input {
+  padding: 11px 12px;
   border-radius: 6px;
+  border: 1px solid #d1d5db;
   font-size: 14px;
-  transition: border 0.2s;
+  background: #f9fafb;
+  transition: all 0.2s ease;
 }
 
-.card input:focus {
+.field input:focus {
   outline: none;
   border-color: #0ea5e9;
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 2px rgba(14, 165, 233, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-.card button {
-  margin-top: 12px;
-  padding: 11px;
-  background: linear-gradient(to right, #0ea5e9, #0284c7);
-  color: white;
-  border: none;
+.loginButton {
+  margin-top: 10px;
+  padding: 12px;
   border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(to bottom, #0ea5e9, #0284c7);
+  color: white;
   cursor: pointer;
-  font-weight: 500;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
 }
 
-.card button:hover {
+.loginButton:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(14, 165, 233, 0.3);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+}
+
+.loginButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .error {
-  color: #ef4444;
   font-size: 13px;
+  color: #ef4444;
   text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
