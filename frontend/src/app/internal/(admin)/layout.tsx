@@ -2,6 +2,7 @@
 
 import AdminLayout from "@/internal/components/layout/AdminLayout/AdminLayout";
 import { MediaProvider } from "@/internal/context/MediaContext";
+import { AuthProvider } from "@/internal/context/AuthContext";
 
 export default function InternalAdminLayout({
   children,
@@ -9,8 +10,10 @@ export default function InternalAdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <MediaProvider>
-      <AdminLayout>{children}</AdminLayout>
-    </MediaProvider>
+    <AuthProvider>
+      <MediaProvider>
+        <AdminLayout>{children}</AdminLayout>
+      </MediaProvider>
+    </AuthProvider>
   );
 }
