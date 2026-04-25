@@ -7,11 +7,10 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function InternalLogin() {
   const router = useRouter();
-  const { login, user, loading } = useAuth();
+  const { login, user } = useAuth();
 
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,52 +18,40 @@ export default function InternalLogin() {
   const [submitting, setSubmitting] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (user) router.replace("/internal/dashboard");
+  }, [user, mounted, router]);
 
   useEffect(() => {
     const bg = bgRef.current;
     if (!bg) return;
-
     let frameId: number;
-
     const handleMouseMove = (e: MouseEvent) => {
       if (frameId) cancelAnimationFrame(frameId);
-
       frameId = requestAnimationFrame(() => {
         const x = (e.clientX / window.innerWidth - 0.5) * 8;
         const y = (e.clientY / window.innerHeight - 0.5) * 8;
         bg.style.transform = `translate(${x}px, ${y}px)`;
       });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       if (frameId) cancelAnimationFrame(frameId);
     };
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/internal/dashboard");
-    }
-  }, [user, router]);
-
-  useEffect(() => {
-    console.log("USER CHANGED:", user);
-  }, [user]);
-
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (submitting) return;
-
     setError("");
     setSubmitting(true);
     setIsActive(true);
-
     try {
       await login(email, password);
-
     } catch (err: any) {
       setError(err.message || "Login failed");
       setSubmitting(false);
@@ -72,29 +59,21 @@ export default function InternalLogin() {
     }
   };
 
-  if (loading) {
-    return <div style={{ color: "white" }}>Checking session...</div>;
-  }
+  if (!mounted || user) return null;
 
   return (
     <div className={styles.wrapper}>
       <div ref={bgRef} className={styles.bgLayer}></div>
-
       <div className={styles.container}>
-        <div className={styles.brand}>
-          VSM Venture Control Systems
-        </div>
-
+        <div className={styles.brand}>VSM Venture Control Systems</div>
         <form
           className={`${styles.card} ${isActive ? styles.cardActive : ""}`}
           onSubmit={handleLogin}
         >
           <h2 className={styles.title}>Employee Login</h2>
-
           <div className={styles.field}>
             <label>Email</label>
             <input
-              ref={usernameRef}
               type="email"
               placeholder="Enter your email"
               value={email}
@@ -102,20 +81,16 @@ export default function InternalLogin() {
               autoFocus
             />
           </div>
-
           <div className={styles.field}>
             <label>Password</label>
             <input
-              ref={passwordRef}
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
           {error && <div className={styles.error}>{error}</div>}
-
           <button
             type="submit"
             className={styles.loginButton}
