@@ -3,13 +3,11 @@
   background: #ffffff;
   border-right: 1px solid var(--admin-border);
   height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
   padding: 16px 10px;
   display: flex;
   flex-direction: column;
   transition: width 0.25s ease;
+  flex-shrink: 0;
 }
 
 .collapsed {
