@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "./MediaPage.module.css";
-import { useMedia, Media } from "@/internal/context/MediaContext";
+import { useMedia, Media } from "@/context/MediaContext";
 
 export default function MediaPage() {
   const { state, dispatch } = useMedia();

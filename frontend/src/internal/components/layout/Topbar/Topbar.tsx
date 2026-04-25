@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./Topbar.module.css";
-import { useAuth } from "@/internal/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 const routeTitleMap: Record<string, string> = {
   "/internal": "Dashboard",
@@ -29,19 +29,16 @@ export default function Topbar() {
     return match ? routeTitleMap[match] : "Dashboard";
   };
 
+
+
   const handleLogout = () => {
     logout();
     router.push("/internal");
   };
 
-  const getInitials = (name?: string) => {
-    if (!name) return "U";
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .slice(0, 2)
-      .toUpperCase();
+  const getInitials = (firstName?: string) => {
+    if (!firstName) return "U";
+    return firstName[0].toUpperCase();
   };
 
   return (
@@ -51,13 +48,14 @@ export default function Topbar() {
 
         <div className={styles.userMenu}>
           <div className={styles.avatar}>
-            {getInitials(user?.name)}
+            {getInitials(user?.first_name)}
           </div>
 
           <div className={styles.userInfo}>
             <div className={styles.userName}>
-              {user?.name || "User"}
+              {user?.first_name ? `${user.first_name} ${user.last_name ?? ""}`.trim() : "User"}
             </div>
+
             <div className={styles.userRole}>
               {user?.role?.toUpperCase() || "ROLE"}
             </div>
