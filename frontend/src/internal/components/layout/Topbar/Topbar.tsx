@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./Topbar.module.css";
-import { useAuth } from "@/internal/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 const routeTitleMap: Record<string, string> = {
   "/internal": "Dashboard",

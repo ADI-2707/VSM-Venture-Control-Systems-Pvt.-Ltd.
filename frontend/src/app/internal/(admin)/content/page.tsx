@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import styles from "./Content.module.css";
-import { useMedia } from "@/internal/context/MediaContext";
+import { useMedia } from "@/context/MediaContext";
 import PageSelector from "@/internal/sections/content/PageSelector/PageSelector";
 
 export default function ContentPage() {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./Login.module.css";
-import { useAuth } from "@/internal/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function InternalLogin() {
   const router = useRouter();
@@ -19,11 +19,6 @@ export default function InternalLogin() {
   const [submitting, setSubmitting] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  useEffect(() => {
-    if (!loading && user) {
-      router.replace("/internal/dashboard");
-    }
-  }, [user, loading, router]);
 
   useEffect(() => {
     const bg = bgRef.current;
@@ -49,6 +44,16 @@ export default function InternalLogin() {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      router.push("/internal/dashboard");
+    }
+  }, [user, router]);
+
+  useEffect(() => {
+    console.log("USER CHANGED:", user);
+  }, [user]);
+
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (submitting) return;
@@ -59,7 +64,7 @@ export default function InternalLogin() {
 
     try {
       await login(email, password);
-      router.replace("/internal/dashboard");
+
     } catch (err: any) {
       setError(err.message || "Login failed");
       setSubmitting(false);
@@ -67,7 +72,9 @@ export default function InternalLogin() {
     }
   };
 
-  if (loading) return null;
+  if (loading) {
+    return <div style={{ color: "white" }}>Checking session...</div>;
+  }
 
   return (
     <div className={styles.wrapper}>

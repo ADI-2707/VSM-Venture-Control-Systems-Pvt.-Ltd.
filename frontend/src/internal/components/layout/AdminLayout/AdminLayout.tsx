@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
 import styles from "./AdminLayout.module.css";
-import { useAuth } from "@/internal/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
