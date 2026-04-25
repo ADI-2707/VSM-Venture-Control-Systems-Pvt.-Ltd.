@@ -9,33 +9,24 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
-  const { isAuthenticated, loading } = useAuth();
-
+  const [mounted, setMounted] = useState(false);
+  const { user } = useAuth();
   const router = useRouter();
 
+  useEffect(() => { setMounted(true); }, []);
+
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.replace("/internal");
-    }
-  }, [loading, isAuthenticated, router]);
+    if (!mounted) return;
+    if (!user) router.replace("/internal");
+  }, [user, mounted, router]);
 
-  if (loading) {
-    return <div className={styles.loader}>Loading...</div>;
-  }
-
-  if (!isAuthenticated) return null;
+  if (!mounted || !user) return null;
 
   return (
     <div className={styles.root}>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-
-      <div
-        className={`${styles.main} ${
-          collapsed ? styles.collapsed : styles.expanded
-        }`}
-      >
+      <div className={`${styles.main} ${collapsed ? styles.collapsed : styles.expanded}`}>
         <Topbar />
-
         <div className={styles.container}>
           <div className={styles.content}>{children}</div>
         </div>
