@@ -11,16 +11,21 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (loading) return;
-    if (!user) router.replace("/internal");
-  }, [user, loading, router]);
+    setMounted(true);
+  }, []);
 
-  if (loading || !user) return null;
+  useEffect(() => {
+    if (!mounted) return;
+    if (!user) router.replace("/internal");
+  }, [user, mounted, router]);
+
+  if (!mounted || !user) return null;
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>

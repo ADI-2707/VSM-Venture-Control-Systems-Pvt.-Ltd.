@@ -26,47 +26,46 @@ type AuthContextType = {
   logout: () => void;
 };
 
+function getStoredAuth(): { user: User | null; token: string | null } {
+  if (typeof window === "undefined") return { user: null, token: null };
+  try {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token && user) {
+      return { token, user: JSON.parse(user) };
+    }
+  } catch {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
+  return { user: null, token: null };
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const stored = getStoredAuth();
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedToken && storedUser) {
-      try {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
-      } catch {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      }
-    }
-
-    setLoading(false);
-  }, []);
+  const [user, setUser] = useState<User | null>(stored.user);
+  const [token, setToken] = useState<string | null>(stored.token);
+  const [loading, setLoading] = useState(false);
 
   const login = useCallback(async (email: string, password: string) => {
-    const res = await apiRequest("/auth/login", "POST", { email, password });
+    setLoading(true);
+    try {
+      const res = await apiRequest("/auth/login", "POST", { email, password });
 
-    if (!res.access_token) {
-      throw new Error("Invalid response: access_token missing");
+      if (!res.access_token) throw new Error("Invalid response: access_token missing");
+      if (!res.user?.id) throw new Error("Invalid user data from backend");
+
+      localStorage.setItem("token", res.access_token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+
+      setToken(res.access_token);
+      setUser(res.user);
+    } finally {
+      setLoading(false);
     }
-
-    if (!res.user || !res.user.id) {
-      throw new Error("Invalid user data from backend");
-    }
-
-    localStorage.setItem("token", res.access_token);
-    localStorage.setItem("user", JSON.stringify(res.user));
-
-    setToken(res.access_token);
-    setUser(res.user);
-    setLoading(false);
   }, []);
 
   const logout = useCallback(() => {
