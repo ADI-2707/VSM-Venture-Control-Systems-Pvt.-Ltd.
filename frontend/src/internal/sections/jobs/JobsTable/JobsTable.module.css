@@ -1,0 +1,139 @@
+.wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--admin-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table thead tr {
+  background: var(--admin-bg);
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: var(--admin-text-secondary);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text-primary);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--admin-bg);
+}
+
+.titleCell {
+  font-weight: 500;
+  max-width: 200px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.date {
+  color: var(--admin-text-secondary);
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.active {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.draft {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.closed {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editBtn,
+.toggleBtn,
+.deleteBtn {
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.editBtn {
+  background: var(--admin-accent);
+  color: white;
+}
+
+.toggleBtn {
+  background: #f1f5f9;
+  color: #374151;
+}
+
+.deleteBtn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.editBtn:hover,
+.toggleBtn:hover,
+.deleteBtn:hover {
+  opacity: 0.75;
+}
+
+.state {
+  font-size: 14px;
+  color: var(--admin-text-secondary);
+  padding: 24px 0;
+}
+
+.applicationsBtn {
+  background: transparent;
+  border: 1px solid var(--admin-accent);
+  color: var(--admin-accent);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.applicationsBtn:hover {
+  background: var(--admin-accent);
+  color: white;
+}

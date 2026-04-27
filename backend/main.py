@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router
+from app.api.job_routes import router as job_router
 from app.db.session import SessionLocal
 from app.core.init_db import create_initial_admin
 
@@ -21,6 +22,7 @@ app.add_middleware(
 )
 
 app.include_router(router)
+app.include_router(job_router)   
 
 @app.on_event("startup")
 def startup():

@@ -1,22 +1,34 @@
+import Link from "next/link";
 import styles from "./OpeningCard.module.css";
 
-export default function OpeningCard({
-  title,
-  location,
-  type,
-}: {
+type Job = {
+  id: number;
   title: string;
+  department: string;
   location: string;
-  type: string;
-}) {
+  job_type: string;
+  experience_level: string;
+};
+
+export default function OpeningCard({ job }: { job: Job }) {
   return (
     <div className={styles.card}>
-      <h3>{title}</h3>
+      <div className={styles.tags}>
+        <span className={styles.tag}>{job.department}</span>
+        <span className={styles.tag}>{job.experience_level}</span>
+      </div>
 
-      <p>{location}</p>
-      <p>{type}</p>
+      <h3 className={styles.title}>{job.title}</h3>
 
-      <button>Apply Now</button>
+      <div className={styles.meta}>
+        <span>{job.location}</span>
+        <span className={styles.dot}>·</span>
+        <span>{job.job_type}</span>
+      </div>
+
+      <Link href={`/career/${job.id}`} className={styles.btn}>
+        View &amp; Apply
+      </Link>
     </div>
   );
 }
