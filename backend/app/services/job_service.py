@@ -1,6 +1,8 @@
 import os
 import shutil
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from fastapi import UploadFile, HTTPException
 from app.modules.job_model import Job
 from app.modules.application_model import Application
@@ -82,3 +84,80 @@ def get_applications(db: Session, job_id: int):
     get_job_by_id(db, job_id)
     return db.query(Application).filter(Application.job_id == job_id)\
              .order_by(Application.created_at.desc()).all()
+
+
+def get_analytics_summary(db: Session):
+    total_jobs = db.query(func.count(Job.id)).scalar()
+    total_applications = db.query(func.count(Application.id)).scalar()
+
+    jobs_by_status = (
+        db.query(Job.status, func.count(Job.id).label("count"))
+        .group_by(Job.status)
+        .all()
+    )
+
+    seven_days_ago = datetime.utcnow() - timedelta(days=7)
+    recent_applications = (
+        db.query(func.count(Application.id))
+        .filter(Application.created_at >= seven_days_ago)
+        .scalar()
+    )
+
+    return {
+        "total_jobs": total_jobs,
+        "total_applications": total_applications,
+        "jobs_by_status": [{"status": s, "count": c} for s, c in jobs_by_status],
+        "recent_applications": recent_applications,
+    }
+
+
+def get_applications_trend(db: Session, days: int = 30):
+    since = datetime.utcnow() - timedelta(days=days)
+
+    rows = (
+        db.query(
+            func.date(Application.created_at).label("date"),
+            func.count(Application.id).label("count"),
+        )
+        .filter(Application.created_at >= since)
+        .group_by(func.date(Application.created_at))
+        .order_by(func.date(Application.created_at))
+        .all()
+    )
+
+    # Fill in zero days so chart has no gaps
+    date_map = {str(row.date): row.count for row in rows}
+    trend = []
+    for i in range(days):
+        day = (since + timedelta(days=i + 1)).strftime("%Y-%m-%d")
+        trend.append({"date": day, "count": date_map.get(day, 0)})
+
+    return {"trend": trend}
+
+
+def get_top_jobs(db: Session, limit: int = 5):
+    rows = (
+        db.query(
+            Application.job_id,
+            Job.title,
+            Job.department,
+            func.count(Application.id).label("application_count"),
+        )
+        .join(Job, Job.id == Application.job_id)
+        .group_by(Application.job_id, Job.title, Job.department)
+        .order_by(func.count(Application.id).desc())
+        .limit(limit)
+        .all()
+    )
+
+    return {
+        "top_jobs": [
+            {
+                "job_id": r.job_id,
+                "title": r.title,
+                "department": r.department,
+                "application_count": r.application_count,
+            }
+            for r in rows
+        ]
+    }
