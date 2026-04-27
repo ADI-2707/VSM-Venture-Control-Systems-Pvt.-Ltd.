@@ -11,6 +11,7 @@ const navItems = [
   { label: "Media", href: "/internal/media", icon: "/adminsidebar/media.svg" },
   { label: "Analytics", href: "/internal/analytics", icon: "/adminsidebar/analytics.svg" },
   { label: "Monitoring", href: "/internal/monitoring", icon: "/adminsidebar/monitoring.svg" },
+  { label: "Jobs", href: "/internal/jobs", icon: "/adminsidebar/jobs.svg" },
   { label: "Settings", href: "/internal/settings", icon: "/adminsidebar/settings.svg" },
 ];
 
