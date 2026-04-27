@@ -79,13 +79,13 @@ export default function JobsTable({
                     Delete
                   </button>
                   <button
-  className={styles.toggleBtn}
-  onClick={() =>
-    router.push(`/internal/jobs/${job.id}/applications`)
-  }
->
-  Applications
-</button>
+                    className={styles.applicationsBtn}
+                    onClick={() =>
+                      router.push(`/internal/jobs/${job.id}/applications`)
+                    }
+                  >
+                    📋 Applications
+                  </button>
                 </div>
               </td>
             </tr>

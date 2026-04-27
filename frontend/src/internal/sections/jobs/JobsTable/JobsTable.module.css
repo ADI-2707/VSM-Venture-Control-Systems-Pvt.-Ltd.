@@ -120,3 +120,20 @@
   color: var(--admin-text-secondary);
   padding: 24px 0;
 }
+
+.applicationsBtn {
+  background: transparent;
+  border: 1px solid var(--admin-accent);
+  color: var(--admin-accent);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.applicationsBtn:hover {
+  background: var(--admin-accent);
+  color: white;
+}
