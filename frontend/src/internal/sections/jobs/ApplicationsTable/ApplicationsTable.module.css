@@ -1,0 +1,70 @@
+.wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--admin-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table thead tr {
+  background: var(--admin-bg);
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: var(--admin-text-secondary);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text-primary);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--admin-bg);
+}
+
+.nameCell {
+  font-weight: 500;
+}
+
+.muted {
+  color: var(--admin-text-secondary);
+}
+
+.coverNote {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.downloadBtn {
+  background: var(--admin-accent);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.downloadBtn:hover {
+  opacity: 0.75;
+}

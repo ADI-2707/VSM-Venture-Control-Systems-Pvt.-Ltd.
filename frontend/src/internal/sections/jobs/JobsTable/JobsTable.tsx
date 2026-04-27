@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import styles from "./JobsTable.module.css";
 import type { Job } from "../JobsPage/JobsPage";
 
@@ -18,6 +19,9 @@ const statusColor: Record<string, string> = {
 export default function JobsTable({
   jobs, loading, onEdit, onDelete, onToggleStatus,
 }: Props) {
+
+  const router = useRouter();
+
   if (loading) return <p className={styles.state}>Loading...</p>;
   if (jobs.length === 0) return (
     <p className={styles.state}>No job postings found. Click "+ New Job" to create one.</p>
@@ -74,6 +78,14 @@ export default function JobsTable({
                   >
                     Delete
                   </button>
+                  <button
+  className={styles.toggleBtn}
+  onClick={() =>
+    router.push(`/internal/jobs/${job.id}/applications`)
+  }
+>
+  Applications
+</button>
                 </div>
               </td>
             </tr>

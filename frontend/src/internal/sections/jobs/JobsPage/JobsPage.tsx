@@ -23,14 +23,21 @@ export type Job = {
 };
 
 export default function JobsPage() {
-  const { token } = useAuth();
+  const { token, authReady, logout } = useAuth();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<"list" | "form">("list");
   const [editJob, setEditJob] = useState<Job | null>(null);
   const [filterStatus, setFilterStatus] = useState("");
+  const [refresh, setRefresh] = useState(0);
 
-  const fetchJobs = () => {
+  const triggerRefresh = () => setRefresh((r) => r + 1);
+
+  useEffect(() => {
+    if (!authReady || !token) return;
+
+    setLoading(true);
+
     const url = filterStatus
       ? `http://localhost:8000/admin/jobs?status=${filterStatus}`
       : "http://localhost:8000/admin/jobs";
@@ -38,17 +45,17 @@ export default function JobsPage() {
     fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((r) => r.json())
-      .then((data) => {
+      .then(async (r) => {
+        if (r.status === 401) {
+          logout();
+          return;
+        }
+        const data = await r.json();
         setJobs(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    fetchJobs();
-  }, [filterStatus]);
+  }, [filterStatus, token, refresh, authReady]);
 
   const handleEdit = (job: Job) => {
     setEditJob(job);
@@ -63,22 +70,22 @@ export default function JobsPage() {
   const handleSaved = () => {
     setView("list");
     setEditJob(null);
-    setLoading(true);
-    fetchJobs();
+    triggerRefresh();
   };
 
   const handleDelete = async (id: number) => {
     if (!confirm("Delete this job posting?")) return;
-    await fetch(`http://localhost:8000/admin/jobs/${id}`, {
+    const r = await fetch(`http://localhost:8000/admin/jobs/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-    fetchJobs();
+    if (r.status === 401) { logout(); return; }
+    triggerRefresh();
   };
 
   const handleToggleStatus = async (job: Job) => {
     const newStatus = job.status === "active" ? "closed" : "active";
-    await fetch(`http://localhost:8000/admin/jobs/${job.id}`, {
+    const r = await fetch(`http://localhost:8000/admin/jobs/${job.id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -86,7 +93,8 @@ export default function JobsPage() {
       },
       body: JSON.stringify({ status: newStatus }),
     });
-    fetchJobs();
+    if (r.status === 401) { logout(); return; }
+    triggerRefresh();
   };
 
   return (
@@ -124,7 +132,9 @@ export default function JobsPage() {
             {["", "draft", "active", "closed"].map((s) => (
               <button
                 key={s}
-                className={`${styles.filterBtn} ${filterStatus === s ? styles.activeFilter : ""}`}
+                className={`${styles.filterBtn} ${
+                  filterStatus === s ? styles.activeFilter : ""
+                }`}
                 onClick={() => setFilterStatus(s)}
               >
                 {s === "" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}
@@ -143,11 +153,7 @@ export default function JobsPage() {
       )}
 
       {view === "form" && (
-        <JobForm
-          token={token!}
-          editJob={editJob}
-          onSaved={handleSaved}
-        />
+        <JobForm token={token!} editJob={editJob} onSaved={handleSaved} />
       )}
     </div>
   );

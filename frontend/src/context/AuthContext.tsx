@@ -22,9 +22,19 @@ type AuthContextType = {
   user: User | null;
   token: string | null;
   loading: boolean;
+  authReady: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 };
+
+function isTokenExpired(token: string): boolean {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true;
+  }
+}
 
 function getStoredAuth(): { user: User | null; token: string | null } {
   if (typeof window === "undefined") return { user: null, token: null };
@@ -32,6 +42,11 @@ function getStoredAuth(): { user: User | null; token: string | null } {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     if (token && user) {
+      if (isTokenExpired(token)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        return { user: null, token: null };
+      }
       return { token, user: JSON.parse(user) };
     }
   } catch {
@@ -44,11 +59,17 @@ function getStoredAuth(): { user: User | null; token: string | null } {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const stored = getStoredAuth();
-
-  const [user, setUser] = useState<User | null>(stored.user);
-  const [token, setToken] = useState<string | null>(stored.token);
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    const stored = getStoredAuth();
+    setUser(stored.user);
+    setToken(stored.token);
+    setAuthReady(true);
+  }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     setLoading(true);
@@ -76,8 +97,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user, token, loading, login, logout }),
-    [user, token, loading, login, logout]
+    () => ({ user, token, loading, authReady, login, logout }),
+    [user, token, loading, authReady, login, logout]
   );
 
   return (
