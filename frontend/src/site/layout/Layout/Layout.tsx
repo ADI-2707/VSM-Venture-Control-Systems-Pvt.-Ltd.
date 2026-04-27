@@ -18,8 +18,6 @@ export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
-  if (showLoader === null) return null;
-
   return (
     <LayoutGroup>
       <div className={styles.root}>

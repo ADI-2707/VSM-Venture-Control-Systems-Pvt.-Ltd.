@@ -59,7 +59,8 @@ export default function InternalLogin() {
     }
   };
 
-  if (!mounted || user) return null;
+  if (!mounted) return <div style={{ visibility: "hidden" }} />;
+  if (user) return null;
 
   return (
     <div className={styles.wrapper}>

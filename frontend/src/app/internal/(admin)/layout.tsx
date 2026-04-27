@@ -23,7 +23,8 @@ export default function AdminLayout({
     if (!user) router.replace("/internal");
   }, [user, mounted, router]);
 
-  if (!mounted || !user) return null;
+  if (!mounted) return <div style={{ visibility: "hidden" }} />;
+  if (!user) return null;
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "var(--admin-bg)" }}>
