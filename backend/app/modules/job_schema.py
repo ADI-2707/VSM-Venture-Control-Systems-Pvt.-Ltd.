@@ -67,3 +67,35 @@ class ApplicationResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class JobStatusCount(BaseModel):
+    status: str
+    count: int
+
+
+class TopJob(BaseModel):
+    job_id: int
+    title: str
+    department: str
+    application_count: int
+
+
+class ApplicationTrendPoint(BaseModel):
+    date: str
+    count: int
+
+
+class AnalyticsSummary(BaseModel):
+    total_jobs: int
+    total_applications: int
+    jobs_by_status: list[JobStatusCount]
+    recent_applications: int  # last 7 days
+
+
+class AnalyticsTrend(BaseModel):
+    trend: list[ApplicationTrendPoint]
+
+
+class AnalyticsTopJobs(BaseModel):
+    top_jobs: list[TopJob]
