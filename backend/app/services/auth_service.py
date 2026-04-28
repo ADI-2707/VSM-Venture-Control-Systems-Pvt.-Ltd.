@@ -44,10 +44,16 @@ def refresh_access_token(db: Session, token: str):
             algorithms=[settings.algorithm]
         )
 
+        if payload.get("type") != "refresh":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid refresh token",
+            )
+
         user_id = int(payload["sub"])
         token_version = payload.get("token_version")
 
-    except (JWTError, KeyError, ValueError):
+    except (JWTError, KeyError, TypeError, ValueError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid refresh token",
