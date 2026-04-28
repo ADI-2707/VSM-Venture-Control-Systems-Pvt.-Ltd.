@@ -5,7 +5,7 @@ from app.db.deps import get_db
 from app.modules.user_schema import UserCreate, UserLogin, UserResponse
 from app.services.user_services import create_user
 from app.services.auth_service import login_user
-from app.core.deps_auth import get_current_admin
+from app.core.deps_auth import get_current_admin, get_current_user
 
 router = APIRouter()
 
@@ -38,3 +38,10 @@ def create_user_route(
     _: None = Depends(get_current_admin),
 ):
     return create_user(db, data)
+
+
+@router.get("/auth/profile", response_model=UserResponse)
+def get_profile(
+    current_user = Depends(get_current_user)
+):
+    return current_user
