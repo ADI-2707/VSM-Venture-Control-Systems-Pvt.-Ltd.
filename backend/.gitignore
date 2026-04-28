@@ -11,6 +11,9 @@ venv/
 # DB
 *.db
 
+# Runtime uploads
+uploads/
+
 # OS
 .DS_Store
 Thumbs.db
