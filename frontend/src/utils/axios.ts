@@ -16,8 +16,23 @@ const api: AxiosInstance = axios.create({
   },
 });
 
+type RefreshSubscriber = {
+  resolve: (token: string) => void;
+  reject: (error: unknown) => void;
+};
+
 let isRefreshing = false;
-let refreshSubscribers: any[] = [];
+let refreshSubscribers: RefreshSubscriber[] = [];
+
+const resolveRefreshSubscribers = (token: string) => {
+  refreshSubscribers.forEach(({ resolve }) => resolve(token));
+  refreshSubscribers = [];
+};
+
+const rejectRefreshSubscribers = (error: unknown) => {
+  refreshSubscribers.forEach(({ reject }) => reject(error));
+  refreshSubscribers = [];
+};
 
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
@@ -35,14 +50,22 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest: any = error.config;
 
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        return new Promise((resolve) => {
-          refreshSubscribers.push((token: string) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(api(originalRequest));
+        return new Promise((resolve, reject) => {
+          refreshSubscribers.push({
+            resolve: (token: string) => {
+              originalRequest.headers = originalRequest.headers ?? {};
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(api(originalRequest));
+            },
+            reject,
           });
         });
       }
@@ -62,13 +85,14 @@ api.interceptors.response.use(
 
         localStorage.setItem("token", newToken);
 
-        refreshSubscribers.forEach((cb) => cb(newToken));
-        refreshSubscribers = [];
+        resolveRefreshSubscribers(newToken);
 
+        originalRequest.headers = originalRequest.headers ?? {};
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
         return api(originalRequest);
       } catch (err) {
+        rejectRefreshSubscribers(err);
         localStorage.clear();
         window.location.href = "/internal";
         return Promise.reject(err);
