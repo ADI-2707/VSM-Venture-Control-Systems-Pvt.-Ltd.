@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { API_BASE_URL } from "@/utils/axios";
 import styles from "./JobDetail.module.css";
 
 type Job = {
@@ -39,7 +40,7 @@ export default function JobDetailPage() {
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/jobs/${id}`)
+    fetch(`${API_BASE_URL}/jobs/${id}`)
       .then((r) => {
         if (!r.ok) throw new Error("Not found");
         return r.json();
@@ -75,7 +76,7 @@ export default function JobDetailPage() {
       if (coverNote) formData.append("cover_note", coverNote);
       formData.append("cv", cv);
 
-      const res = await fetch(`http://localhost:8000/jobs/${id}/apply`, {
+      const res = await fetch(`${API_BASE_URL}/jobs/${id}/apply`, {
         method: "POST",
         body: formData,
       });

@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/utils/axios";
 import styles from "./ApplicationsTable.module.css";
 
 export default function ApplicationsTable({ data }: { data: any[] }) {
@@ -9,7 +10,7 @@ export default function ApplicationsTable({ data }: { data: any[] }) {
   const downloadCV = async (id: number) => {
     try {
       const res = await fetch(
-        `http://localhost:8000/admin/applications/${id}/cv`,
+        `${API_BASE_URL}/admin/applications/${id}/cv`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
