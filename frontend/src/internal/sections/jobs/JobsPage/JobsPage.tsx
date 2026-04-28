@@ -2,9 +2,15 @@
 
 import { useEffect, useState } from "react";
 import styles from "./JobsPage.module.css";
-import { useAuth } from "@/context/AuthContext";
+
 import JobForm from "../JobForm/JobForm";
 import JobsTable from "../JobsTable/JobsTable";
+
+import {
+  fetchJobs,
+  deleteJob,
+  updateJob,
+} from "@/services/jobService";
 
 export type Job = {
   id: number;
@@ -23,7 +29,6 @@ export type Job = {
 };
 
 export default function JobsPage() {
-  const { token, authReady, logout } = useAuth();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<"list" | "form">("list");
@@ -33,29 +38,24 @@ export default function JobsPage() {
 
   const triggerRefresh = () => setRefresh((r) => r + 1);
 
+  // 🔥 Fetch Jobs (clean service-based)
   useEffect(() => {
-    if (!authReady || !token) return;
-
-    setLoading(true);
-
-    const url = filterStatus
-      ? `http://localhost:8000/admin/jobs?status=${filterStatus}`
-      : "http://localhost:8000/admin/jobs";
-
-    fetch(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then(async (r) => {
-        if (r.status === 401) {
-          logout();
-          return;
-        }
-        const data = await r.json();
+    const loadJobs = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchJobs(
+          filterStatus ? `?status=${filterStatus}` : ""
+        );
         setJobs(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Failed to fetch jobs", err);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [filterStatus, token, refresh, authReady]);
+      }
+    };
+
+    loadJobs();
+  }, [filterStatus, refresh]);
 
   const handleEdit = (job: Job) => {
     setEditJob(job);
@@ -75,26 +75,24 @@ export default function JobsPage() {
 
   const handleDelete = async (id: number) => {
     if (!confirm("Delete this job posting?")) return;
-    const r = await fetch(`http://localhost:8000/admin/jobs/${id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (r.status === 401) { logout(); return; }
-    triggerRefresh();
+
+    try {
+      await deleteJob(id);
+      triggerRefresh();
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
   };
 
   const handleToggleStatus = async (job: Job) => {
     const newStatus = job.status === "active" ? "closed" : "active";
-    const r = await fetch(`http://localhost:8000/admin/jobs/${job.id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    if (r.status === 401) { logout(); return; }
-    triggerRefresh();
+
+    try {
+      await updateJob(job.id, { status: newStatus });
+      triggerRefresh();
+    } catch (err) {
+      console.error("Status update failed", err);
+    }
   };
 
   return (
@@ -103,7 +101,7 @@ export default function JobsPage() {
         <div>
           <h1 className={styles.title}>Job Postings</h1>
           <p className={styles.subtitle}>
-            Create and manage open positions for the public careers page
+            Create and manage open positions
           </p>
         </div>
 
@@ -153,7 +151,7 @@ export default function JobsPage() {
       )}
 
       {view === "form" && (
-        <JobForm token={token!} editJob={editJob} onSaved={handleSaved} />
+        <JobForm editJob={editJob} onSaved={handleSaved} />
       )}
     </div>
   );

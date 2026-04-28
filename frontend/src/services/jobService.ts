@@ -1,6 +1,7 @@
 import { apiGet, apiPost, apiPatch, apiDelete } from "@/utils/axios";
 
-export const fetchJobs = () => apiGet("/admin/jobs");
+export const fetchJobs = (query: string = "") =>
+  apiGet(`/admin/jobs${query}`);
 
 export const createJob = (data: any) =>
   apiPost("/admin/jobs", data);

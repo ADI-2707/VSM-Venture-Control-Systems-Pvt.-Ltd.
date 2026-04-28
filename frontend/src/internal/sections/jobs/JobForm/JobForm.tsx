@@ -1,34 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./JobForm.module.css";
 import type { Job } from "../JobsPage/JobsPage";
 
+import { createJob, updateJob } from "@/services/jobService";
+
 type Props = {
-  token: string;
   editJob: Job | null;
   onSaved: () => void;
 };
 
-export default function JobForm({ token, editJob, onSaved }: Props) {
+export default function JobForm({ editJob, onSaved }: Props) {
   const [form, setForm] = useState({
-    title: editJob?.title ?? "",
-    department: editJob?.department ?? "",
-    location: editJob?.location ?? "",
-    job_type: editJob?.job_type ?? "full-time",
-    experience_level: editJob?.experience_level ?? "mid",
-    salary_min: editJob?.salary_min?.toString() ?? "",
-    salary_max: editJob?.salary_max?.toString() ?? "",
-    description: editJob?.description ?? "",
-    requirements: editJob?.requirements ?? "",
-    status: editJob?.status ?? "draft",
+    title: "",
+    department: "",
+    location: "",
+    job_type: "full-time",
+    experience_level: "mid",
+    salary_min: "",
+    salary_max: "",
+    description: "",
+    requirements: "",
+    status: "draft",
   });
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  const set = (field: string, value: string) =>
+  useEffect(() => {
+    if (editJob) {
+      setForm({
+        title: editJob.title ?? "",
+        department: editJob.department ?? "",
+        location: editJob.location ?? "",
+        job_type: editJob.job_type ?? "full-time",
+        experience_level: editJob.experience_level ?? "mid",
+        salary_min: editJob.salary_min?.toString() ?? "",
+        salary_max: editJob.salary_max?.toString() ?? "",
+        description: editJob.description ?? "",
+        requirements: editJob.requirements ?? "",
+        status: editJob.status ?? "draft",
+      });
+    }
+  }, [editJob]);
+
+  const set = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,27 +61,16 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
     };
 
     try {
-      const url = editJob
-        ? `http://localhost:8000/admin/jobs/${editJob.id}`
-        : "http://localhost:8000/admin/jobs";
-
-      const res = await fetch(url, {
-        method: editJob ? "PATCH" : "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Failed to save");
+      if (editJob) {
+        await updateJob(editJob.id, payload);
+      } else {
+        await createJob(payload);
       }
 
       onSaved();
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      console.error("Save failed", err);
+      setError(err?.response?.data?.detail || "Failed to save job");
     } finally {
       setSaving(false);
     }
@@ -84,6 +92,7 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
             required
           />
         </div>
+
         <div className={styles.field}>
           <label>Department *</label>
           <input
@@ -105,6 +114,7 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
             required
           />
         </div>
+
         <div className={styles.field}>
           <label>Job Type *</label>
           <select
@@ -131,6 +141,7 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
             <option value="senior">Senior</option>
           </select>
         </div>
+
         <div className={styles.field}>
           <label>Status</label>
           <select
@@ -146,21 +157,24 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label>Salary Min (₹/yr) <span className={styles.optional}>optional</span></label>
+          <label>
+            Salary Min (₹/yr) <span className={styles.optional}>optional</span>
+          </label>
           <input
             type="number"
             value={form.salary_min}
             onChange={(e) => set("salary_min", e.target.value)}
-            placeholder="e.g. 400000"
           />
         </div>
+
         <div className={styles.field}>
-          <label>Salary Max (₹/yr) <span className={styles.optional}>optional</span></label>
+          <label>
+            Salary Max (₹/yr) <span className={styles.optional}>optional</span>
+          </label>
           <input
             type="number"
             value={form.salary_max}
             onChange={(e) => set("salary_max", e.target.value)}
-            placeholder="e.g. 700000"
           />
         </div>
       </div>
@@ -171,21 +185,18 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
           rows={5}
           value={form.description}
           onChange={(e) => set("description", e.target.value)}
-          placeholder="Describe the role, responsibilities, and what a typical day looks like..."
           required
         />
       </div>
 
       <div className={styles.field}>
         <label>
-          Requirements *{" "}
-          <span className={styles.optional}>one per line</span>
+          Requirements <span className={styles.optional}>one per line</span>
         </label>
         <textarea
           rows={5}
           value={form.requirements}
           onChange={(e) => set("requirements", e.target.value)}
-          placeholder={"3+ years PLC programming experience\nFamiliarity with SCADA systems\nB.E. in Electrical / Electronics"}
           required
         />
       </div>
@@ -194,7 +205,11 @@ export default function JobForm({ token, editJob, onSaved }: Props) {
 
       <div className={styles.footer}>
         <button type="submit" className={styles.saveBtn} disabled={saving}>
-          {saving ? "Saving..." : editJob ? "Save Changes" : "Create Job"}
+          {saving
+            ? "Saving..."
+            : editJob
+            ? "Save Changes"
+            : "Create Job"}
         </button>
       </div>
     </form>
