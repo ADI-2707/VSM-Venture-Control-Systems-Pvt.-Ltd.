@@ -22,7 +22,7 @@ def create_initial_admin(db: Session):
             employee_id="EMP002",
             email="analyst@vsm.com",
             hashed_password=hash_password("analyst123"),
-            role="user",
+            role="analyst",
         ))
 
     db.commit()
