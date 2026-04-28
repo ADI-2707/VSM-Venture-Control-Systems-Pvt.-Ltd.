@@ -62,6 +62,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initAuth();
   }, []);
 
+  useEffect(() => {
+    const checkSession = () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setUser(null);
+        setAuthReady(true);
+        return;
+      }
+
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+
+        if (payload.exp * 1000 < Date.now()) {
+          localStorage.removeItem("token");
+          setUser(null);
+        } else {
+          setUser({ id: payload.sub, role: payload.role });
+        }
+      } catch {
+        setUser(null);
+      }
+
+      setAuthReady(true);
+    };
+
+    checkSession();
+  }, []);
+
   const login = useCallback(async (email: string, password: string) => {
     setLoading(true);
 
