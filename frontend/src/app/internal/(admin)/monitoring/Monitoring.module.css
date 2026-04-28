@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 24px;
 }
 
 .title {
@@ -23,72 +24,12 @@
   text-align: right;
 }
 
-.uptime {
-  font-size: 12px;
-  color: var(--admin-text-secondary);
-}
-
 .overallStatus {
   display: block;
   font-size: 12px;
   color: #16a34a;
   margin-top: 4px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  border: 1px solid var(--admin-border);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-  transition: all 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-}
-
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: var(--admin-text-secondary);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.dotOnline {
-  background: #16a34a;
-}
-
-.dotWarning {
-  background: #f59e0b;
-}
-
-.status {
-  margin-top: 8px;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.online {
-  color: #16a34a;
-}
-
-.warning {
-  color: #f59e0b;
+  font-weight: 500;
 }
 
 .logs {
@@ -96,6 +37,42 @@
   border: 1px solid var(--admin-border);
   border-radius: 12px;
   padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--admin-border);
+  padding-bottom: 8px;
+}
+
+.tab {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--admin-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #f3f4f6;
+  color: var(--admin-text-primary);
+}
+
+.activeTab {
+  background: #1e293b;
+  color: white;
+}
+
+.activeTab:hover {
+  background: #334155;
+  color: white;
 }
 
 .logsHeader {
@@ -105,82 +82,83 @@
   margin-bottom: 12px;
 }
 
-.logsHeader span {
-  font-size: 10px;
-  color: var(--admin-text-secondary);
+.logsHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.logControls select {
-  background: white;
-  border: 1px solid var(--admin-border);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
+.logsHeader span {
+  font-size: 10px;
+  color: #ef4444;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
 
 .logsTable {
   border: 1px solid var(--admin-border);
   border-radius: 10px;
   overflow: hidden;
+  background: #1e1e1e;
+  color: #e4e4e7;
 }
 
 .logHead {
   display: grid;
-  grid-template-columns: 100px 120px 120px 1fr;
-  background: #f9fafb;
+  grid-template-columns: 80px 80px 100px 120px 1fr;
+  background: #27272a;
   padding: 10px 12px;
   font-size: 12px;
-  color: var(--admin-text-secondary);
+  font-weight: 600;
+  color: #a1a1aa;
+  border-bottom: 1px solid #3f3f46;
 }
 
 .logBody {
-  max-height: 260px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
 .logRow {
   display: grid;
-  grid-template-columns: 100px 120px 120px 1fr;
-  padding: 10px 12px;
+  grid-template-columns: 80px 80px 100px 120px 1fr;
+  padding: 8px 12px;
   font-size: 12px;
   font-family: monospace;
-  border-top: 1px solid var(--admin-border);
-  transition: background 0.2s ease;
+  border-bottom: 1px solid #27272a;
 }
 
 .logRow:hover {
-  background: rgba(0, 0, 0, 0.03);
+  background: #27272a;
 }
 
 .time {
-  color: #6b7280;
-}
-
-.logType {
-  text-transform: uppercase;
-  font-size: 10px;
+  color: #71717a;
 }
 
 .service {
-  color: #3b82f6;
+  color: #60a5fa;
+}
+
+.actor {
+  color: #d946ef;
 }
 
 .level {
-  font-weight: 600;
+  font-weight: bold;
 }
 
-.success {
-  color: #16a34a;
-}
-
-.warning {
-  color: #f59e0b;
-}
-
-.info {
-  color: #3b82f6;
-}
+.success { color: #10b981; }
+.warning { color: #f59e0b; }
+.info { color: #3b82f6; }
+.error { color: #ef4444; }
 
 .message {
-  color: var(--admin-text-primary);
+  color: #f4f4f5;
+  word-break: break-all;
 }

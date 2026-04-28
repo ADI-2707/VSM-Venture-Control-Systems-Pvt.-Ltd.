@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+import asyncio
+import os
 
 from app.db.deps import get_db
 
@@ -82,3 +84,32 @@ def logout_user(
     db.commit()
 
     return {"message": "Logged out successfully"}
+
+
+@router.get("/admin/logs")
+def get_system_logs(
+    limit: int = 200,
+    _: User = Depends(get_current_admin)
+):
+    import json
+    log_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "logs", "app.log")
+    logs = []
+    
+    if os.path.exists(log_file_path):
+        with open(log_file_path, "r") as f:
+            lines = f.readlines()
+            last_lines = lines[-limit:] if len(lines) > limit else lines
+            for line in last_lines:
+                if line.strip():
+                    try:
+                        logs.append(json.loads(line.strip()))
+                    except:
+                        logs.append({
+                            "time": "",
+                            "level": "INFO",
+                            "service": "system",
+                            "source": "system",
+                            "actor": "anonymous",
+                            "message": line.strip()
+                        })
+    return logs

@@ -22,6 +22,7 @@ def login_user(db: Session, email: str, password: str):
         "sub": str(user.id),
         "role": user.role,
         "token_version": user.token_version,
+        "employee_id": user.employee_id,
     })
 
     refresh_token = create_refresh_token({
@@ -71,6 +72,7 @@ def refresh_access_token(db: Session, token: str):
         "sub": str(user.id),
         "role": user.role,
         "token_version": user.token_version,
+        "employee_id": user.employee_id,
     })
 
     return new_access
