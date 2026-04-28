@@ -9,6 +9,7 @@ export function useRBACGuard() {
   const { user, authReady } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const isAllowed = !!user && hasAccess(user.role as any, pathname);
 
   useEffect(() => {
     if (!authReady) return;
@@ -18,13 +19,13 @@ export function useRBACGuard() {
       return;
     }
 
-    if (!hasAccess(user.role as any, pathname)) {
+    if (!isAllowed) {
       router.replace("/internal");
     }
-  }, [user, authReady, pathname, router]);
+  }, [user, authReady, isAllowed, router]);
 
   return {
-    isAllowed: !!user,
+    isAllowed,
     isLoading: !authReady,
   };
 }

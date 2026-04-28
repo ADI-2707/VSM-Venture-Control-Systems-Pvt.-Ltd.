@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.db.deps import get_db
 
-from app.modules.user_schema import UserCreate, UserLogin, UserResponse
+from app.modules.user_schema import RefreshTokenRequest, UserCreate, UserLogin, UserResponse
 from app.modules.user_model import User
 
 from app.services.user_services import create_user
@@ -38,10 +38,10 @@ def login(data: UserLogin, db: Session = Depends(get_db)):
 
 @router.post("/auth/refresh")
 def refresh_token(
-    token: str,
+    data: RefreshTokenRequest,
     db: Session = Depends(get_db),
 ):
-    new_access = refresh_access_token(db, token)
+    new_access = refresh_access_token(db, data.token)
     return {"access_token": new_access}
 
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 export type Media = {
   id: string;
@@ -29,6 +29,53 @@ type MediaAction =
       type: "REMOVE_MEDIA_FROM_PAGE";
       payload: { page: string; mediaId: string };
     };
+
+const MEDIA_STORAGE_KEY = "vsm-media-state";
+
+const defaultMediaState: MediaState = {
+  media: [
+    {
+      id: "1",
+      url: "/images/gallery/team/1.jfif",
+      name: "team1.jpg",
+      type: "image",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "2",
+      url: "/images/gallery/team/2.jfif",
+      name: "team2.jpg",
+      type: "image",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "3",
+      url: "/images/gallery/team/3.jfif",
+      name: "team3.jpg",
+      type: "image",
+      createdAt: new Date().toISOString(),
+    },
+  ],
+  pageMedia: {},
+};
+
+function loadMediaState(): MediaState {
+  if (typeof window === "undefined") return defaultMediaState;
+
+  try {
+    const stored = window.localStorage.getItem(MEDIA_STORAGE_KEY);
+    if (!stored) return defaultMediaState;
+
+    const parsed = JSON.parse(stored) as MediaState;
+    if (!Array.isArray(parsed.media) || typeof parsed.pageMedia !== "object") {
+      return defaultMediaState;
+    }
+
+    return parsed;
+  } catch {
+    return defaultMediaState;
+  }
+}
 
 
 function mediaReducer(state: MediaState, action: MediaAction): MediaState {
@@ -79,32 +126,15 @@ const MediaContext = createContext<{
 } | null>(null);
 
 export function MediaProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(mediaReducer, {
-    media: [
-      {
-        id: "1",
-        url: "/images/gallery/team/1.jfif",
-        name: "team1.jpg",
-        type: "image",
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        url: "/images/gallery/team/2.jfif",
-        name: "team2.jpg",
-        type: "image",
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "3",
-        url: "/images/gallery/team/3.jfif",
-        name: "team3.jpg",
-        type: "image",
-        createdAt: new Date().toISOString(),
-      },
-    ],
-    pageMedia: {},
-  });
+  const [state, dispatch] = useReducer(
+    mediaReducer,
+    undefined,
+    loadMediaState
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem(MEDIA_STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
 
   return (
     <MediaContext.Provider value={{ state, dispatch }}>

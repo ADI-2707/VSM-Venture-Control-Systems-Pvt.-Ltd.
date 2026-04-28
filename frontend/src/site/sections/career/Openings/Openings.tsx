@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "@/utils/axios";
 import styles from "./Openings.module.css";
 import OpeningCard from "../OpeningCard/OpeningCard";
 
@@ -27,7 +28,7 @@ export default function Openings() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/jobs?status=active")
+    fetch(`${API_BASE_URL}/jobs?status=active`)
       .then((r) => r.json())
       .then((data) => {
         setJobs(Array.isArray(data) ? data : []);

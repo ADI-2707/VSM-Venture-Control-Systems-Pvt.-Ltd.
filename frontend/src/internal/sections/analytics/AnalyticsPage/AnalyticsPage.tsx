@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { API_BASE_URL } from "@/utils/axios";
 import styles from "./AnalyticsPage.module.css";
 import {
   AreaChart,
@@ -66,9 +67,9 @@ export default function AnalyticsPage() {
     setError("");
 
     Promise.all([
-      apiFetch("http://localhost:8000/admin/analytics/summary"),
-      apiFetch(`http://localhost:8000/admin/analytics/trend?days=${days}`),
-      apiFetch("http://localhost:8000/admin/analytics/top-jobs?limit=5"),
+      apiFetch(`${API_BASE_URL}/admin/analytics/summary`),
+      apiFetch(`${API_BASE_URL}/admin/analytics/trend?days=${days}`),
+      apiFetch(`${API_BASE_URL}/admin/analytics/top-jobs?limit=5`),
     ])
       .then(([summaryData, trendData, topJobsData]) => {
         setSummary(summaryData);
