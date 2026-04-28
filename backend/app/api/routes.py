@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import asyncio
 import os
@@ -86,35 +86,28 @@ def logout_user(
     return {"message": "Logged out successfully"}
 
 
-@router.websocket("/admin/ws/logs")
-async def websocket_logs(websocket: WebSocket):
-    await websocket.accept()
+@router.get("/admin/logs")
+def get_system_logs(
+    limit: int = 200,
+    _: User = Depends(get_current_admin)
+):
+    import json
     log_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "logs", "app.log")
+    logs = []
     
-    try:
-        # Read the last 50 lines first
-        if os.path.exists(log_file_path):
-            with open(log_file_path, "r") as f:
-                lines = f.readlines()
-                last_lines = lines[-50:] if len(lines) > 50 else lines
-                for line in last_lines:
-                    if line.strip():
-                        await websocket.send_text(line.strip())
-                        
-            # Now tail the file
-            with open(log_file_path, "r") as f:
-                f.seek(0, os.SEEK_END)
-                while True:
-                    line = f.readline()
-                    if not line:
-                        await asyncio.sleep(0.5)
-                        continue
-                    if line.strip():
-                        await websocket.send_text(line.strip())
-        else:
-            await asyncio.sleep(1)
-            
-    except WebSocketDisconnect:
-        print("WebSocket disconnected")
-    except Exception as e:
-        print(f"WebSocket error: {e}")
+    if os.path.exists(log_file_path):
+        with open(log_file_path, "r") as f:
+            lines = f.readlines()
+            last_lines = lines[-limit:] if len(lines) > limit else lines
+            for line in last_lines:
+                if line.strip():
+                    try:
+                        logs.append(json.loads(line.strip()))
+                    except:
+                        logs.append({
+                            "time": "",
+                            "level": "INFO",
+                            "service": "system",
+                            "message": line.strip()
+                        })
+    return logs

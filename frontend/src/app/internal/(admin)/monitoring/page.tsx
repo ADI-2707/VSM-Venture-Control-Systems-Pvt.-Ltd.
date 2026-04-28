@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "./Monitoring.module.css";
 import { useRBACGuard } from "@/hooks/useRBACGuard";
+import api from "@/utils/axios";
 
 interface LogEntry {
   time: string;
@@ -16,43 +17,22 @@ export default function MonitoringPage() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const logsEndRef = useRef<HTMLDivElement>(null);
 
+  const fetchLogs = async () => {
+    try {
+      const res = await api.get("/admin/logs");
+      setLogs(res.data);
+    } catch (error) {
+      console.error("Failed to fetch logs:", error);
+    }
+  };
+
   useEffect(() => {
     if (!isAllowed) return;
 
-    const wsUrl = "ws://localhost:8000/admin/ws/logs";
-    const ws = new WebSocket(wsUrl);
-
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        setLogs((prev) => {
-          const newLogs = [...prev, data];
-          return newLogs.length > 500 ? newLogs.slice(newLogs.length - 500) : newLogs;
-        });
-      } catch (err) {
-        const now = new Date();
-        setLogs((prev) => {
-          const newLogs = [
-            ...prev,
-            {
-              time: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`,
-              level: "INFO",
-              service: "system",
-              message: event.data,
-            },
-          ];
-          return newLogs.length > 500 ? newLogs.slice(newLogs.length - 500) : newLogs;
-        });
-      }
-    };
-
-    ws.onerror = (error) => {
-      console.error("WebSocket Error:", error);
-    };
-
-    return () => {
-      ws.close();
-    };
+    fetchLogs();
+    
+    const interval = setInterval(fetchLogs, 5000); // refresh every 5 seconds
+    return () => clearInterval(interval);
   }, [isAllowed]);
 
   useEffect(() => {
@@ -74,13 +54,18 @@ export default function MonitoringPage() {
         </div>
 
         <div className={styles.meta}>
-          <span className={styles.overallStatus}>WebSocket Connected</span>
+          <span className={styles.overallStatus}>Auto-refreshing every 5s</span>
         </div>
       </div>
 
       <div className={styles.logs}>
         <div className={styles.logsHeader}>
-          <h3>System Logs</h3>
+          <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <h3>System Logs</h3>
+            <button onClick={fetchLogs} style={{ padding: "4px 8px", fontSize: "12px", borderRadius: "6px", border: "1px solid #e4e4e7", background: "white", cursor: "pointer" }}>
+              Refresh Now
+            </button>
+          </div>
           <span>LIVE SYSTEM</span>
         </div>
 
