@@ -3,6 +3,8 @@
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { hasAccess } from "@/utils/rbac";
 import Tooltip from "@/components/ui/Tooltip/Tooltip";
 
 const navItems = [
@@ -17,6 +19,12 @@ const navItems = [
 
 export default function Sidebar({ collapsed, setCollapsed }: any) {
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  const filteredNavItems = navItems.filter((item) => {
+    if (!user) return false;
+    return hasAccess(user.role as any, item.href);
+  });
 
   const isActive = (path: string) => {
     if (path === "/internal") {
@@ -40,7 +48,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
       </div>
 
       <nav className={styles.nav}>
-        {navItems.map((item) => {
+        {filteredNavItems.map((item) => {
           const active = isActive(item.href);
 
           const link = (
