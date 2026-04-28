@@ -15,7 +15,7 @@ def get_current_user(
     db: Session = Depends(get_db)
 ):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
 
         user_id = int(payload.get("sub"))
         token_version = payload.get("token_version")

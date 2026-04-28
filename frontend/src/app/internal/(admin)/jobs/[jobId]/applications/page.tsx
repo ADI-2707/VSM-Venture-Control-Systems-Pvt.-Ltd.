@@ -1,12 +1,19 @@
-"use client";
-
-import { useRBACGuard } from "@/hooks/useRBACGuard";
 import ApplicationsPage from "@/internal/sections/jobs/ApplicationsPage/ApplicationsPage";
 
-export default function Page({ params }: any) {
-  const { isAllowed, isLoading } = useRBACGuard();
+type PageProps = {
+  params: Promise<{
+    jobId: string;
+  }>;
+};
 
-  if (isLoading || !isAllowed) return null;
+export default async function Page({ params }: PageProps) {
+  const { jobId } = await params;
 
-  return <ApplicationsPage jobId={params.jobId} />;
+  const numericJobId = Number(jobId);
+
+  if (!Number.isInteger(numericJobId) || numericJobId <= 0) {
+    return <div>Invalid Job ID</div>;
+  }
+
+  return <ApplicationsPage jobId={numericJobId} />;
 }
