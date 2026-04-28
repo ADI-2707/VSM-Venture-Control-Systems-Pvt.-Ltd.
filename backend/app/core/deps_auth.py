@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-
+from app.core.permissions import ROLE_PERMISSIONS
 from app.core.config import settings
 from app.db.deps import get_db
 from app.modules.user_model import User
@@ -15,7 +15,7 @@ def get_current_user(
     db: Session = Depends(get_db)
 ):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
 
         user_id = int(payload.get("sub"))
         token_version = payload.get("token_version")
@@ -50,3 +50,21 @@ def require_roles(allowed_roles: list[str]):
         return current_user
 
     return role_checker
+
+
+def require_permissions(perms: list[str]):
+    def checker(user: User = Depends(get_current_user)):
+        user_perms = ROLE_PERMISSIONS.get(user.role, [])
+
+        if "*" in user_perms:
+            return user
+
+        if not any(p in user_perms for p in perms):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Permission denied"
+            )
+
+        return user
+
+    return checker
