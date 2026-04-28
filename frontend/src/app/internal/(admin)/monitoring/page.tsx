@@ -9,12 +9,15 @@ interface LogEntry {
   time: string;
   level: string;
   service: string;
+  source: string;
+  actor: string;
   message: string;
 }
 
 export default function MonitoringPage() {
   const { isAllowed, isLoading } = useRBACGuard();
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [activeTab, setActiveTab] = useState<"site" | "internal">("internal");
   const logsEndRef = useRef<HTMLDivElement>(null);
 
   const fetchLogs = async () => {
@@ -59,6 +62,21 @@ export default function MonitoringPage() {
       </div>
 
       <div className={styles.logs}>
+        <div className={styles.tabsContainer}>
+          <button 
+            className={`${styles.tab} ${activeTab === "site" ? styles.activeTab : ""}`}
+            onClick={() => setActiveTab("site")}
+          >
+            Site Logs
+          </button>
+          <button 
+            className={`${styles.tab} ${activeTab === "internal" ? styles.activeTab : ""}`}
+            onClick={() => setActiveTab("internal")}
+          >
+            Internal Logs
+          </button>
+        </div>
+
         <div className={styles.logsHeader}>
           <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
             <h3>System Logs</h3>
@@ -74,14 +92,15 @@ export default function MonitoringPage() {
             <span>Time</span>
             <span>Level</span>
             <span>Service</span>
+            <span>Actor</span>
             <span>Message</span>
           </div>
 
           <div className={styles.logBody}>
-            {logs.length === 0 ? (
-              <div style={{ padding: "12px", fontSize: "12px", color: "gray" }}>Waiting for logs...</div>
+            {logs.filter(l => l.source === activeTab).length === 0 ? (
+              <div style={{ padding: "12px", fontSize: "12px", color: "gray" }}>Waiting for {activeTab} logs...</div>
             ) : (
-              logs.map((log, i) => (
+              logs.filter(l => l.source === activeTab).map((log, i) => (
                 <div key={i} className={styles.logRow}>
                   <span className={styles.time}>[{log.time}]</span>
                   <span
@@ -98,6 +117,7 @@ export default function MonitoringPage() {
                     {log.level}
                   </span>
                   <span className={styles.service}>{log.service}</span>
+                  <span className={styles.actor}>{log.actor || "-"}</span>
                   <span className={styles.message}>{log.message}</span>
                 </div>
               ))

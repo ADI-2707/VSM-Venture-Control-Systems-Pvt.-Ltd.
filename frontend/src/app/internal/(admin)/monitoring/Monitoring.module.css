@@ -40,6 +40,41 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.02);
 }
 
+.tabsContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--admin-border);
+  padding-bottom: 8px;
+}
+
+.tab {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--admin-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #f3f4f6;
+  color: var(--admin-text-primary);
+}
+
+.activeTab {
+  background: #1e293b;
+  color: white;
+}
+
+.activeTab:hover {
+  background: #334155;
+  color: white;
+}
+
 .logsHeader {
   display: flex;
   justify-content: space-between;
@@ -75,7 +110,7 @@
 
 .logHead {
   display: grid;
-  grid-template-columns: 100px 100px 150px 1fr;
+  grid-template-columns: 80px 80px 100px 120px 1fr;
   background: #27272a;
   padding: 10px 12px;
   font-size: 12px;
@@ -91,7 +126,7 @@
 
 .logRow {
   display: grid;
-  grid-template-columns: 100px 100px 150px 1fr;
+  grid-template-columns: 80px 80px 100px 120px 1fr;
   padding: 8px 12px;
   font-size: 12px;
   font-family: monospace;
@@ -108,6 +143,10 @@
 
 .service {
   color: #60a5fa;
+}
+
+.actor {
+  color: #d946ef;
 }
 
 .level {
