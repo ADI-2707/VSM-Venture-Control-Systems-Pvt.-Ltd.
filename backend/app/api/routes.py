@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
+import asyncio
+import os
 
 from app.db.deps import get_db
 
@@ -82,3 +84,37 @@ def logout_user(
     db.commit()
 
     return {"message": "Logged out successfully"}
+
+
+@router.websocket("/admin/ws/logs")
+async def websocket_logs(websocket: WebSocket):
+    await websocket.accept()
+    log_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "logs", "app.log")
+    
+    try:
+        # Read the last 50 lines first
+        if os.path.exists(log_file_path):
+            with open(log_file_path, "r") as f:
+                lines = f.readlines()
+                last_lines = lines[-50:] if len(lines) > 50 else lines
+                for line in last_lines:
+                    if line.strip():
+                        await websocket.send_text(line.strip())
+                        
+            # Now tail the file
+            with open(log_file_path, "r") as f:
+                f.seek(0, os.SEEK_END)
+                while True:
+                    line = f.readline()
+                    if not line:
+                        await asyncio.sleep(0.5)
+                        continue
+                    if line.strip():
+                        await websocket.send_text(line.strip())
+        else:
+            await asyncio.sleep(1)
+            
+    except WebSocketDisconnect:
+        print("WebSocket disconnected")
+    except Exception as e:
+        print(f"WebSocket error: {e}")
