@@ -24,7 +24,7 @@ type AuthContextType = {
   loading: boolean;
   authReady: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    const initAuth = async () => {
+    const init = async () => {
       const storedToken = localStorage.getItem("token");
 
       if (!storedToken) {
@@ -50,8 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(res.data);
         setToken(storedToken);
       } catch {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
         setUser(null);
         setToken(null);
       } finally {
@@ -59,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
-    initAuth();
+    init();
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
@@ -68,15 +67,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const res = await api.post("/auth/login", { email, password });
 
-      if (!res.data.access_token) {
-        throw new Error("Invalid response: access_token missing");
-      }
+      const { access_token, refresh_token } = res.data;
 
-      localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
 
       const profile = await api.get("/auth/profile");
 
-      setToken(res.data.access_token);
+      setToken(access_token);
       setUser(profile.data);
 
       localStorage.setItem("user", JSON.stringify(profile.data));
@@ -85,9 +83,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const logout = useCallback(async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch {}
+
+    localStorage.clear();
     setUser(null);
     setToken(null);
 
