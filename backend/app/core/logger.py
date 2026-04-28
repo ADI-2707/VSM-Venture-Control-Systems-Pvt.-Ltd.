@@ -14,6 +14,8 @@ class JSONFormatter(logging.Formatter):
             "time": self.formatTime(record, "%H:%M:%S"),
             "level": record.levelname,
             "service": record.name,
+            "source": getattr(record, "source", "system"),
+            "actor": getattr(record, "actor", "anonymous"),
             "message": record.getMessage()
         }
         return json.dumps(log_obj)

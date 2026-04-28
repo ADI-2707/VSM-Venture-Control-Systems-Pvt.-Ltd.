@@ -108,6 +108,8 @@ def get_system_logs(
                             "time": "",
                             "level": "INFO",
                             "service": "system",
+                            "source": "system",
+                            "actor": "anonymous",
                             "message": line.strip()
                         })
     return logs
