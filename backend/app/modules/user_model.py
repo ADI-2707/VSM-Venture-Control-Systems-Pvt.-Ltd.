@@ -15,6 +15,7 @@ class User(Base):
     email = Column(String, unique=True, nullable=False, index=True)
 
     hashed_password = Column(String, nullable=False)
+    token_version = Column(Integer, default=0, nullable=False)
 
     role = Column(String, nullable=False, default="user")
 
