@@ -5,15 +5,19 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 20000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+  (config: InternalAxiosRequestConfig) => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");
 
@@ -21,18 +25,13 @@ api.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
-
     return config;
   },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
-  (response: AxiosResponse): AxiosResponse => {
-    return response;
-  },
+  (response: AxiosResponse) => response,
   (error: AxiosError) => {
     if (typeof window !== "undefined") {
       if (error.response?.status === 401) {
@@ -42,9 +41,34 @@ api.interceptors.response.use(
         window.location.href = "/internal";
       }
     }
-
     return Promise.reject(error);
   }
 );
+
+export const apiGet = async <T = any>(url: string): Promise<T> => {
+  const res = await api.get<T>(url);
+  return res.data;
+};
+
+export const apiPost = async <T = any>(
+  url: string,
+  data?: any
+): Promise<T> => {
+  const res = await api.post<T>(url, data);
+  return res.data;
+};
+
+export const apiPatch = async <T = any>(
+  url: string,
+  data?: any
+): Promise<T> => {
+  const res = await api.patch<T>(url, data);
+  return res.data;
+};
+
+export const apiDelete = async <T = any>(url: string): Promise<T> => {
+  const res = await api.delete<T>(url);
+  return res.data;
+};
 
 export default api;
