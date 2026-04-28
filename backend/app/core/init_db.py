@@ -12,7 +12,7 @@ def create_initial_admin(db: Session):
             employee_id="EMP001",
             email="admin@vsm.com",
             hashed_password=hash_password("admin123"),
-            role="admin",
+            role="manager",
         ))
 
     if not db.query(User).filter(User.email == "analyst@vsm.com").first():
