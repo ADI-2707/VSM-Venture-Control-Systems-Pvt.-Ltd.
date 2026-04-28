@@ -1,91 +1,90 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import styles from "./Monitoring.module.css";
 import { useRBACGuard } from "@/hooks/useRBACGuard";
 
-const services = [
-  { name: "Frontend Server", status: "online" },
-  { name: "Backend API", status: "online" },
-  { name: "Database", status: "online" },
-  { name: "Media Storage", status: "warning" },
-];
-
-const logs = [
-  { time: "12:01", type: "info", service: "system", message: "System started" },
-  { time: "12:05", type: "success", service: "api", message: "API request success" },
-  { time: "12:08", type: "info", service: "media", message: "Image uploaded" },
-  { time: "12:12", type: "warning", service: "storage", message: "Storage nearing limit" },
-];
+interface LogEntry {
+  time: string;
+  level: string;
+  service: string;
+  message: string;
+}
 
 export default function MonitoringPage() {
-
   const { isAllowed, isLoading } = useRBACGuard();
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const logsEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isAllowed) return;
+
+    const wsUrl = "ws://localhost:8000/admin/ws/logs";
+    const ws = new WebSocket(wsUrl);
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setLogs((prev) => {
+          const newLogs = [...prev, data];
+          return newLogs.length > 500 ? newLogs.slice(newLogs.length - 500) : newLogs;
+        });
+      } catch (err) {
+        const now = new Date();
+        setLogs((prev) => {
+          const newLogs = [
+            ...prev,
+            {
+              time: `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`,
+              level: "INFO",
+              service: "system",
+              message: event.data,
+            },
+          ];
+          return newLogs.length > 500 ? newLogs.slice(newLogs.length - 500) : newLogs;
+        });
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [isAllowed]);
+
+  useEffect(() => {
+    if (logsEndRef.current) {
+      logsEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [logs]);
 
   if (isLoading || !isAllowed) return null;
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-
         <div>
           <h1 className={styles.title}>System Monitoring</h1>
           <p className={styles.subtitle}>
-            Real-time status of services and system health
+            Live industry-grade system logs
           </p>
         </div>
 
         <div className={styles.meta}>
-          <span className={styles.uptime}>Uptime: 12h 32m</span>
-          <span className={styles.overallStatus}>All systems operational</span>
+          <span className={styles.overallStatus}>WebSocket Connected</span>
         </div>
-      </div>
-
-      <div className={styles.grid}>
-        {services.map((s) => (
-          <div key={s.name} className={styles.card}>
-
-            <div className={styles.cardHeader}>
-              <span>{s.name}</span>
-              <div
-                className={`${styles.dot} ${s.status === "online"
-                    ? styles.dotOnline
-                    : styles.dotWarning
-                  }`}
-              />
-            </div>
-
-            <div
-              className={`${styles.status} ${s.status === "online"
-                  ? styles.online
-                  : styles.warning
-                }`}
-            >
-              {s.status}
-            </div>
-
-          </div>
-        ))}
       </div>
 
       <div className={styles.logs}>
-
         <div className={styles.logsHeader}>
           <h3>System Logs</h3>
           <span>LIVE SYSTEM</span>
-
-          <div className={styles.logControls}>
-            <select>
-              <option>All Levels</option>
-              <option>Info</option>
-              <option>Success</option>
-              <option>Warning</option>
-              <option>Error</option>
-            </select>
-          </div>
         </div>
 
         <div className={styles.logsTable}>
-
           <div className={styles.logHead}>
             <span>Time</span>
             <span>Level</span>
@@ -94,34 +93,32 @@ export default function MonitoringPage() {
           </div>
 
           <div className={styles.logBody}>
-            {logs.map((log, i) => (
-              <div key={i} className={styles.logRow}>
-
-                <span className={styles.time}>[{log.time}]</span>
-
-                <span
-                  className={`${styles.level} ${log.type === "success"
-                      ? styles.success
-                      : log.type === "warning"
+            {logs.length === 0 ? (
+              <div style={{ padding: "12px", fontSize: "12px", color: "gray" }}>Waiting for logs...</div>
+            ) : (
+              logs.map((log, i) => (
+                <div key={i} className={styles.logRow}>
+                  <span className={styles.time}>[{log.time}]</span>
+                  <span
+                    className={`${styles.level} ${
+                      log.level === "INFO"
+                        ? styles.info
+                        : log.level === "WARNING"
                         ? styles.warning
-                        : styles.info
+                        : log.level === "ERROR"
+                        ? styles.error
+                        : styles.success
                     }`}
-                >
-                  {log.type.toUpperCase()}
-                </span>
-
-                <span className={styles.service}>
-                  {log.service}
-                </span>
-
-                <span className={styles.message}>
-                  {log.message}
-                </span>
-
-              </div>
-            ))}
+                  >
+                    {log.level}
+                  </span>
+                  <span className={styles.service}>{log.service}</span>
+                  <span className={styles.message}>{log.message}</span>
+                </div>
+              ))
+            )}
+            <div ref={logsEndRef} />
           </div>
-
         </div>
       </div>
     </div>
