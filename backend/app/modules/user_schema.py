@@ -1,6 +1,8 @@
 from typing import Literal
 from pydantic import BaseModel, EmailStr
 
+UserRole = Literal["manager", "hr", "marketing", "analyst", "sales"]
+
 
 class UserCreate(BaseModel):
     first_name: str
@@ -8,12 +10,16 @@ class UserCreate(BaseModel):
     employee_id: str
     email: EmailStr
     password: str
-    role: Literal["user", "admin"] = "user"
+    role: UserRole = "sales"
 
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+
+class RefreshTokenRequest(BaseModel):
+    token: str
 
 
 class UserResponse(BaseModel):

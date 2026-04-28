@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
+from fastapi import HTTPException, status
 
 from app.services.user_services import get_user_by_email
 from app.core.hash import verify_password
@@ -39,20 +40,26 @@ def refresh_access_token(db: Session, token: str):
     try:
         payload = jwt.decode(
             token,
-            settings.SECRET_KEY,
-            algorithms=["HS256"]
+            settings.secret_key,
+            algorithms=[settings.algorithm]
         )
 
-        user_id = int(payload.get("sub"))
+        user_id = int(payload["sub"])
         token_version = payload.get("token_version")
 
-    except JWTError:
-        raise Exception("Invalid refresh token")
+    except (JWTError, KeyError, ValueError):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid refresh token",
+        )
 
     user: User = db.query(User).filter(User.id == user_id).first()
 
     if not user or user.token_version != token_version:
-        raise Exception("Token invalidated")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token invalidated",
+        )
 
     new_access = create_access_token({
         "sub": str(user.id),
