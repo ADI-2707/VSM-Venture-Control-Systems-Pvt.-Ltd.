@@ -13,6 +13,10 @@ def login_user(db: Session, email: str, password: str):
     if not verify_password(password, user.hashed_password):
         return None
 
-    token = create_access_token({"sub": str(user.id), "role": user.role})
+    token = create_access_token({
+        "sub": str(user.id),
+        "role": user.role,
+        "token_version": user.token_version,
+    })
 
     return {"access_token": token, "user": user}

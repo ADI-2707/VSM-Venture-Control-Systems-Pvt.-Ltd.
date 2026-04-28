@@ -12,26 +12,21 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
-    db: Session = Depends(get_db),
-) -> User:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    db: Session = Depends(get_db)
+):
     try:
-        payload = jwt.decode(
-            token, settings.secret_key, algorithms=[settings.algorithm]
-        )
-        user_id: str = payload.get("sub")
-        if user_id is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
 
-    user = db.query(User).filter(User.id == int(user_id)).first()
-    if user is None:
-        raise credentials_exception
+        user_id = int(payload.get("sub"))
+        token_version = payload.get("token_version")
+
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    user = db.query(User).filter(User.id == user_id).first()
+
+    if not user or user.token_version != token_version:
+        raise HTTPException(status_code=401, detail="Token invalidated")
 
     return user
 
