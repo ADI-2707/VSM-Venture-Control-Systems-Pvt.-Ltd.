@@ -1,6 +1,7 @@
 import os
-import shutil
 from datetime import datetime, timedelta
+from pathlib import Path
+from uuid import uuid4
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from fastapi import UploadFile, HTTPException
@@ -9,6 +10,14 @@ from app.modules.application_model import Application
 from app.modules.job_schema import JobCreate, JobUpdate
 
 CV_UPLOAD_DIR = "uploads/cvs"
+MAX_CV_UPLOAD_BYTES = 5 * 1024 * 1024
+ALLOWED_CV_TYPES = {
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+}
+ALLOWED_CV_EXTENSIONS = {".pdf", ".doc", ".docx"}
+
 os.makedirs(CV_UPLOAD_DIR, exist_ok=True)
 
 
@@ -54,17 +63,33 @@ def submit_application(db: Session, job_id: int, full_name: str, email: str,
                        phone: str, cover_note: str, cv_file: UploadFile):
     get_job_by_id(db, job_id)
 
-    allowed = {"application/pdf", "application/msword",
-               "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
-    if cv_file.content_type not in allowed:
+    original_name = Path(cv_file.filename or "").name
+    extension = Path(original_name).suffix.lower()
+
+    if (
+        cv_file.content_type not in ALLOWED_CV_TYPES
+        or extension not in ALLOWED_CV_EXTENSIONS
+    ):
         raise HTTPException(status_code=400, detail="CV must be PDF or Word document")
 
-    ext = cv_file.filename.rsplit(".", 1)[-1]
-    filename = f"{job_id}_{email.replace('@','_')}_{cv_file.filename}"
+    filename = f"{job_id}_{uuid4().hex}{extension}"
     filepath = os.path.join(CV_UPLOAD_DIR, filename)
 
-    with open(filepath, "wb") as f:
-        shutil.copyfileobj(cv_file.file, f)
+    bytes_written = 0
+    try:
+        with open(filepath, "wb") as f:
+            while chunk := cv_file.file.read(1024 * 1024):
+                bytes_written += len(chunk)
+                if bytes_written > MAX_CV_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=413,
+                        detail="CV must be 5MB or smaller",
+                    )
+                f.write(chunk)
+    except HTTPException:
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        raise
 
     application = Application(
         job_id=job_id,
