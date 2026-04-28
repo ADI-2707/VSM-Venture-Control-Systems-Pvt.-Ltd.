@@ -51,11 +51,12 @@ async def log_requests(request: Request, call_next):
     response = await call_next(request)
     process_time = time.time() - start_time
     
-    # Log the request
-    logger.info(
-        f"{request.method} {path} - {response.status_code} - {process_time:.4f}s",
-        extra={"source": source, "actor": actor}
-    )
+    # Do not log the logs endpoint itself to prevent infinite polling loops
+    if path != "/admin/logs":
+        logger.info(
+            f"{request.method} {path} - {response.status_code} - {process_time:.4f}s",
+            extra={"source": source, "actor": actor}
+        )
     
     return response
 
