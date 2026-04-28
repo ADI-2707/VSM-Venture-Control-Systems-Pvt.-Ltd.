@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { apiRequest } from "@/utils/api";
+import api from "@/utils/axios";
 
 type User = {
   id: number;
@@ -24,37 +24,8 @@ type AuthContextType = {
   loading: boolean;
   authReady: boolean;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
-
-function isTokenExpired(token: string): boolean {
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.exp * 1000 < Date.now();
-  } catch {
-    return true;
-  }
-}
-
-function getStoredAuth(): { user: User | null; token: string | null } {
-  if (typeof window === "undefined") return { user: null, token: null };
-  try {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-    if (token && user) {
-      if (isTokenExpired(token)) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        return { user: null, token: null };
-      }
-      return { token, user: JSON.parse(user) };
-    }
-  } catch {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  }
-  return { user: null, token: null };
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -65,35 +36,63 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    const stored = getStoredAuth();
-    setUser(stored.user);
-    setToken(stored.token);
-    setAuthReady(true);
+    const init = async () => {
+      const storedToken = localStorage.getItem("token");
+
+      if (!storedToken) {
+        setAuthReady(true);
+        return;
+      }
+
+      try {
+        const res = await api.get("/auth/profile");
+
+        setUser(res.data);
+        setToken(storedToken);
+      } catch {
+        localStorage.clear();
+        setUser(null);
+        setToken(null);
+      } finally {
+        setAuthReady(true);
+      }
+    };
+
+    init();
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     setLoading(true);
+
     try {
-      const res = await apiRequest("/auth/login", "POST", { email, password });
+      const res = await api.post("/auth/login", { email, password });
 
-      if (!res.access_token) throw new Error("Invalid response: access_token missing");
-      if (!res.user?.id) throw new Error("Invalid user data from backend");
+      const { access_token, refresh_token } = res.data;
 
-      localStorage.setItem("token", res.access_token);
-      localStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
 
-      setToken(res.access_token);
-      setUser(res.user);
+      const profile = await api.get("/auth/profile");
+
+      setToken(access_token);
+      setUser(profile.data);
+
+      localStorage.setItem("user", JSON.stringify(profile.data));
     } finally {
       setLoading(false);
     }
   }, []);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const logout = useCallback(async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch {}
+
+    localStorage.clear();
     setUser(null);
     setToken(null);
+
+    window.location.href = "/internal";
   }, []);
 
   const value = useMemo(

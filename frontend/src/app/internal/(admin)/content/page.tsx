@@ -1,11 +1,13 @@
 "use client";
 
+import { useRBACGuard } from "@/hooks/useRBACGuard";
 import { useState } from "react";
 import styles from "./Content.module.css";
 import { useMedia } from "@/context/MediaContext";
 import PageSelector from "@/internal/sections/content/PageSelector/PageSelector";
 
 export default function ContentPage() {
+  const { isAllowed, isLoading } = useRBACGuard();
   const [page, setPage] = useState("home");
   const [showPicker, setShowPicker] = useState(false);
 
@@ -16,6 +18,8 @@ export default function ContentPage() {
   const assignedMedia = state.media.filter((m) =>
     assignedIds.includes(m.id)
   );
+
+  if (isLoading || !isAllowed) return null;
 
   return (
     <div className={styles.container}>

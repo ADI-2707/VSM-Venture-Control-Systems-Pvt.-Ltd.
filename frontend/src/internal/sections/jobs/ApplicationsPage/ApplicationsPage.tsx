@@ -1,48 +1,52 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+
 import ApplicationsTable from "../ApplicationsTable/ApplicationsTable";
 import styles from "./ApplicationsPage.module.css";
 
-export default function ApplicationsPage({ jobId }: { jobId: string }) {
-  const { token, authReady, logout } = useAuth();
+import { fetchApplications } from "@/services/jobService";
+import { useRBACGuard } from "@/hooks/useRBACGuard";
+
+export default function ApplicationsPage({ jobId }: { jobId: number }) {
   const router = useRouter();
 
-  const [applications, setApplications] = useState([]);
+  const { isAllowed, isLoading: authLoading } = useRBACGuard();
+
+  const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!authReady || !token) return;
+    if (!jobId || isNaN(jobId)) {
+      setError("Invalid Job ID");
+      setLoading(false);
+      return;
+    }
 
-    const fetchApplications = async () => {
+    const loadApplications = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:8000/admin/jobs/${jobId}/applications`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        if (res.status === 401) { logout(); return; }
-
-        if (!res.ok) {
-          setError("Failed to fetch applications");
-          return;
-        }
-
-        const data = await res.json();
+        const data = await fetchApplications(jobId);
         setApplications(data);
       } catch (err) {
         console.error("Failed to fetch applications", err);
-        setError("Something went wrong");
+        setError("Something went wrong while fetching applications");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchApplications();
-  }, [jobId, token, authReady]);
+    loadApplications();
+  }, [jobId]);
+
+  if (authLoading) {
+    return <p className={styles.state}>Checking permissions...</p>;
+  }
+
+  if (!isAllowed) {
+    return <p className={styles.error}>Access denied</p>;
+  }
 
   return (
     <div className={styles.container}>
@@ -53,6 +57,7 @@ export default function ApplicationsPage({ jobId }: { jobId: string }) {
             Applicants for job #{jobId}
           </p>
         </div>
+
         <button className={styles.backBtn} onClick={() => router.back()}>
           ← Back to Jobs
         </button>
@@ -60,9 +65,11 @@ export default function ApplicationsPage({ jobId }: { jobId: string }) {
 
       {loading && <p className={styles.state}>Loading applications...</p>}
       {error && <p className={styles.error}>{error}</p>}
+
       {!loading && !error && applications.length === 0 && (
         <p className={styles.state}>No applications yet.</p>
       )}
+
       {!loading && !error && applications.length > 0 && (
         <ApplicationsTable data={applications} />
       )}
