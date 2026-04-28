@@ -1,8 +1,14 @@
 "use client";
 
 import styles from "./Settings.module.css";
+import { useRBACGuard } from "@/hooks/useRBACGuard";
 
 export default function SettingsPage() {
+
+  const { isAllowed, isLoading } = useRBACGuard();
+
+  if (isLoading || !isAllowed) return null;
+  
   return (
     <div className={styles.container}>
       

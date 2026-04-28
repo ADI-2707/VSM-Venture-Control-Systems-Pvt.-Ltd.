@@ -3,8 +3,10 @@
 import { useState } from "react";
 import styles from "./MediaPage.module.css";
 import { useMedia, Media } from "@/context/MediaContext";
+import { useRBACGuard } from "@/hooks/useRBACGuard";
 
 export default function MediaPage() {
+  const { isAllowed, isLoading } = useRBACGuard();
   const { state, dispatch } = useMedia();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -19,6 +21,8 @@ export default function MediaPage() {
 
     dispatch({ type: "UPLOAD_MEDIA", payload: newMedia });
   };
+
+  if (isLoading || !isAllowed) return null;
 
   return (
     <div className={styles.container}>

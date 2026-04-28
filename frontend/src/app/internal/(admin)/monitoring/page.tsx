@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./Monitoring.module.css";
+import { useRBACGuard } from "@/hooks/useRBACGuard";
 
 const services = [
   { name: "Frontend Server", status: "online" },
@@ -17,6 +18,11 @@ const logs = [
 ];
 
 export default function MonitoringPage() {
+
+  const { isAllowed, isLoading } = useRBACGuard();
+
+  if (isLoading || !isAllowed) return null;
+  
   return (
     <div className={styles.container}>
       <div className={styles.header}>
