@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 
 from app.db.deps import get_db
 
-from app.modules.user_schema import RefreshTokenRequest, UserCreate, UserLogin, UserResponse
+from app.modules.user_schema import RefreshTokenRequest, UserCreate, UserLogin, UserResponse, ChangePasswordRequest
 from app.modules.user_model import User
 
-from app.services.user_services import create_user
+from app.services.user_services import create_user, change_user_password
 from app.services.auth_service import login_user, refresh_access_token
 
 from app.core.deps_auth import get_current_admin, get_current_user
@@ -43,6 +43,18 @@ def refresh_token(
 ):
     new_access = refresh_access_token(db, data.token)
     return {"access_token": new_access}
+
+
+@router.post("/auth/change-password")
+def change_password_route(
+    data: ChangePasswordRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    success = change_user_password(db, current_user, data.current_password, data.new_password)
+    if not success:
+        raise HTTPException(status_code=400, detail="Invalid current password")
+    return {"message": "Password updated successfully"}
 
 
 @router.post("/users", response_model=UserResponse)

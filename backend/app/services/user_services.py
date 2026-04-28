@@ -1,6 +1,15 @@
 from sqlalchemy.orm import Session
 from app.modules.user_model import User
-from app.core.hash import hash_password
+from app.core.hash import hash_password, verify_password
+
+
+def change_user_password(db: Session, user: User, current_password: str, new_password: str):
+    if not verify_password(current_password, user.hashed_password):
+        return False
+    
+    user.hashed_password = hash_password(new_password)
+    db.commit()
+    return True
 
 
 def create_user(db: Session, user_data):

@@ -22,6 +22,11 @@ class RefreshTokenRequest(BaseModel):
     token: str
 
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+
 class UserResponse(BaseModel):
     id: int
     first_name: str
