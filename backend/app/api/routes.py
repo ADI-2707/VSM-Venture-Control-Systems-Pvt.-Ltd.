@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.db.deps import get_db
-from app.modules.user_schema import UserCreate, UserLogin, UserResponse
+from app.modules.user_schema import UserCreate, UserLogin, UserResponse, User
 from app.services.user_services import create_user
 from app.services.auth_service import login_user
 from app.core.deps_auth import get_current_admin, get_current_user
@@ -42,6 +42,17 @@ def create_user_route(
 
 @router.get("/auth/profile", response_model=UserResponse)
 def get_profile(
-    current_user = Depends(get_current_user)
+    current_user: User = Depends(get_current_user)
 ):
     return current_user
+
+
+@router.post("/auth/logout")
+def logout_user(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    current_user.token_version += 1
+    db.commit()
+
+    return {"message": "Logged out successfully"}
