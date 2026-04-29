@@ -48,6 +48,7 @@ export default function AnalyticsPage() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
   const [topJobs, setTopJobs] = useState<TopJob[]>([]);
+  const [traffic, setTraffic] = useState<{ total_hits_recent: number; top_endpoints: {endpoint: string, hits: number}[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -70,11 +71,13 @@ export default function AnalyticsPage() {
       apiFetch(`${API_BASE_URL}/admin/analytics/summary`),
       apiFetch(`${API_BASE_URL}/admin/analytics/trend?days=${days}`),
       apiFetch(`${API_BASE_URL}/admin/analytics/top-jobs?limit=5`),
+      apiFetch(`${API_BASE_URL}/admin/monitoring/traffic`),
     ])
-      .then(([summaryData, trendData, topJobsData]) => {
+      .then(([summaryData, trendData, topJobsData, trafficData]) => {
         setSummary(summaryData);
         setTrend(trendData.trend);
         setTopJobs(topJobsData.top_jobs);
+        setTraffic(trafficData);
       })
       .catch((err) => {
         if (err.message !== "Unauthorized") setError("Failed to load analytics");
@@ -254,6 +257,31 @@ export default function AnalyticsPage() {
               </table>
             )}
           </div>
+          
+          {traffic && (
+            <div className={styles.card}>
+              <h2 className={styles.cardTitle}>Website Traffic & Endpoint Popularity</h2>
+              <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+                <div style={{ flex: 1, padding: "16px", background: "var(--admin-bg)", borderRadius: "8px", textAlign: "center" }}>
+                  <div style={{ fontSize: 13, color: "var(--admin-text-secondary)", marginBottom: 8 }}>Recent Traffic Hits</div>
+                  <div style={{ fontSize: 32, fontWeight: "bold", color: "#3b82f6" }}>{traffic.total_hits_recent}</div>
+                </div>
+                <div style={{ flex: 2 }}>
+                  <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12 }}>Top Visited Pages</h3>
+                  {traffic.top_endpoints.length === 0 ? <p style={{ fontSize: 13, color: "gray" }}>No traffic data.</p> : (
+                    <ul style={{ paddingLeft: 0, listStyle: "none", margin: 0 }}>
+                      {traffic.top_endpoints.map(e => (
+                        <li key={e.endpoint} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid var(--admin-border)", fontSize: 13 }}>
+                          <span style={{ color: "#60a5fa", fontFamily: "monospace" }}>{e.endpoint}</span>
+                          <span style={{ fontWeight: 600 }}>{e.hits} hits</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>
