@@ -25,6 +25,7 @@ export default function SettingsPage() {
     last_name: "",
     employee_id: "",
     email: "",
+    phone_number: "+91 ",
     password: "",
     role: "sales",
   });
@@ -102,6 +103,7 @@ export default function SettingsPage() {
         last_name: "",
         employee_id: "",
         email: "",
+        phone_number: "+91 ",
         password: "",
         role: "sales",
       });
@@ -257,6 +259,18 @@ export default function SettingsPage() {
                   />
                 </div>
                 <div className={styles.formGroup}>
+                  <label>Phone Number (Optional)</label>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={formData.phone_number}
+                    onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
                   <label>Email Address</label>
                   <input
                     type="email"
@@ -266,9 +280,6 @@ export default function SettingsPage() {
                     required
                   />
                 </div>
-              </div>
-
-              <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
                   <label>Role</label>
                   <select
@@ -284,6 +295,9 @@ export default function SettingsPage() {
                     <option value="sales">Sales</option>
                   </select>
                 </div>
+              </div>
+
+              <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
                   <label>Initial Password</label>
                   <input
@@ -344,7 +358,7 @@ export default function SettingsPage() {
                         <td style={{ padding: "0.5rem" }}>{emp.employee_id}</td>
                         <td style={{ padding: "0.5rem" }}>{emp.first_name} {emp.last_name || ""}</td>
                         <td style={{ padding: "0.5rem" }}>{emp.email}</td>
-                        <td style={{ padding: "0.5rem" }}>N/A</td>
+                        <td style={{ padding: "0.5rem" }}>{emp.phone_number || "N/A"}</td>
                         <td style={{ padding: "0.5rem", textTransform: "capitalize" }}>{emp.role}</td>
                       </tr>
                     ))}
