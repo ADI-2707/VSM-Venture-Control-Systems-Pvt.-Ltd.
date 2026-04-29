@@ -5,6 +5,7 @@ from jose import jwt
 
 from app.api.routes import router
 from app.api.job_routes import router as job_router
+from app.api.monitoring_routes import router as monitoring_router
 from app.db.session import SessionLocal
 from app.core.init_db import create_initial_admin
 from app.core.logger import logger
@@ -27,6 +28,7 @@ app.add_middleware(
 
 app.include_router(router)
 app.include_router(job_router)   
+app.include_router(monitoring_router)
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
