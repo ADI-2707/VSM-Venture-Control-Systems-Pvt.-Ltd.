@@ -90,3 +90,6 @@ def startup():
     db = SessionLocal()
     create_initial_admin(db)
     db.close()
+    
+    from app.services.log_retention import purge_old_audit_logs
+    purge_old_audit_logs()

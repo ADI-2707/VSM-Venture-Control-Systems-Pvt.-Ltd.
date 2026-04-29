@@ -12,6 +12,14 @@ from app.modules.audit_model import AuditLog
 
 router = APIRouter(prefix="/admin/monitoring", tags=["monitoring"])
 
+@router.post("/maintenance/purge-logs")
+def manual_purge_logs(_: User = Depends(get_current_admin)):
+    """Manually trigger audit log purge. Removes entries older than retention window."""
+    from app.services.log_retention import purge_old_audit_logs, LOG_RETENTION_DAYS
+    deleted = purge_old_audit_logs()
+    return {"deleted_rows": deleted, "retention_days": LOG_RETENTION_DAYS}
+
+
 @router.get("/latency")
 def get_latency_metrics(db: Session = Depends(get_db), _: User = Depends(get_current_admin)):
     recent_logs = db.query(AuditLog.time, AuditLog.process_time).filter(
