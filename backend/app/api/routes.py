@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import asyncio
 import os
+from typing import List
 
 from app.db.deps import get_db
 
@@ -66,6 +67,15 @@ def create_user_route(
     _: None = Depends(get_current_admin),
 ):
     return create_user(db, data)
+
+
+@router.get("/users", response_model=List[UserResponse])
+def get_all_users_route(
+    db: Session = Depends(get_db),
+    _: None = Depends(get_current_admin),
+):
+    from app.services.user_services import get_all_users
+    return get_all_users(db)
 
 
 @router.get("/auth/profile", response_model=UserResponse)

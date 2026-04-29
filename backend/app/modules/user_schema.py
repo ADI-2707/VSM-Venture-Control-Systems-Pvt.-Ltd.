@@ -9,6 +9,7 @@ class UserCreate(BaseModel):
     last_name: str | None = None
     employee_id: str
     email: EmailStr
+    phone_number: str | None = None
     password: str
     role: UserRole = "sales"
 
@@ -33,6 +34,7 @@ class UserResponse(BaseModel):
     last_name: str | None
     employee_id: str
     email: str
+    phone_number: str | None = None
     role: str
 
     class Config:

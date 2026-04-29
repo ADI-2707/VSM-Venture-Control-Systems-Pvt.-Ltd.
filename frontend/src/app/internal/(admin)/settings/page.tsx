@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Settings.module.css";
 import { useRBACGuard } from "@/hooks/useRBACGuard";
 import { useAuth } from "@/context/AuthContext";
@@ -11,9 +11,8 @@ export default function SettingsPage() {
   const { isAllowed, isLoading } = useRBACGuard();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<"security" | "users">("security");
+  const [activeTab, setActiveTab] = useState<"security" | "users" | "employees">("security");
 
-  // Password State
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,18 +20,40 @@ export default function SettingsPage() {
   const [pwdError, setPwdError] = useState("");
   const [pwdSuccess, setPwdSuccess] = useState("");
 
-  // Create User State
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     employee_id: "",
     email: "",
+    phone_number: "+91 ",
     password: "",
     role: "sales",
   });
   const [userLoading, setUserLoading] = useState(false);
   const [userError, setUserError] = useState("");
   const [userSuccess, setUserSuccess] = useState("");
+
+  const [employees, setEmployees] = useState<any[]>([]);
+  const [employeesLoading, setEmployeesLoading] = useState(false);
+  const [employeesError, setEmployeesError] = useState("");
+
+  const fetchEmployees = async () => {
+    try {
+      setEmployeesLoading(true);
+      const res = await api.get("/users");
+      setEmployees(res.data);
+    } catch (err: any) {
+      setEmployeesError(err.response?.data?.detail || "Failed to fetch employees.");
+    } finally {
+      setEmployeesLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "employees") {
+      fetchEmployees();
+    }
+  }, [activeTab]);
 
   if (isLoading || !isAllowed) return null;
 
@@ -82,6 +103,7 @@ export default function SettingsPage() {
         last_name: "",
         employee_id: "",
         email: "",
+        phone_number: "+91 ",
         password: "",
         role: "sales",
       });
@@ -109,12 +131,20 @@ export default function SettingsPage() {
           Security
         </button>
         {user?.role === "manager" && (
-          <button
-            className={`${styles.tab} ${activeTab === "users" ? styles.tabActive : ""}`}
-            onClick={() => setActiveTab("users")}
-          >
-            User Management
-          </button>
+          <>
+            <button
+              className={`${styles.tab} ${activeTab === "users" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("users")}
+            >
+              Add Employee
+            </button>
+            <button
+              className={`${styles.tab} ${activeTab === "employees" ? styles.tabActive : ""}`}
+              onClick={() => setActiveTab("employees")}
+            >
+              Employee Management
+            </button>
+          </>
         )}
       </div>
 
@@ -229,6 +259,18 @@ export default function SettingsPage() {
                   />
                 </div>
                 <div className={styles.formGroup}>
+                  <label>Phone Number (Optional)</label>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={formData.phone_number}
+                    onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
                   <label>Email Address</label>
                   <input
                     type="email"
@@ -238,9 +280,6 @@ export default function SettingsPage() {
                     required
                   />
                 </div>
-              </div>
-
-              <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
                   <label>Role</label>
                   <select
@@ -256,6 +295,9 @@ export default function SettingsPage() {
                     <option value="sales">Sales</option>
                   </select>
                 </div>
+              </div>
+
+              <div className={styles.formGrid}>
                 <div className={styles.formGroup}>
                   <label>Initial Password</label>
                   <input
@@ -277,6 +319,53 @@ export default function SettingsPage() {
                 </button>
               </div>
             </form>
+          </motion.div>
+        )}
+
+        {activeTab === "employees" && user?.role === "manager" && (
+          <motion.div
+            key="employees"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className={styles.card}
+          >
+            <div className={styles.cardHeader}>
+              <h3>Employee Management</h3>
+              <span>View all added employees and their details.</span>
+            </div>
+
+            {employeesLoading ? (
+              <p>Loading employees...</p>
+            ) : employeesError ? (
+              <p className={styles.errorMsg}>{employeesError}</p>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
+                  <thead>
+                    <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
+                      <th style={{ padding: "0.5rem" }}>Employee ID</th>
+                      <th style={{ padding: "0.5rem" }}>Name</th>
+                      <th style={{ padding: "0.5rem" }}>Email ID</th>
+                      <th style={{ padding: "0.5rem" }}>Phone Number</th>
+                      <th style={{ padding: "0.5rem" }}>Department</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employees.map((emp) => (
+                      <tr key={emp.id} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                        <td style={{ padding: "0.5rem" }}>{emp.employee_id}</td>
+                        <td style={{ padding: "0.5rem" }}>{emp.first_name} {emp.last_name || ""}</td>
+                        <td style={{ padding: "0.5rem" }}>{emp.email}</td>
+                        <td style={{ padding: "0.5rem" }}>{emp.phone_number || "N/A"}</td>
+                        <td style={{ padding: "0.5rem", textTransform: "capitalize" }}>{emp.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

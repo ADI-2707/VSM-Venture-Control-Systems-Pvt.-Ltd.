@@ -18,6 +18,7 @@ def create_user(db: Session, user_data):
         last_name=user_data.last_name,
         employee_id=user_data.employee_id,
         email=user_data.email,
+        phone_number=user_data.phone_number,
         hashed_password=hash_password(user_data.password),
         role=user_data.role,
     )
@@ -29,3 +30,6 @@ def create_user(db: Session, user_data):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(User).filter(User.email == email).first()
+
+def get_all_users(db: Session):
+    return db.query(User).all()
