@@ -32,6 +32,39 @@
   font-weight: 500;
 }
 
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--admin-text-primary);
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.statVal {
+  font-weight: 600;
+}
+
 .logs {
   background: white;
   border: 1px solid var(--admin-border);
