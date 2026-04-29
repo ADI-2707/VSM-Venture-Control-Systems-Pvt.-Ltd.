@@ -113,7 +113,7 @@ export default function SettingsPage() {
             className={`${styles.tab} ${activeTab === "users" ? styles.tabActive : ""}`}
             onClick={() => setActiveTab("users")}
           >
-            User Management
+            Add Employee
           </button>
         )}
       </div>
