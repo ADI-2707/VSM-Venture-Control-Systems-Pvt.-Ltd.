@@ -1,8 +1,10 @@
 import os
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Query
+from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from typing import Optional
+
+from app.core.limiter import limiter
 
 from app.db.deps import get_db
 from app.core.deps_auth import require_roles
@@ -32,7 +34,9 @@ def get_job(job_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/jobs/{job_id}/apply", response_model=ApplicationResponse)
+@limiter.limit("3/minute")
 def apply_for_job(
+    request: Request,
     job_id: int,
     full_name: str = Form(...),
     email: str = Form(...),

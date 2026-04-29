@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
+from app.core.limiter import limiter
 from sqlalchemy.orm import Session
 import asyncio
 import os
@@ -18,7 +19,8 @@ router = APIRouter()
 
 
 @router.post("/auth/login")
-def login(data: UserLogin, db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def login(request: Request, data: UserLogin, db: Session = Depends(get_db)):
     result = login_user(db, data.email, data.password)
 
     if not result:
