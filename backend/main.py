@@ -53,8 +53,7 @@ async def log_requests(request: Request, call_next):
     response = await call_next(request)
     process_time = time.time() - start_time
     
-    # Do not log the logs or monitoring endpoints to prevent infinite polling noise
-    if path != "/admin/logs" and not path.startswith("/admin/monitoring"):
+    if path != "/admin/logs" and not path.startswith("/admin/monitoring") and request.method != "OPTIONS":
         extra_data = {"source": source, "service": path}
         if source == "internal":
             extra_data["actor"] = actor
