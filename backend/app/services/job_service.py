@@ -72,24 +72,22 @@ def submit_application(db: Session, job_id: int, full_name: str, email: str,
     ):
         raise HTTPException(status_code=400, detail="CV must be PDF or Word document")
 
-    filename = f"{job_id}_{uuid4().hex}{extension}"
-    filepath = os.path.join(CV_UPLOAD_DIR, filename)
+    from app.services.storage_service import storage
 
-    bytes_written = 0
+    cv_file.file.seek(0, 2)
+    file_size = cv_file.file.tell()
+    cv_file.file.seek(0)
+    
+    if file_size > MAX_CV_UPLOAD_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail="CV must be 5MB or smaller",
+        )
+
     try:
-        with open(filepath, "wb") as f:
-            while chunk := cv_file.file.read(1024 * 1024):
-                bytes_written += len(chunk)
-                if bytes_written > MAX_CV_UPLOAD_BYTES:
-                    raise HTTPException(
-                        status_code=413,
-                        detail="CV must be 5MB or smaller",
-                    )
-                f.write(chunk)
-    except HTTPException:
-        if os.path.exists(filepath):
-            os.remove(filepath)
-        raise
+        saved_path = storage.save_file(cv_file, prefix=str(job_id))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Storage error: {str(e)}")
 
     application = Application(
         job_id=job_id,
@@ -97,7 +95,7 @@ def submit_application(db: Session, job_id: int, full_name: str, email: str,
         email=email,
         phone=phone,
         cover_note=cover_note,
-        cv_path=filepath,
+        cv_path=saved_path,
     )
     db.add(application)
     db.commit()
@@ -150,7 +148,6 @@ def get_applications_trend(db: Session, days: int = 30):
         .all()
     )
 
-    # Fill in zero days so chart has no gaps
     date_map = {str(row.date): row.count for row in rows}
     trend = []
     for i in range(days):

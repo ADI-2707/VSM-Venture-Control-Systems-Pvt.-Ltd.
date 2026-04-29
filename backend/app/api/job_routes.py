@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.db.deps import get_db
-from app.core.deps_auth import require_roles  # ✅ use RBAC instead of admin-only
+from app.core.deps_auth import require_roles
 
 from app.modules.job_schema import (
     JobCreate, JobUpdate, JobResponse, ApplicationResponse,
@@ -97,13 +97,26 @@ def download_cv(
     _: None = Depends(require_roles(["manager", "hr"])),
 ):
     from app.modules.application_model import Application
+    from app.services.storage_service import storage
+    from fastapi.responses import RedirectResponse
 
     app = db.query(Application).filter(Application.id == application_id).first()
 
-    if not app or not os.path.exists(app.cv_path):
+    if not app or not app.cv_path:
         raise HTTPException(status_code=404, detail="CV not found")
 
-    return FileResponse(app.cv_path, filename=os.path.basename(app.cv_path))
+    try:
+        file_info = storage.get_file_path_or_url(app.cv_path)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    if file_info["type"] == "url":
+        return RedirectResponse(file_info["url"])
+    
+    if not os.path.exists(file_info["path"]):
+        raise HTTPException(status_code=404, detail="File missing on disk")
+
+    return FileResponse(file_info["path"], filename=os.path.basename(file_info["path"]))
 
 
 @router.get("/admin/analytics/summary", response_model=AnalyticsSummary)
