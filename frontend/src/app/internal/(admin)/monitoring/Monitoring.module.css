@@ -110,7 +110,7 @@
 
 .logHead {
   display: grid;
-  grid-template-columns: 80px 80px 100px 120px 1fr;
+  grid-template-columns: 85px 80px 250px 120px 1fr;
   background: #27272a;
   padding: 10px 12px;
   font-size: 12px;
@@ -126,7 +126,7 @@
 
 .logRow {
   display: grid;
-  grid-template-columns: 80px 80px 100px 120px 1fr;
+  grid-template-columns: 85px 80px 250px 120px 1fr;
   padding: 8px 12px;
   font-size: 12px;
   font-family: monospace;
@@ -143,6 +143,8 @@
 
 .service {
   color: #60a5fa;
+  word-break: break-all;
+  padding-right: 12px;
 }
 
 .actor {

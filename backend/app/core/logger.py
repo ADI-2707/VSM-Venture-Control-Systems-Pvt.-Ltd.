@@ -10,14 +10,16 @@ LOG_FILE = os.path.join(LOGS_DIR, "app.log")
 
 class JSONFormatter(logging.Formatter):
     def format(self, record):
+        source = getattr(record, "source", "system")
         log_obj = {
             "time": self.formatTime(record, "%H:%M:%S"),
             "level": record.levelname,
-            "service": record.name,
-            "source": getattr(record, "source", "system"),
-            "actor": getattr(record, "actor", "anonymous"),
+            "service": getattr(record, "service", record.name),
+            "source": source,
             "message": record.getMessage()
         }
+        if source == "internal":
+            log_obj["actor"] = getattr(record, "actor", "anonymous")
         return json.dumps(log_obj)
 
 def setup_logger():
