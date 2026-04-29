@@ -13,6 +13,7 @@ class User(Base):
 
     employee_id = Column(String, unique=True, nullable=False, index=True)
     email = Column(String, unique=True, nullable=False, index=True)
+    phone_number = Column(String, nullable=True)
 
     hashed_password = Column(String, nullable=False)
     token_version = Column(Integer, default=0, nullable=False)
