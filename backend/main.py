@@ -45,7 +45,7 @@ async def log_requests(request: Request, call_next):
     if auth_header and auth_header.startswith("Bearer "):
         token = auth_header.split(" ")[1]
         try:
-            payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm], options={"verify_exp": False})
+            payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
             actor = payload.get("employee_id", "anonymous")
         except:
             pass
@@ -54,15 +54,28 @@ async def log_requests(request: Request, call_next):
     process_time = time.time() - start_time
     
     if path != "/admin/logs" and not path.startswith("/admin/monitoring") and request.method != "OPTIONS":
-        extra_data = {"source": source, "service": path}
-        if source == "internal":
-            extra_data["actor"] = actor
-            
-        logger.info(
-            f"{request.method} {path} - {response.status_code} - {process_time:.4f}s",
-            extra=extra_data
-        )
-    
+        message = f"{request.method} {path} - {response.status_code} - {process_time:.4f}s"
+        level = "ERROR" if response.status_code >= 400 else "INFO"
+        
+        import asyncio
+        from app.db.session import SessionLocal
+        from app.modules.audit_model import AuditLog
+        
+        def save_log():
+            db = SessionLocal()
+            try:
+                db.add(AuditLog(
+                    level=level, service=path, source=source, actor=actor,
+                    message=message, process_time=process_time, status_code=response.status_code
+                ))
+                db.commit()
+            except Exception as e:
+                print(f"Log Error: {e}")
+            finally:
+                db.close()
+                
+        asyncio.create_task(asyncio.to_thread(save_log))
+        
     return response
 
 @app.on_event("startup")

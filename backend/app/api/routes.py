@@ -99,27 +99,20 @@ def logout_user(
 @router.get("/admin/logs")
 def get_system_logs(
     limit: int = 200,
+    db: Session = Depends(get_db),
     _: User = Depends(get_current_admin)
 ):
-    import json
-    log_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "logs", "app.log")
-    logs = []
+    from app.modules.audit_model import AuditLog
+    logs = db.query(AuditLog).order_by(AuditLog.id.desc()).limit(limit).all()
     
-    if os.path.exists(log_file_path):
-        with open(log_file_path, "r") as f:
-            lines = f.readlines()
-            last_lines = lines[-limit:] if len(lines) > limit else lines
-            for line in last_lines:
-                if line.strip():
-                    try:
-                        logs.append(json.loads(line.strip()))
-                    except:
-                        logs.append({
-                            "time": "",
-                            "level": "INFO",
-                            "service": "system",
-                            "source": "system",
-                            "actor": "anonymous",
-                            "message": line.strip()
-                        })
-    return logs
+    result = []
+    for log in reversed(logs):
+        result.append({
+            "time": log.time.strftime("%H:%M:%S") if log.time else "",
+            "level": log.level,
+            "service": log.service,
+            "source": log.source,
+            "actor": log.actor,
+            "message": log.message
+        })
+    return result
