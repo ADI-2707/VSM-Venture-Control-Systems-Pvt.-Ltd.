@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./Projects.module.css";
 import api from "@/utils/axios";
 import { useAuth } from "@/context/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 type SubStep = {
   id: number;
@@ -38,7 +39,6 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Form State
   const [formData, setFormData] = useState({
     client_name: "",
     line: "",
@@ -88,7 +88,7 @@ export default function ProjectsPage() {
   const toggleCheckpoint = async (cp: Checkpoint) => {
     try {
       await api.patch(`/projects/checkpoints/${cp.id}`, { is_completed: !cp.is_completed });
-      fetchProjects(); // Refresh to get nested updates
+      fetchProjects();
       if (selectedProject) {
         const updatedCps = selectedProject.checkpoints.map(c => 
           c.id === cp.id ? { ...c, is_completed: !cp.is_completed } : c
@@ -106,8 +106,6 @@ export default function ProjectsPage() {
     try {
       await api.post(`/projects/checkpoints/${checkpointId}/substeps`, { name: newSubStep });
       setNewSubStep("");
-      fetchProjects();
-      // Optimization: trigger a refresh of selectedProject
       const res = await api.get("/projects");
       const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
       if (updated) setSelectedProject(updated);
@@ -117,78 +115,87 @@ export default function ProjectsPage() {
   };
 
   const renderCreateTab = () => (
-    <div className={styles.card}>
-      <h2 style={{ marginBottom: "1.5rem" }}>Start New Project</h2>
-      <form className={styles.form} onSubmit={handleCreateProject}>
-        <div className={styles.formField}>
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={styles.card}
+    >
+      <div className={styles.cardHeader}>
+        <h2>Start New Project</h2>
+        <p>Enter the initial project details to begin the lifecycle tracking.</p>
+      </div>
+
+      <form className={styles.formGrid} onSubmit={handleCreateProject}>
+        <div className={styles.formGroup}>
           <label>Client Name</label>
           <input 
+            className={styles.input}
             required 
             value={formData.client_name}
             onChange={e => setFormData({...formData, client_name: e.target.value})}
             placeholder="e.g. Tata Motors" 
           />
         </div>
-        <div className={styles.formField}>
+        <div className={styles.formGroup}>
           <label>Line</label>
           <input 
+            className={styles.input}
             required 
             value={formData.line}
             onChange={e => setFormData({...formData, line: e.target.value})}
             placeholder="e.g. Assembly Line A" 
           />
         </div>
-        <div className={styles.formField}>
+        <div className={styles.formGroup}>
           <label>Material</label>
           <input 
+            className={styles.input}
             required 
             value={formData.material}
             onChange={e => setFormData({...formData, material: e.target.value})}
             placeholder="e.g. Stainless Steel" 
           />
         </div>
-        <div className={styles.formField}>
+        <div className={styles.formGroup}>
           <label>Location</label>
           <input 
+            className={styles.input}
             required 
             value={formData.location}
             onChange={e => setFormData({...formData, location: e.target.value})}
             placeholder="e.g. Pune, Maharashtra" 
           />
         </div>
-        <button type="submit" className={styles.submitBtn} disabled={loading}>
-          {loading ? "Creating..." : "Initialize Project"}
-        </button>
+        <div style={{ gridColumn: "span 2" }}>
+           <button type="submit" className={styles.primaryBtn} disabled={loading} style={{ width: "100%" }}>
+            {loading ? "Initializing..." : "Create Project & Start Tracking"}
+          </button>
+        </div>
       </form>
-    </div>
+    </motion.div>
   );
 
   const renderLifecycleTab = () => {
     if (selectedProject) {
       return (
-        <div className={styles.card}>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className={styles.card}
+        >
           <button className={styles.backBtn} onClick={() => setSelectedProject(null)}>
-            ← Back to Projects
+            ← Back to All Projects
           </button>
           
-          <div className={styles.trackerHeader}>
-            <div>
-              <h2 style={{ margin: 0 }}>{selectedProject.client_name}</h2>
-              <p style={{ color: "var(--text-secondary)", marginTop: "0.4rem" }}>
-                {selectedProject.line} | {selectedProject.location}
-              </p>
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <span className={styles.activeTab} style={{ padding: "0.4rem 1rem", borderRadius: "20px", fontSize: "0.8rem" }}>
-                Active Project
-              </span>
-            </div>
+          <div className={styles.cardHeader}>
+            <h2>{selectedProject.client_name}</h2>
+            <p>{selectedProject.line} • {selectedProject.location}</p>
           </div>
 
           <div className={styles.progressBarContainer}>
             <div className={styles.progressBarLabel}>
-              <span>Overall Progress</span>
-              <span>{selectedProject.progress}%</span>
+              <span>Manual Progress Update</span>
+              <span style={{ color: "var(--admin-accent)" }}>{selectedProject.progress}%</span>
             </div>
             <input 
               type="range" 
@@ -216,16 +223,16 @@ export default function ProjectsPage() {
           </div>
 
           <div className={styles.substepsSection}>
-            <h3>Custom Sub-steps</h3>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
-              Add and track specific tasks for each major checkpoint.
-            </p>
+            <div className={styles.cardHeader} style={{ marginBottom: "16px" }}>
+              <h2>Milestone Sub-tasks</h2>
+              <p>Add specific tasks for each stage to track granular progress.</p>
+            </div>
             
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
               {selectedProject.checkpoints.map(cp => (
                 <div key={cp.id} style={{ opacity: cp.is_completed ? 0.6 : 1 }}>
-                  <h4 style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-                    <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "var(--success-color)" : "var(--accent-primary)" }}></span>
+                  <h4 style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", fontSize: "14px", fontWeight: 700, color: "var(--admin-text-primary)" }}>
+                    <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "#10b981" : "var(--admin-accent)" }}></div>
                     {cp.name}
                   </h4>
                   <div className={styles.substepList}>
@@ -237,6 +244,8 @@ export default function ProjectsPage() {
                     ))}
                     <div className={styles.addSubstep}>
                       <input 
+                        className={styles.input}
+                        style={{ padding: "8px 12px" }}
                         placeholder="Add sub-task..." 
                         value={cp.id === (window as any).activeCpId ? newSubStep : ""}
                         onChange={(e) => {
@@ -245,51 +254,59 @@ export default function ProjectsPage() {
                         }}
                         onKeyPress={(e) => e.key === "Enter" && addSubStep(cp.id)}
                       />
-                      <button onClick={() => addSubStep(cp.id)} style={{ padding: "0 0.8rem", background: "var(--accent-primary)", border: "none", borderRadius: "6px", color: "white" }}>+</button>
+                      <button 
+                        onClick={() => addSubStep(cp.id)} 
+                        className={styles.primaryBtn}
+                        style={{ margin: 0, padding: "0 12px" }}
+                      >+</button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       );
     }
 
     return (
       <div className={styles.projectGrid}>
-        {projects.length === 0 && (
-          <div className={styles.card} style={{ gridColumn: "1 / -1", textAlign: "center" }}>
-            <p>No active projects found. Start one in the "Create" tab.</p>
-          </div>
-        )}
         {projects.map((p) => (
-          <div key={p.id} className={styles.projectCard} onClick={() => setSelectedProject(p)}>
+          <motion.div 
+            key={p.id} 
+            whileHover={{ y: -4 }}
+            className={styles.projectCard} 
+            onClick={() => setSelectedProject(p)}
+          >
             <div className={styles.projectInfo}>
-              <h3>{p.client_name}</h3>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <h3>{p.client_name}</h3>
+                <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--admin-accent)", background: "var(--admin-accent-soft)", padding: "2px 6px", borderRadius: "4px" }}>
+                  ACTIVE
+                </span>
+              </div>
               <div className={styles.projectMeta}>
-                <span>Line: {p.line}</span>
-                <span>Location: {p.location}</span>
-                <span>Material: {p.material}</span>
+                <span><strong>Line:</strong> {p.line}</span>
+                <span><strong>Location:</strong> {p.location}</span>
+                <span><strong>Material:</strong> {p.material}</span>
               </div>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", marginBottom: "0.4rem" }}>
+            <div style={{ marginTop: "20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "6px", fontWeight: 600 }}>
                 <span>Progress</span>
                 <span>{p.progress}%</span>
               </div>
-              <div style={{ width: "100%", height: "4px", background: "rgba(255,255,255,0.1)", borderRadius: "2px" }}>
-                <div style={{ width: `${p.progress}%`, height: "100%", background: "var(--accent-primary)", borderRadius: "2px", transition: "width 0.5s ease" }}></div>
+              <div style={{ width: "100%", height: "6px", background: "#f1f5f9", borderRadius: "3px" }}>
+                <div style={{ width: `${p.progress}%`, height: "100%", background: "var(--admin-accent)", borderRadius: "3px", transition: "width 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}></div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     );
   };
 
   const renderManagementTab = () => {
-    // Group projects by owner
     const grouped: Record<string, Project[]> = {};
     projects.forEach(p => {
       const name = p.owner_name || "Unknown";
@@ -302,19 +319,19 @@ export default function ProjectsPage() {
         {Object.entries(grouped).map(([name, employeeProjects]) => (
           <div key={name} className={styles.employeeGroup}>
             <div className={styles.employeeHeader}>
-              <span style={{ fontWeight: 600 }}>{name}</span>
-              <span style={{ color: "var(--text-secondary)" }}>{employeeProjects.length} Projects</span>
+              <span style={{ fontWeight: 600, color: "var(--admin-text-primary)" }}>{name}</span>
+              <span style={{ fontSize: "13px", color: "var(--admin-text-secondary)" }}>{employeeProjects.length} Active Projects</span>
             </div>
             <div className={styles.employeeProjects}>
                {employeeProjects.map(p => (
-                 <div key={p.id} className={styles.projectCard} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                 <div key={p.id} className={styles.projectCard} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
                    <div>
-                     <div style={{ fontWeight: 600 }}>{p.client_name}</div>
-                     <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>{p.line} | {p.location}</div>
+                     <div style={{ fontWeight: 600, fontSize: "15px" }}>{p.client_name}</div>
+                     <div style={{ fontSize: "12px", color: "var(--admin-text-secondary)" }}>{p.line} | {p.location}</div>
                    </div>
                    <div style={{ textAlign: "right" }}>
-                      <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "var(--accent-primary)" }}>{p.progress}%</div>
-                      <div style={{ fontSize: "0.7rem", color: "var(--text-secondary)" }}>Overall Progress</div>
+                      <div style={{ fontSize: "18px", fontWeight: 800, color: "var(--admin-accent)" }}>{p.progress}%</div>
+                      <div style={{ fontSize: "10px", fontWeight: 700, color: "var(--admin-text-secondary)", textTransform: "uppercase" }}>Completion</div>
                    </div>
                  </div>
                ))}
@@ -329,34 +346,38 @@ export default function ProjectsPage() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Project Management</h1>
-        <div className={styles.tabs}>
+        <p className={styles.subtitle}>Track and manage employee project lifecycles</p>
+      </div>
+
+      <div className={styles.tabs}>
+        <button 
+          className={`${styles.tab} ${activeTab === "lifecycle" ? styles.tabActive : ""}`}
+          onClick={() => { setActiveTab("lifecycle"); setSelectedProject(null); }}
+        >
+          Project Life Cycle
+        </button>
+        <button 
+          className={`${styles.tab} ${activeTab === "create" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("create")}
+        >
+          Create New Project
+        </button>
+        {user?.role === "manager" && (
           <button 
-            className={`${styles.tab} ${activeTab === "lifecycle" ? styles.activeTab : ""}`}
-            onClick={() => { setActiveTab("lifecycle"); setSelectedProject(null); }}
+            className={`${styles.tab} ${activeTab === "management" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("management")}
           >
-            Project Life Cycle
+            Management Overview
           </button>
-          <button 
-            className={`${styles.tab} ${activeTab === "create" ? styles.activeTab : ""}`}
-            onClick={() => setActiveTab("create")}
-          >
-            Create New Project
-          </button>
-          {user?.role === "manager" && (
-            <button 
-              className={`${styles.tab} ${activeTab === "management" ? styles.activeTab : ""}`}
-              onClick={() => setActiveTab("management")}
-            >
-              Management Overview
-            </button>
-          )}
-        </div>
+        )}
       </div>
 
       <div className={styles.content}>
-        {activeTab === "create" && renderCreateTab()}
-        {activeTab === "lifecycle" && renderLifecycleTab()}
-        {activeTab === "management" && renderManagementTab()}
+        <AnimatePresence mode="wait">
+          {activeTab === "create" && renderCreateTab()}
+          {activeTab === "lifecycle" && renderLifecycleTab()}
+          {activeTab === "management" && renderManagementTab()}
+        </AnimatePresence>
       </div>
     </div>
   );
