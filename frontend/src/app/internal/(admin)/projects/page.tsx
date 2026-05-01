@@ -257,7 +257,7 @@ export default function ProjectsPage() {
 
           <div className={styles.progressBarContainer}>
             <div className={styles.progressBarLabel}>
-              <span>Manual Progress Update</span>
+              <span>Auto-Calculated Progress</span>
               <span style={{ color: "var(--admin-accent)" }}>{selectedProject.progress}%</span>
             </div>
             <input 
@@ -265,7 +265,7 @@ export default function ProjectsPage() {
               className={styles.slider} 
               min="0" max="100" 
               value={selectedProject.progress}
-              onChange={(e) => updateProgress(selectedProject.id, parseInt(e.target.value))}
+              readOnly
             />
           </div>
 
