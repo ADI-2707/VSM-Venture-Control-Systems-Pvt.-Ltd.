@@ -82,8 +82,10 @@ api.interceptors.response.use(
         });
 
         const newToken = res.data.access_token;
+        const newRefreshToken = res.data.refresh_token;
 
         localStorage.setItem("token", newToken);
+        localStorage.setItem("refresh_token", newRefreshToken);
 
         resolveRefreshSubscribers(newToken);
 

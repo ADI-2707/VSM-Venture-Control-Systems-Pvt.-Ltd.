@@ -75,4 +75,9 @@ def refresh_access_token(db: Session, token: str):
         "employee_id": user.employee_id,
     })
 
-    return new_access
+    new_refresh = create_refresh_token({
+        "sub": str(user.id),
+        "token_version": user.token_version,
+    })
+
+    return {"access_token": new_access, "refresh_token": new_refresh}

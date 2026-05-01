@@ -46,8 +46,8 @@ def refresh_token(
     data: RefreshTokenRequest,
     db: Session = Depends(get_db),
 ):
-    new_access = refresh_access_token(db, data.token)
-    return {"access_token": new_access}
+    result = refresh_access_token(db, data.token)
+    return {"access_token": result["access_token"], "refresh_token": result["refresh_token"]}
 
 
 @router.post("/auth/change-password")
