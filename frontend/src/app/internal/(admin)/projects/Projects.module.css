@@ -136,7 +136,6 @@
   box-shadow: none;
 }
 
-/* Lifecycle Specific Styles */
 .backBtn {
   background: transparent;
   border: none;
@@ -396,7 +395,6 @@
   pointer-events: none;
 }
 
-/* Manager Styles */
 .employeeGroup {
   margin-bottom: 24px;
 }
