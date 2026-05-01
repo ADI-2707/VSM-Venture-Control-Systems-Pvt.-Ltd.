@@ -127,6 +127,19 @@ export default function ProjectsPage() {
     }
   };
 
+  const deleteSubStep = async (subId: number) => {
+    if (!confirm("Are you sure you want to remove this sub-task?")) return;
+    try {
+      await api.delete(`/projects/substeps/${subId}`);
+      const res = await api.get("/projects");
+      setProjects(res.data);
+      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
+      if (updated) setSelectedProject(updated);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const renderTimeline = () => {
     if (!selectedProject) return null;
 
@@ -294,6 +307,13 @@ export default function ProjectsPage() {
                           style={{ cursor: "pointer" }}
                         />
                         <span>{sub.name}</span>
+                        <button 
+                          className={styles.deleteBtn}
+                          onClick={() => deleteSubStep(sub.id)}
+                          title="Remove sub-task"
+                        >
+                          ×
+                        </button>
                       </div>
                     ))}
                     <div className={styles.addSubstep}>

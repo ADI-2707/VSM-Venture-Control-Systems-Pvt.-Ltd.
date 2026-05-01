@@ -175,3 +175,24 @@ def toggle_substep(
     
     return {"message": "Updated"}
 
+@router.delete("/substeps/{substep_id}")
+def delete_substep(
+    substep_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    substep = db.query(ProjectSubStep).filter(ProjectSubStep.id == substep_id).first()
+    if not substep:
+        raise HTTPException(status_code=404, detail="Substep not found")
+    
+    if substep.checkpoint.project.owner_id != current_user.id and current_user.role != "manager":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    project_id = substep.checkpoint.project_id
+    db.delete(substep)
+    db.commit()
+    
+    calculate_project_progress(project_id, db)
+    
+    return {"message": "Deleted"}
+

@@ -351,6 +351,24 @@
   border-radius: var(--admin-radius);
   font-size: 14px;
   border: 1px solid #f1f5f9;
+  position: relative;
+}
+
+.deleteBtn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  color: #ef4444;
+  background: #fef2f2;
 }
 
 .addSubstep {
