@@ -11,7 +11,7 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = useAuth();
+  const { user, authReady } = useAuth();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -19,11 +19,11 @@ export default function AdminLayout({
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !authReady) return;
     if (!user) router.replace("/internal");
-  }, [user, mounted, router]);
+  }, [user, authReady, mounted, router]);
 
-  if (!mounted) return <div style={{ visibility: "hidden" }} />;
+  if (!mounted || !authReady) return <div style={{ visibility: "hidden" }} />;
   if (!user) return null;
 
   return (
