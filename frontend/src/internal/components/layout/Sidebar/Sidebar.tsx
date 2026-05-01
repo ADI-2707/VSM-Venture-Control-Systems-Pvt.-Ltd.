@@ -10,7 +10,7 @@ import Tooltip from "@/components/ui/Tooltip/Tooltip";
 const navItems = [
   { label: "Dashboard", href: "/internal", icon: "/adminsidebar/dashboard.svg" },
   { label: "Content", href: "/internal/content", icon: "/adminsidebar/content.svg" },
-  { label: "Media", href: "/internal/media", icon: "/adminsidebar/media.svg" },
+  { label: "Projects", href: "/internal/projects", icon: "/adminsidebar/project.svg" },
   { label: "Analytics", href: "/internal/analytics", icon: "/adminsidebar/analytics.svg" },
   { label: "Monitoring", href: "/internal/monitoring", icon: "/adminsidebar/monitoring.svg" },
   { label: "Jobs", href: "/internal/jobs", icon: "/adminsidebar/jobs.svg" },
