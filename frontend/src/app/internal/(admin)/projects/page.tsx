@@ -46,6 +46,8 @@ export default function ProjectsPage() {
     location: "",
   });
 
+  const [subStepInputs, setSubStepInputs] = useState<Record<number, string>>({});
+
   useEffect(() => {
     fetchProjects();
   }, [activeTab]);
@@ -88,19 +90,14 @@ export default function ProjectsPage() {
   const toggleCheckpoint = async (cp: Checkpoint) => {
     try {
       await api.patch(`/projects/checkpoints/${cp.id}`, { is_completed: !cp.is_completed });
-      fetchProjects();
-      if (selectedProject) {
-        const updatedCps = selectedProject.checkpoints.map(c => 
-          c.id === cp.id ? { ...c, is_completed: !cp.is_completed } : c
-        );
-        setSelectedProject({ ...selectedProject, checkpoints: updatedCps });
-      }
+      const res = await api.get("/projects");
+      setProjects(res.data);
+      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
+      if (updated) setSelectedProject(updated);
     } catch (err) {
       console.error(err);
     }
   };
-
-  const [subStepInputs, setSubStepInputs] = useState<Record<number, string>>({});
 
   const addSubStep = async (checkpointId: number) => {
     const name = subStepInputs[checkpointId];
@@ -116,6 +113,68 @@ export default function ProjectsPage() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const toggleSubStep = async (sub: SubStep) => {
+    try {
+      await api.patch(`/projects/substeps/${sub.id}`, { is_completed: !sub.is_completed });
+      const res = await api.get("/projects");
+      setProjects(res.data);
+      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
+      if (updated) setSelectedProject(updated);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const renderTimeline = () => {
+    if (!selectedProject) return null;
+
+    const timelineNodes: any[] = [];
+    selectedProject.checkpoints.forEach((cp) => {
+      timelineNodes.push({ ...cp, type: "checkpoint" });
+      if (cp.sub_steps) {
+        cp.sub_steps.forEach((sub) => {
+          timelineNodes.push({ ...sub, type: "substep", parentCpId: cp.id });
+        });
+      }
+    });
+
+    return (
+      <div className={styles.checkpoints}>
+        {timelineNodes.map((node, idx) => {
+          if (node.type === "checkpoint") {
+            return (
+              <div 
+                key={`cp-${node.id}`} 
+                className={`${styles.checkpoint} ${node.is_completed ? styles.activeCp : ""}`}
+                onClick={() => toggleCheckpoint(node)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className={`${styles.dot} ${node.is_completed ? styles.completedDot : ""}`}>
+                  {node.is_completed ? "✓" : node.order}
+                </div>
+                <div className={styles.cpName}>{node.name}</div>
+              </div>
+            );
+          } else {
+            return (
+              <div 
+                key={`sub-${node.id}`} 
+                className={styles.checkpoint}
+                onClick={() => toggleSubStep(node)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className={`${styles.subDot} ${node.is_completed ? styles.completedSubDot : ""}`}>
+                  {node.is_completed ? "✓" : ""}
+                </div>
+                <div className={styles.subName}>{node.name}</div>
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
   };
 
   const renderCreateTab = () => (
@@ -210,21 +269,7 @@ export default function ProjectsPage() {
             />
           </div>
 
-          <div className={styles.checkpoints}>
-            {selectedProject.checkpoints.map((cp) => (
-              <div 
-                key={cp.id} 
-                className={`${styles.checkpoint} ${cp.is_completed ? styles.activeCp : ""}`}
-                onClick={() => toggleCheckpoint(cp)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className={`${styles.dot} ${cp.is_completed ? styles.completedDot : ""}`}>
-                  {cp.is_completed ? "✓" : cp.order}
-                </div>
-                <div className={styles.cpName}>{cp.name}</div>
-              </div>
-            ))}
-          </div>
+          {renderTimeline()}
 
           <div className={styles.substepsSection}>
             <div className={styles.cardHeader} style={{ marginBottom: "16px" }}>
@@ -242,7 +287,12 @@ export default function ProjectsPage() {
                   <div className={styles.substepList}>
                     {cp.sub_steps?.map(sub => (
                       <div key={sub.id} className={styles.substepItem}>
-                        <input type="checkbox" checked={sub.is_completed} readOnly />
+                        <input 
+                          type="checkbox" 
+                          checked={sub.is_completed} 
+                          onChange={() => toggleSubStep(sub)}
+                          style={{ cursor: "pointer" }}
+                        />
                         <span>{sub.name}</span>
                       </div>
                     ))}
