@@ -121,11 +121,22 @@ def toggle_checkpoint(
     if checkpoint.project.owner_id != current_user.id and current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not authorized")
     
+    all_cps = sorted(checkpoint.project.checkpoints, key=lambda x: x.order)
+    
+    if data.is_completed:
+        for cp in all_cps:
+            if cp.order < checkpoint.order and not cp.is_completed:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Please complete '{cp.name}' first")
+    else:
+
+        for cp in all_cps:
+            if cp.order > checkpoint.order and cp.is_completed:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Cannot undo '{checkpoint.name}' while '{cp.name}' is completed")
+
     checkpoint.is_completed = data.is_completed
     db.commit()
     
     calculate_project_progress(checkpoint.project_id, db)
-    
     return {"message": "Updated"}
 
 @router.post("/checkpoints/{checkpoint_id}/substeps")
@@ -151,7 +162,6 @@ def add_substep(
     db.commit()
     
     calculate_project_progress(checkpoint.project_id, db)
-    
     return {"message": "Added"}
 
 @router.patch("/substeps/{substep_id}")
@@ -168,11 +178,15 @@ def toggle_substep(
     if substep.checkpoint.project.owner_id != current_user.id and current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not authorized")
     
+    all_cps = sorted(substep.checkpoint.project.checkpoints, key=lambda x: x.order)
+    for cp in all_cps:
+        if cp.order < substep.checkpoint.order and not cp.is_completed:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Complete '{cp.name}' before starting sub-tasks here")
+
     substep.is_completed = data.is_completed
     db.commit()
     
     calculate_project_progress(substep.checkpoint.project_id, db)
-    
     return {"message": "Updated"}
 
 @router.delete("/substeps/{substep_id}")
@@ -193,6 +207,4 @@ def delete_substep(
     db.commit()
     
     calculate_project_progress(project_id, db)
-    
     return {"message": "Deleted"}
-

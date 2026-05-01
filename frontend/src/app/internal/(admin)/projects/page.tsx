@@ -94,8 +94,12 @@ export default function ProjectsPage() {
       setProjects(res.data);
       const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
       if (updated) setSelectedProject(updated);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      if (err.response?.status === 400) {
+        alert(err.response.data.detail);
+      } else {
+        console.error(err);
+      }
     }
   };
 
@@ -122,8 +126,12 @@ export default function ProjectsPage() {
       setProjects(res.data);
       const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
       if (updated) setSelectedProject(updated);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      if (err.response?.status === 400) {
+        alert(err.response.data.detail);
+      } else {
+        console.error(err);
+      }
     }
   };
 
@@ -148,21 +156,30 @@ export default function ProjectsPage() {
       timelineNodes.push({ ...cp, type: "checkpoint" });
       if (cp.sub_steps) {
         cp.sub_steps.forEach((sub) => {
-          timelineNodes.push({ ...sub, type: "substep", parentCpId: cp.id });
+          timelineNodes.push({ ...sub, type: "substep", parentCpId: cp.id, parentOrder: cp.order });
         });
       }
     });
 
+    const isNodeEnabled = (node: any) => {
+      const allCps = [...selectedProject.checkpoints].sort((a, b) => a.order - b.order);
+      const nodeOrder = node.type === "checkpoint" ? node.order : node.parentOrder;
+      
+      // Node is enabled if all checkpoints with order < nodeOrder are completed
+      return allCps.every(cp => cp.order >= nodeOrder || cp.is_completed);
+    };
+
     return (
       <div className={styles.checkpoints}>
         {timelineNodes.map((node, idx) => {
+          const enabled = isNodeEnabled(node);
           if (node.type === "checkpoint") {
             return (
               <div 
                 key={`cp-${node.id}`} 
-                className={`${styles.checkpoint} ${node.is_completed ? styles.activeCp : ""}`}
-                onClick={() => toggleCheckpoint(node)}
-                style={{ cursor: "pointer" }}
+                className={`${styles.checkpoint} ${node.is_completed ? styles.activeCp : ""} ${!enabled ? styles.locked : ""}`}
+                onClick={() => enabled && toggleCheckpoint(node)}
+                style={{ cursor: enabled ? "pointer" : "not-allowed" }}
               >
                 <div className={`${styles.dot} ${node.is_completed ? styles.completedDot : ""}`}>
                   {node.is_completed ? "✓" : node.order}
@@ -174,9 +191,9 @@ export default function ProjectsPage() {
             return (
               <div 
                 key={`sub-${node.id}`} 
-                className={styles.checkpoint}
-                onClick={() => toggleSubStep(node)}
-                style={{ cursor: "pointer" }}
+                className={`${styles.checkpoint} ${!enabled ? styles.locked : ""}`}
+                onClick={() => enabled && toggleSubStep(node)}
+                style={{ cursor: enabled ? "pointer" : "not-allowed" }}
               >
                 <div className={`${styles.subDot} ${node.is_completed ? styles.completedSubDot : ""}`}>
                   {node.is_completed ? "✓" : ""}
@@ -253,6 +270,8 @@ export default function ProjectsPage() {
 
   const renderLifecycleTab = () => {
     if (selectedProject) {
+      const allCps = [...selectedProject.checkpoints].sort((a, b) => a.order - b.order);
+
       return (
         <motion.div 
           initial={{ opacity: 0, scale: 0.98 }}
@@ -291,49 +310,57 @@ export default function ProjectsPage() {
             </div>
             
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
-              {selectedProject.checkpoints.map(cp => (
-                <div key={cp.id} style={{ opacity: cp.is_completed ? 0.6 : 1 }}>
-                  <h4 style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", fontSize: "14px", fontWeight: 700, color: "var(--admin-text-primary)" }}>
-                    <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "#10b981" : "var(--admin-accent)" }}></div>
-                    {cp.name}
-                  </h4>
-                  <div className={styles.substepList}>
-                    {cp.sub_steps?.map(sub => (
-                      <div key={sub.id} className={styles.substepItem}>
+              {allCps.map(cp => {
+                // Check if this CP's sub-tasks should be enabled
+                const enabled = allCps.every(prev => prev.order >= cp.order || prev.is_completed);
+
+                return (
+                  <div key={cp.id} style={{ opacity: cp.is_completed ? 0.6 : (enabled ? 1 : 0.4) }}>
+                    <h4 style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", fontSize: "14px", fontWeight: 700, color: "var(--admin-text-primary)" }}>
+                      <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "#10b981" : (enabled ? "var(--admin-accent)" : "#cbd5e1") }}></div>
+                      {cp.name} {!enabled && "🔒"}
+                    </h4>
+                    <div className={styles.substepList}>
+                      {cp.sub_steps?.map(sub => (
+                        <div key={sub.id} className={styles.substepItem}>
+                          <input 
+                            type="checkbox" 
+                            disabled={!enabled}
+                            checked={sub.is_completed} 
+                            onChange={() => toggleSubStep(sub)}
+                            style={{ cursor: enabled ? "pointer" : "not-allowed" }}
+                          />
+                          <span>{sub.name}</span>
+                          <button 
+                            className={styles.deleteBtn}
+                            onClick={() => deleteSubStep(sub.id)}
+                            title="Remove sub-task"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                      <div className={styles.addSubstep}>
                         <input 
-                          type="checkbox" 
-                          checked={sub.is_completed} 
-                          onChange={() => toggleSubStep(sub)}
-                          style={{ cursor: "pointer" }}
+                          className={styles.input}
+                          disabled={!enabled}
+                          style={{ padding: "8px 12px", opacity: enabled ? 1 : 0.5 }}
+                          placeholder={enabled ? "Add sub-task..." : "Locked"} 
+                          value={subStepInputs[cp.id] || ""}
+                          onChange={(e) => setSubStepInputs({ ...subStepInputs, [cp.id]: e.target.value })}
+                          onKeyPress={(e) => e.key === "Enter" && addSubStep(cp.id)}
                         />
-                        <span>{sub.name}</span>
                         <button 
-                          className={styles.deleteBtn}
-                          onClick={() => deleteSubStep(sub.id)}
-                          title="Remove sub-task"
-                        >
-                          ×
-                        </button>
+                          onClick={() => addSubStep(cp.id)} 
+                          className={styles.primaryBtn}
+                          disabled={!enabled}
+                          style={{ margin: 0, padding: "0 12px", opacity: enabled ? 1 : 0.5 }}
+                        >+</button>
                       </div>
-                    ))}
-                    <div className={styles.addSubstep}>
-                      <input 
-                        className={styles.input}
-                        style={{ padding: "8px 12px" }}
-                        placeholder="Add sub-task..." 
-                        value={subStepInputs[cp.id] || ""}
-                        onChange={(e) => setSubStepInputs({ ...subStepInputs, [cp.id]: e.target.value })}
-                        onKeyPress={(e) => e.key === "Enter" && addSubStep(cp.id)}
-                      />
-                      <button 
-                        onClick={() => addSubStep(cp.id)} 
-                        className={styles.primaryBtn}
-                        style={{ margin: 0, padding: "0 12px" }}
-                      >+</button>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </motion.div>
