@@ -13,6 +13,7 @@ export const ROLE_ROUTES: Record<Role, Route[]> = {
   hr: [
     "/internal",
     "/internal/dashboard",
+    "/internal/projects",
     "/internal/jobs",
     "/internal/jobs/applications",
   ],
@@ -20,14 +21,15 @@ export const ROLE_ROUTES: Record<Role, Route[]> = {
   marketing: [
     "/internal",
     "/internal/dashboard",
+    "/internal/projects",
     "/internal/content",
-    "/internal/media",
     "/internal/monitoring",
   ],
 
   analyst: [
     "/internal",
     "/internal/dashboard",
+    "/internal/projects",
     "/internal/analytics",
     "/internal/monitoring",
   ],
@@ -35,6 +37,7 @@ export const ROLE_ROUTES: Record<Role, Route[]> = {
   sales: [
     "/internal",
     "/internal/dashboard",
+    "/internal/projects",
     "/internal/analytics",
   ],
 };
