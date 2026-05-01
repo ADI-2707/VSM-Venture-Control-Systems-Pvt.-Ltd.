@@ -54,7 +54,7 @@ async def log_requests(request: Request, call_next):
         try:
             payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
             actor = payload.get("employee_id", "anonymous")
-        except:
+        except Exception:
             pass
 
     response = await call_next(request)
