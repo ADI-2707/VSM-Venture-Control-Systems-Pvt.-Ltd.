@@ -11,11 +11,15 @@ export const ROLE_ROUTES: Record<Role, Route[]> = {
   manager: ["*"],
 
   hr: [
+    "/internal",
+    "/internal/dashboard",
     "/internal/jobs",
     "/internal/jobs/applications",
   ],
 
   marketing: [
+    "/internal",
+    "/internal/dashboard",
     "/internal/content",
     "/internal/media",
     "/internal/monitoring",
