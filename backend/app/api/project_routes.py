@@ -82,6 +82,31 @@ def update_project(
     db.refresh(project)
     return project
 
+def calculate_project_progress(project_id: int, db: Session):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        return
+    
+    total_items = 0
+    completed_items = 0
+    
+    for cp in project.checkpoints:
+        total_items += 1
+        if cp.is_completed:
+            completed_items += 1
+        
+        for sub in cp.sub_steps:
+            total_items += 1
+            if sub.is_completed:
+                completed_items += 1
+    
+    if total_items > 0:
+        project.progress = int((completed_items / total_items) * 100)
+    else:
+        project.progress = 0
+    
+    db.commit()
+
 @router.patch("/checkpoints/{checkpoint_id}")
 def toggle_checkpoint(
     checkpoint_id: int,
@@ -98,6 +123,9 @@ def toggle_checkpoint(
     
     checkpoint.is_completed = data.is_completed
     db.commit()
+    
+    calculate_project_progress(checkpoint.project_id, db)
+    
     return {"message": "Updated"}
 
 @router.post("/checkpoints/{checkpoint_id}/substeps")
@@ -121,6 +149,9 @@ def add_substep(
     )
     db.add(substep)
     db.commit()
+    
+    calculate_project_progress(checkpoint.project_id, db)
+    
     return {"message": "Added"}
 
 @router.patch("/substeps/{substep_id}")
@@ -139,4 +170,8 @@ def toggle_substep(
     
     substep.is_completed = data.is_completed
     db.commit()
+    
+    calculate_project_progress(substep.checkpoint.project_id, db)
+    
     return {"message": "Updated"}
+
