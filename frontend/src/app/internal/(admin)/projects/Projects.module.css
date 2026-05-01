@@ -299,6 +299,13 @@
   border-top: 1px solid var(--admin-border);
 }
 
+.substepList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .substepItem {
   display: flex;
   align-items: center;
@@ -306,9 +313,8 @@
   padding: 10px 14px;
   background: #f8fafc;
   border-radius: var(--admin-radius);
-  margin-bottom: 8px;
   font-size: 14px;
-  border: 1px solid transparent;
+  border: 1px solid #f1f5f9;
 }
 
 .addSubstep {

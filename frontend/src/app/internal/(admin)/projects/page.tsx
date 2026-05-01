@@ -100,13 +100,17 @@ export default function ProjectsPage() {
     }
   };
 
-  const [newSubStep, setNewSubStep] = useState("");
+  const [subStepInputs, setSubStepInputs] = useState<Record<number, string>>({});
+
   const addSubStep = async (checkpointId: number) => {
-    if (!newSubStep) return;
+    const name = subStepInputs[checkpointId];
+    if (!name) return;
     try {
-      await api.post(`/projects/checkpoints/${checkpointId}/substeps`, { name: newSubStep });
-      setNewSubStep("");
+      await api.post(`/projects/checkpoints/${checkpointId}/substeps`, { name });
+      setSubStepInputs({ ...subStepInputs, [checkpointId]: "" });
+      
       const res = await api.get("/projects");
+      setProjects(res.data);
       const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
       if (updated) setSelectedProject(updated);
     } catch (err) {
@@ -247,11 +251,8 @@ export default function ProjectsPage() {
                         className={styles.input}
                         style={{ padding: "8px 12px" }}
                         placeholder="Add sub-task..." 
-                        value={cp.id === (window as any).activeCpId ? newSubStep : ""}
-                        onChange={(e) => {
-                          setNewSubStep(e.target.value);
-                          (window as any).activeCpId = cp.id;
-                        }}
+                        value={subStepInputs[cp.id] || ""}
+                        onChange={(e) => setSubStepInputs({ ...subStepInputs, [cp.id]: e.target.value })}
                         onKeyPress={(e) => e.key === "Enter" && addSubStep(cp.id)}
                       />
                       <button 
