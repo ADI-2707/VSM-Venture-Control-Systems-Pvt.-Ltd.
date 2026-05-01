@@ -8,6 +8,7 @@ def change_user_password(db: Session, user: User, current_password: str, new_pas
         return False
     
     user.hashed_password = hash_password(new_password)
+    user.token_version += 1  # invalidate all existing sessions
     db.commit()
     return True
 

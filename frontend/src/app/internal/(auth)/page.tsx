@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function InternalLogin() {
   const router = useRouter();
-  const { login, user } = useAuth();
+  const { login, user, authReady } = useAuth();
 
   const bgRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -21,9 +21,9 @@ export default function InternalLogin() {
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !authReady) return;
     if (user) router.replace("/internal/dashboard");
-  }, [user, mounted, router]);
+  }, [user, authReady, mounted, router]);
 
   useEffect(() => {
     const bg = bgRef.current;
@@ -53,7 +53,7 @@ export default function InternalLogin() {
     try {
       await login(email, password);
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      setError(err?.response?.data?.detail || "Login failed");
       setSubmitting(false);
       setIsActive(false);
     }
