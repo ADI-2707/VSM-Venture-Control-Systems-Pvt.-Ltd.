@@ -61,6 +61,17 @@ export default function ProjectsPage() {
     }
   };
 
+  const refreshSelectedProject = async (projectId: number) => {
+    try {
+      const res = await api.get(`/projects/${projectId}`);
+      setSelectedProject(res.data);
+      
+      setProjects(prev => prev.map(p => p.id === projectId ? res.data : p));
+    } catch (err) {
+      console.error("Failed to refresh project", err);
+    }
+  };
+
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -68,6 +79,7 @@ export default function ProjectsPage() {
       await api.post("/projects", formData);
       setFormData({ client_name: "", line: "", material: "", location: "" });
       setActiveTab("lifecycle");
+      fetchProjects();
     } catch (err) {
       alert("Failed to create project");
     } finally {
@@ -75,25 +87,11 @@ export default function ProjectsPage() {
     }
   };
 
-  const updateProgress = async (projectId: number, val: number) => {
-    try {
-      await api.patch(`/projects/${projectId}`, { progress: val });
-      setProjects(projects.map(p => p.id === projectId ? { ...p, progress: val } : p));
-      if (selectedProject?.id === projectId) {
-        setSelectedProject({ ...selectedProject, progress: val });
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const toggleCheckpoint = async (cp: Checkpoint) => {
+    if (!selectedProject) return;
     try {
       await api.patch(`/projects/checkpoints/${cp.id}`, { is_completed: !cp.is_completed });
-      const res = await api.get("/projects");
-      setProjects(res.data);
-      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
-      if (updated) setSelectedProject(updated);
+      await refreshSelectedProject(selectedProject.id);
     } catch (err: any) {
       if (err.response?.status === 400) {
         alert(err.response.data.detail);
@@ -104,28 +102,23 @@ export default function ProjectsPage() {
   };
 
   const addSubStep = async (checkpointId: number) => {
+    if (!selectedProject) return;
     const name = subStepInputs[checkpointId];
     if (!name) return;
     try {
       await api.post(`/projects/checkpoints/${checkpointId}/substeps`, { name });
       setSubStepInputs({ ...subStepInputs, [checkpointId]: "" });
-      
-      const res = await api.get("/projects");
-      setProjects(res.data);
-      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
-      if (updated) setSelectedProject(updated);
+      await refreshSelectedProject(selectedProject.id);
     } catch (err) {
       console.error(err);
     }
   };
 
   const toggleSubStep = async (sub: SubStep) => {
+    if (!selectedProject) return;
     try {
       await api.patch(`/projects/substeps/${sub.id}`, { is_completed: !sub.is_completed });
-      const res = await api.get("/projects");
-      setProjects(res.data);
-      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
-      if (updated) setSelectedProject(updated);
+      await refreshSelectedProject(selectedProject.id);
     } catch (err: any) {
       if (err.response?.status === 400) {
         alert(err.response.data.detail);
@@ -136,13 +129,11 @@ export default function ProjectsPage() {
   };
 
   const deleteSubStep = async (subId: number) => {
+    if (!selectedProject) return;
     if (!confirm("Are you sure you want to remove this sub-task?")) return;
     try {
       await api.delete(`/projects/substeps/${subId}`);
-      const res = await api.get("/projects");
-      setProjects(res.data);
-      const updated = res.data.find((p: Project) => p.id === selectedProject?.id);
-      if (updated) setSelectedProject(updated);
+      await refreshSelectedProject(selectedProject.id);
     } catch (err) {
       console.error(err);
     }
@@ -164,8 +155,6 @@ export default function ProjectsPage() {
     const isNodeEnabled = (node: any) => {
       const allCps = [...selectedProject.checkpoints].sort((a, b) => a.order - b.order);
       const nodeOrder = node.type === "checkpoint" ? node.order : node.parentOrder;
-      
-      // Node is enabled if all checkpoints with order < nodeOrder are completed
       return allCps.every(cp => cp.order >= nodeOrder || cp.is_completed);
     };
 
@@ -311,7 +300,6 @@ export default function ProjectsPage() {
             
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
               {allCps.map(cp => {
-                // Check if this CP's sub-tasks should be enabled
                 const enabled = allCps.every(prev => prev.order >= cp.order || prev.is_completed);
 
                 return (

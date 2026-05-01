@@ -61,6 +61,22 @@ def get_projects(
         
     return projects
 
+@router.get("/{project_id}", response_model=ProjectResponse)
+def get_project(
+    project_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+    
+    if project.owner_id != current_user.id and current_user.role != "manager":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    project.owner_name = f"{project.owner.first_name} {project.owner.last_name or ''}".strip()
+    return project
+
 @router.patch("/{project_id}", response_model=ProjectResponse)
 def update_project(
     project_id: int,
