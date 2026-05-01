@@ -5,7 +5,7 @@ from typing import List
 from app.db.deps import get_db
 from app.core.deps_auth import get_current_user, require_roles
 from app.modules.project_model import Project, ProjectCheckpoint, ProjectSubStep
-from app.modules.project_schema import ProjectCreate, ProjectResponse, ProjectUpdate, ProjectSubStepCreate
+from app.modules.project_schema import ProjectCreate, ProjectResponse, ProjectUpdate, ProjectSubStepCreate, ToggleRequest
 from app.modules.user_model import User
 
 router = APIRouter(prefix="/projects", tags=["projects"])
@@ -85,7 +85,7 @@ def update_project(
 @router.patch("/checkpoints/{checkpoint_id}")
 def toggle_checkpoint(
     checkpoint_id: int,
-    is_completed: bool,
+    data: ToggleRequest,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -96,7 +96,7 @@ def toggle_checkpoint(
     if checkpoint.project.owner_id != current_user.id and current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    checkpoint.is_completed = is_completed
+    checkpoint.is_completed = data.is_completed
     db.commit()
     return {"message": "Updated"}
 
@@ -122,3 +122,21 @@ def add_substep(
     db.add(substep)
     db.commit()
     return {"message": "Added"}
+
+@router.patch("/substeps/{substep_id}")
+def toggle_substep(
+    substep_id: int,
+    data: ToggleRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    substep = db.query(ProjectSubStep).filter(ProjectSubStep.id == substep_id).first()
+    if not substep:
+        raise HTTPException(status_code=404, detail="Substep not found")
+    
+    if substep.checkpoint.project.owner_id != current_user.id and current_user.role != "manager":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    substep.is_completed = data.is_completed
+    db.commit()
+    return {"message": "Updated"}

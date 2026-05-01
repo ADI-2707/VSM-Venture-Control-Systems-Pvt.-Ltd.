@@ -6,6 +6,9 @@ class ProjectSubStepBase(BaseModel):
     name: str
     is_completed: bool = False
 
+class ToggleRequest(BaseModel):
+    is_completed: bool
+
 class ProjectSubStepCreate(ProjectSubStepBase):
     pass
 
