@@ -65,7 +65,6 @@ export default function ProjectsPage() {
     try {
       const res = await api.get(`/projects/${projectId}`);
       setSelectedProject(res.data);
-      
       setProjects(prev => prev.map(p => p.id === projectId ? res.data : p));
     } catch (err) {
       console.error("Failed to refresh project", err);
@@ -168,7 +167,6 @@ export default function ProjectsPage() {
                 key={`cp-${node.id}`} 
                 className={`${styles.checkpoint} ${node.is_completed ? styles.activeCp : ""} ${!enabled ? styles.locked : ""}`}
                 onClick={() => enabled && toggleCheckpoint(node)}
-                style={{ cursor: enabled ? "pointer" : "not-allowed" }}
               >
                 <div className={`${styles.dot} ${node.is_completed ? styles.completedDot : ""}`}>
                   {node.is_completed ? "✓" : node.order}
@@ -182,7 +180,6 @@ export default function ProjectsPage() {
                 key={`sub-${node.id}`} 
                 className={`${styles.checkpoint} ${!enabled ? styles.locked : ""}`}
                 onClick={() => enabled && toggleSubStep(node)}
-                style={{ cursor: enabled ? "pointer" : "not-allowed" }}
               >
                 <div className={`${styles.subDot} ${node.is_completed ? styles.completedSubDot : ""}`}>
                   {node.is_completed ? "✓" : ""}
@@ -204,7 +201,7 @@ export default function ProjectsPage() {
     >
       <div className={styles.cardHeader}>
         <h2>Start New Project</h2>
-        <p>Enter the initial project details to begin the lifecycle tracking.</p>
+        <p>Initialize a new project lifecycle for tracking.</p>
       </div>
 
       <form className={styles.formGrid} onSubmit={handleCreateProject}>
@@ -249,8 +246,8 @@ export default function ProjectsPage() {
           />
         </div>
         <div style={{ gridColumn: "span 2" }}>
-           <button type="submit" className={styles.primaryBtn} disabled={loading} style={{ width: "100%" }}>
-            {loading ? "Initializing..." : "Create Project & Start Tracking"}
+           <button type="submit" className={styles.primaryBtn} disabled={loading}>
+            {loading ? "INITIALIZING..." : "CREATE PROJECT"}
           </button>
         </div>
       </form>
@@ -268,7 +265,7 @@ export default function ProjectsPage() {
           className={styles.card}
         >
           <button className={styles.backBtn} onClick={() => setSelectedProject(null)}>
-            ← Back to All Projects
+            ← BACK TO PROJECTS
           </button>
           
           <div className={styles.cardHeader}>
@@ -278,7 +275,7 @@ export default function ProjectsPage() {
 
           <div className={styles.progressBarContainer}>
             <div className={styles.progressBarLabel}>
-              <span>Auto-Calculated Progress</span>
+              <span>AUTO-CALCULATED PROGRESS</span>
               <span style={{ color: "var(--admin-accent)" }}>{selectedProject.progress}%</span>
             </div>
             <input 
@@ -293,9 +290,9 @@ export default function ProjectsPage() {
           {renderTimeline()}
 
           <div className={styles.substepsSection}>
-            <div className={styles.cardHeader} style={{ marginBottom: "16px" }}>
+            <div className={styles.cardHeader}>
               <h2>Milestone Sub-tasks</h2>
-              <p>Add specific tasks for each stage to track granular progress.</p>
+              <p>Granular progress tracking for each stage.</p>
             </div>
             
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
@@ -304,10 +301,12 @@ export default function ProjectsPage() {
 
                 return (
                   <div key={cp.id} style={{ opacity: cp.is_completed ? 0.6 : (enabled ? 1 : 0.4) }}>
-                    <h4 style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", fontSize: "14px", fontWeight: 700, color: "var(--admin-text-primary)" }}>
-                      <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "#10b981" : (enabled ? "var(--admin-accent)" : "#cbd5e1") }}></div>
-                      {cp.name} {!enabled && "🔒"}
-                    </h4>
+                    <div className={styles.formGroup} style={{ marginBottom: "12px" }}>
+                       <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: cp.is_completed ? "#10b981" : (enabled ? "var(--admin-accent)" : "#cbd5e1") }}></div>
+                        {cp.name} {!enabled && "🔒"}
+                       </label>
+                    </div>
                     <div className={styles.substepList}>
                       {cp.sub_steps?.map(sub => (
                         <div key={sub.id} className={styles.substepItem}>
@@ -316,7 +315,6 @@ export default function ProjectsPage() {
                             disabled={!enabled}
                             checked={sub.is_completed} 
                             onChange={() => toggleSubStep(sub)}
-                            style={{ cursor: enabled ? "pointer" : "not-allowed" }}
                           />
                           <span>{sub.name}</span>
                           <button 
@@ -332,7 +330,6 @@ export default function ProjectsPage() {
                         <input 
                           className={styles.input}
                           disabled={!enabled}
-                          style={{ padding: "8px 12px", opacity: enabled ? 1 : 0.5 }}
                           placeholder={enabled ? "Add sub-task..." : "Locked"} 
                           value={subStepInputs[cp.id] || ""}
                           onChange={(e) => setSubStepInputs({ ...subStepInputs, [cp.id]: e.target.value })}
@@ -342,7 +339,6 @@ export default function ProjectsPage() {
                           onClick={() => addSubStep(cp.id)} 
                           className={styles.primaryBtn}
                           disabled={!enabled}
-                          style={{ margin: 0, padding: "0 12px", opacity: enabled ? 1 : 0.5 }}
                         >+</button>
                       </div>
                     </div>
@@ -360,30 +356,27 @@ export default function ProjectsPage() {
         {projects.map((p) => (
           <motion.div 
             key={p.id} 
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -2 }}
             className={styles.projectCard} 
             onClick={() => setSelectedProject(p)}
           >
-            <div className={styles.projectInfo}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <h3>{p.client_name}</h3>
-                <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--admin-accent)", background: "var(--admin-accent-soft)", padding: "2px 6px", borderRadius: "4px" }}>
-                  ACTIVE
-                </span>
-              </div>
-              <div className={styles.projectMeta}>
-                <span><strong>Line:</strong> {p.line}</span>
-                <span><strong>Location:</strong> {p.location}</span>
-                <span><strong>Material:</strong> {p.material}</span>
-              </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
+              <h3 style={{ fontSize: "16px", fontWeight: "700", margin: 0 }}>{p.client_name}</h3>
+              <span style={{ fontSize: "10px", fontWeight: "700", color: "var(--admin-accent)", background: "rgba(14, 165, 233, 0.1)", padding: "2px 6px", borderRadius: "4px" }}>
+                ACTIVE
+              </span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px", fontSize: "13px", color: "var(--admin-text-secondary)" }}>
+              <span>LINE: {p.line}</span>
+              <span>LOCATION: {p.location}</span>
             </div>
             <div style={{ marginTop: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "6px", fontWeight: 600 }}>
-                <span>Progress</span>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", marginBottom: "6px", fontWeight: "600" }}>
+                <span>PROGRESS</span>
                 <span>{p.progress}%</span>
               </div>
               <div style={{ width: "100%", height: "6px", background: "#f1f5f9", borderRadius: "3px" }}>
-                <div style={{ width: `${p.progress}%`, height: "100%", background: "var(--admin-accent)", borderRadius: "3px", transition: "width 0.6s cubic-bezier(0.4, 0, 0.2, 1)" }}></div>
+                <div style={{ width: `${p.progress}%`, height: "100%", background: "var(--admin-accent)", borderRadius: "3px" }}></div>
               </div>
             </div>
           </motion.div>
@@ -401,23 +394,22 @@ export default function ProjectsPage() {
     });
 
     return (
-      <div className={styles.container}>
+      <div>
         {Object.entries(grouped).map(([name, employeeProjects]) => (
           <div key={name} className={styles.employeeGroup}>
             <div className={styles.employeeHeader}>
-              <span style={{ fontWeight: 600, color: "var(--admin-text-primary)" }}>{name}</span>
-              <span style={{ fontSize: "13px", color: "var(--admin-text-secondary)" }}>{employeeProjects.length} Active Projects</span>
+              <span style={{ fontWeight: 600 }}>{name}</span>
+              <span style={{ fontSize: "12px", color: "var(--admin-text-secondary)" }}>{employeeProjects.length} ACTIVE PROJECTS</span>
             </div>
             <div className={styles.employeeProjects}>
                {employeeProjects.map(p => (
                  <div key={p.id} className={styles.projectCard} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
                    <div>
-                     <div style={{ fontWeight: 600, fontSize: "15px" }}>{p.client_name}</div>
+                     <div style={{ fontWeight: 600 }}>{p.client_name}</div>
                      <div style={{ fontSize: "12px", color: "var(--admin-text-secondary)" }}>{p.line} | {p.location}</div>
                    </div>
                    <div style={{ textAlign: "right" }}>
                       <div style={{ fontSize: "18px", fontWeight: 800, color: "var(--admin-accent)" }}>{p.progress}%</div>
-                      <div style={{ fontSize: "10px", fontWeight: 700, color: "var(--admin-text-secondary)", textTransform: "uppercase" }}>Completion</div>
                    </div>
                  </div>
                ))}
@@ -458,13 +450,19 @@ export default function ProjectsPage() {
         )}
       </div>
 
-      <div className={styles.content}>
-        <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
           {activeTab === "create" && renderCreateTab()}
           {activeTab === "lifecycle" && renderLifecycleTab()}
           {activeTab === "management" && renderManagementTab()}
-        </AnimatePresence>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
