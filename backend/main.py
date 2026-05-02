@@ -7,6 +7,7 @@ from app.api.routes import router
 from app.api.job_routes import router as job_router
 from app.api.monitoring_routes import router as monitoring_router
 from app.api.project_routes import router as project_router
+from app.api.cta_routes import router as cta_router
 from app.db.session import SessionLocal
 from app.core.init_db import create_initial_admin
 from app.core.logger import logger
@@ -38,6 +39,7 @@ app.include_router(router)
 app.include_router(job_router)   
 app.include_router(monitoring_router)
 app.include_router(project_router)
+app.include_router(cta_router)
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
