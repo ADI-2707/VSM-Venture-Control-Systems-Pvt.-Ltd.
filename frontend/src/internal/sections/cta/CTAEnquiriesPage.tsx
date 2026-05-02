@@ -37,6 +37,34 @@ export default function CTAEnquiriesPage() {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const getPageName = (path: string) => {
+    const mapping: { [key: string]: string } = {
+      "/": "Home Page",
+      "/contact": "Contact Us",
+      "/services": "Services Page",
+      "/solutions": "Solutions Page",
+      "/applications": "Application Areas",
+      "/projects": "Our Work",
+      "/careers": "Careers"
+    };
+    return mapping[path] || path;
+  };
+
+  const handleConnect = (enq: Enquiry) => {
+    const subject = `Re: Enquiry from ${enq.type === 'general' ? enq.full_name : enq.organization_name}`;
+    let body = `Hello,\n\nI am following up on your enquiry regarding `;
+    
+    if (enq.type === 'service') {
+      body += `${enq.service_name} for ${enq.organization_name}.\n\nDetails:\n- Material: ${enq.material_type}\n- Line: ${enq.line}\n- Location: ${enq.location || 'N/A'}`;
+    } else {
+      body += `your query: "${enq.query}"`;
+    }
+    
+    body += `\n\nBest regards,\nVSM Team`;
+    
+    window.location.href = `mailto:${enq.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -94,7 +122,7 @@ export default function CTAEnquiriesPage() {
                 <div key={i} className={styles.statCard}>
                   <div className={styles.statLabel}>{stat.button_label}</div>
                   <div className={styles.statValue}>{stat.click_count.toLocaleString()}</div>
-                  <div className={styles.statSub}>{stat.page_path}</div>
+                  <div className={styles.statSub}>{getPageName(stat.page_path)}</div>
                 </div>
               ))
             ) : (
@@ -158,10 +186,16 @@ export default function CTAEnquiriesPage() {
                         </>
                       )}
                       <td>
-                        <span className={styles.sourceBadge}>{enq.source_page}</span>
+                        <span className={styles.sourceBadge}>{getPageName(enq.source_page)}</span>
                       </td>
                       <td>
-                        <button className={styles.replyBtn}>Connect</button>
+                        <button 
+                          className={styles.replyBtn}
+                          onClick={() => handleConnect(enq)}
+                          style={{ cursor: 'pointer', opacity: 1 }}
+                        >
+                          Connect
+                        </button>
                       </td>
                     </tr>
                   ))}
