@@ -7,7 +7,7 @@ from alembic import context
 
 from app.core.config import settings
 from app.db.base import Base
-from app.modules import user_model, job_model, application_model, audit_model
+from app.modules import user_model, job_model, application_model, audit_model, project_model
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
