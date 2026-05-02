@@ -11,9 +11,9 @@ const navItems = [
   { label: "Dashboard", href: "/internal", icon: "/adminsidebar/dashboard.svg" },
   { label: "Content", href: "/internal/content", icon: "/adminsidebar/content.svg" },
   { label: "Projects", href: "/internal/projects", icon: "/adminsidebar/project.svg" },
+  { label: "Jobs", href: "/internal/jobs", icon: "/adminsidebar/jobs.svg" },
   { label: "Analytics", href: "/internal/analytics", icon: "/adminsidebar/analytics.svg" },
   { label: "Monitoring", href: "/internal/monitoring", icon: "/adminsidebar/monitoring.svg" },
-  { label: "Jobs", href: "/internal/jobs", icon: "/adminsidebar/jobs.svg" },
   { label: "Settings", href: "/internal/settings", icon: "/adminsidebar/settings.svg" },
 ];
 
