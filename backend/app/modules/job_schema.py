@@ -43,6 +43,7 @@ class JobResponse(BaseModel):
     status: str
     created_at: datetime
     updated_at: datetime
+    unread_applications_count: int = 0
 
     class Config:
         from_attributes = True
