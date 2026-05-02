@@ -25,13 +25,28 @@ def get_all_jobs(db: Session, status: str = None):
     query = db.query(Job)
     if status:
         query = query.filter(Job.status == status)
-    return query.order_by(Job.created_at.desc()).all()
+    
+    jobs = query.order_by(Job.created_at.desc()).all()
+    
+    for job in jobs:
+        unread_count = db.query(func.count(Application.id))\
+                         .filter(Application.job_id == job.id, Application.is_read == False)\
+                         .scalar()
+        job.unread_applications_count = unread_count
+        
+    return jobs
 
 
 def get_job_by_id(db: Session, job_id: int):
     job = db.query(Job).filter(Job.id == job_id).first()
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
+    
+    unread_count = db.query(func.count(Application.id))\
+                     .filter(Application.job_id == job.id, Application.is_read == False)\
+                     .scalar()
+    job.unread_applications_count = unread_count
+    
     return job
 
 
@@ -40,6 +55,7 @@ def create_job(db: Session, data: JobCreate):
     db.add(job)
     db.commit()
     db.refresh(job)
+    job.unread_applications_count = 0
     return job
 
 
@@ -96,6 +112,7 @@ def submit_application(db: Session, job_id: int, full_name: str, email: str,
         phone=phone,
         cover_note=cover_note,
         cv_path=saved_path,
+        is_read=False
     )
     db.add(application)
     db.commit()
@@ -103,10 +120,24 @@ def submit_application(db: Session, job_id: int, full_name: str, email: str,
     return application
 
 
-def get_applications(db: Session, job_id: int):
+def get_applications(db: Session, job_id: int, mark_as_read: bool = False):
     get_job_by_id(db, job_id)
+    
+    if mark_as_read:
+        db.query(Application).filter(Application.job_id == job_id, Application.is_read == False)\
+          .update({Application.is_read: True}, synchronize_session=False)
+        db.commit()
+
     return db.query(Application).filter(Application.job_id == job_id)\
              .order_by(Application.created_at.desc()).all()
+
+
+def mark_job_applications_read(db: Session, job_id: int):
+    get_job_by_id(db, job_id)
+    db.query(Application).filter(Application.job_id == job_id, Application.is_read == False)\
+      .update({Application.is_read: True}, synchronize_session=False)
+    db.commit()
+    return {"detail": "Applications marked as read"}
 
 
 def get_analytics_summary(db: Session):

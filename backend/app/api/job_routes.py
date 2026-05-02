@@ -91,7 +91,18 @@ def admin_get_applications(
     db: Session = Depends(get_db),
     _: None = Depends(require_roles(["manager", "hr"])),
 ):
-    return get_applications(db, job_id)
+    from app.services.job_service import get_applications
+    return get_applications(db, job_id, mark_as_read=True)
+
+
+@router.patch("/admin/jobs/{job_id}/read")
+def admin_mark_job_read(
+    job_id: int,
+    db: Session = Depends(get_db),
+    _: None = Depends(require_roles(["manager", "hr"])),
+):
+    from app.services.job_service import mark_job_applications_read
+    return mark_job_applications_read(db, job_id)
 
 
 @router.get("/admin/applications/{application_id}/cv")
