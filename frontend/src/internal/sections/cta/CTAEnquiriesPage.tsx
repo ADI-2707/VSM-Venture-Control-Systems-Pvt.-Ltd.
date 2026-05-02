@@ -39,7 +39,7 @@ export default function CTAEnquiriesPage() {
   const [loading, setLoading] = useState(true);
 
   const getPageName = (path: string) => {
-    if (path === "Footer") return "Footer";
+    if (path === "Footer") return "Website Footer";
     const mapping: { [key: string]: string } = {
       "/": "Home Page",
       "/contact": "Contact Us",
@@ -62,6 +62,7 @@ export default function CTAEnquiriesPage() {
       body += `your query: "${enq.query}"`;
     }
     
+    body += `\n\nAction Triggered via: ${enq.button_label || 'Direct Click'}`;
     body += `\n\nBest regards,\nVSM Team`;
     
     window.location.href = `mailto:${enq.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -189,8 +190,12 @@ export default function CTAEnquiriesPage() {
                       )}
                       <td>
                         <div className={styles.sourceInfo}>
-                          <span className={styles.sourcePage}>{getPageName(enq.source_page)}</span>
-                          <span className={styles.buttonLabel}>{enq.button_label || 'Direct'}</span>
+                          <span className={`${styles.sourcePage} ${enq.source_page === 'Footer' ? styles.footerSource : ''}`}>
+                            {getPageName(enq.source_page)}
+                          </span>
+                          <span className={styles.buttonLabel}>
+                            {enq.button_label || 'Legacy / Direct'}
+                          </span>
                         </div>
                       </td>
                       <td>

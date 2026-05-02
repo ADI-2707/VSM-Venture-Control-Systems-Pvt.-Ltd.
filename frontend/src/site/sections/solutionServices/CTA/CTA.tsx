@@ -16,9 +16,9 @@ export default function CTA() {
 
         <button 
           className={styles.button}
-          onClick={() => openServiceModal("Get a Quote")}
+          onClick={() => openServiceModal("Get A Quote")}
         >
-          Get a Quote
+          Get A Quote
         </button>
       </div>
     </div>

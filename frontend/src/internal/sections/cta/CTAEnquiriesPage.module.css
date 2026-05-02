@@ -208,6 +208,11 @@
   font-size: 13px;
 }
 
+.footerSource {
+  color: #0ea5e9;
+  font-weight: 700;
+}
+
 .sourceBadge {
   font-size: 10px;
   font-family: var(--font-mono, monospace);
