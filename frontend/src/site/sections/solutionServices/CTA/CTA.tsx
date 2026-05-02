@@ -1,7 +1,8 @@
 import styles from "./CTA.module.css";
-import Link from "next/link";
+import { useCTA } from "@/context/CTAContext";
 
 export default function CTA() {
+  const { openServiceModal } = useCTA();
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
@@ -11,9 +12,12 @@ export default function CTA() {
           Let’s build reliable and scalable automation solutions tailored to your industry.
         </p>
 
-        <Link href="/contact" className={styles.button}>
+        <button 
+          className={styles.button}
+          onClick={() => openServiceModal("Get a Quote")}
+        >
           Get a Quote
-        </Link>
+        </button>
       </div>
     </div>
   );

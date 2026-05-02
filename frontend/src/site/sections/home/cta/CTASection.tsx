@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./CTASection.module.css";
+import { useCTA } from "@/context/CTAContext";
 
 export default function CTASection() {
+  const { openGeneralModal } = useCTA();
   const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -41,10 +43,13 @@ export default function CTASection() {
           </p>
 
           <div className={styles.actions}>
-            <a href="/contact" className={styles.primaryBtn}>
+            <button 
+              className={styles.primaryBtn}
+              onClick={() => openGeneralModal("Schedule a Consultation")}
+            >
               <span>Schedule a Consultation</span>
               <span className={styles.arrow}>→</span>
-            </a>
+            </button>
 
             <a href="/projects" className={styles.secondaryBtn}>
               View Our Work
