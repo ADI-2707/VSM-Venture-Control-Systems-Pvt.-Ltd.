@@ -17,6 +17,7 @@ interface Enquiry {
   line?: string;
   location?: string;
   service_name?: string;
+  button_label?: string;
   created_at: string;
 }
 

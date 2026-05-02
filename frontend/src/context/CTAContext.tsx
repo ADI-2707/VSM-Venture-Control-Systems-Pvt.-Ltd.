@@ -1,36 +1,35 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import api from "@/utils/axios";
 import { usePathname } from "next/navigation";
 
 interface CTAContextType {
-  openGeneralModal: (buttonLabel: string) => void;
-  openServiceModal: (buttonLabel: string, defaultService?: string) => void;
-  trackClick: (buttonLabel: string) => Promise<void>;
+  openGeneralModal: (buttonLabel: string, customSource?: string) => void;
+  openServiceModal: (buttonLabel: string, serviceName?: string, customSource?: string) => void;
 }
 
 const CTAContext = createContext<CTAContextType | undefined>(undefined);
 
 export function CTAProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [isGeneralOpen, setIsGeneralOpen] = useState(false);
-  const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [generalOpen, setGeneralOpen] = useState(false);
+  const [serviceOpen, setServiceOpen] = useState(false);
+  const [sourcePage, setSourcePage] = useState("");
   const [activeButton, setActiveButton] = useState("");
   const [defaultService, setDefaultService] = useState("");
 
-  const trackClick = async (buttonLabel: string) => {
+  const trackClick = async (label: string, page: string) => {
     try {
       await api.post("/cta/click", {
-        button_label: buttonLabel,
-        page_path: pathname,
+        button_label: label,
+        page_path: page,
       });
     } catch (error) {
       console.error("Failed to track CTA click:", error);
     }
   };
 
-  const openGeneralModal = (buttonLabel: string) => {
   const openGeneralModal = (buttonLabel: string, customSource?: string) => {
     const page = customSource || pathname;
     setSourcePage(page);
