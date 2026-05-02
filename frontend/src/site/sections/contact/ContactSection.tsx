@@ -1,7 +1,11 @@
+"use client";
+
 import styles from "./ContactSection.module.css";
 import Reveal from "@/site/components/Reveal/Reveal";
+import { useCTA } from "@/context/CTAContext";
 
 export default function ContactSection() {
+    const { openGeneralModal } = useCTA();
     return (
         <div className={styles.container}>
 
@@ -38,19 +42,16 @@ export default function ContactSection() {
                             We take great pride in everything that we do...
                         </p>
 
-                        <form className={styles.form}>
-                            <input type="text" placeholder="Name" />
-                            <input type="email" placeholder="Email" />
-
-                            <input type="text" placeholder="Phone" />
-                            <input type="text" placeholder="Subject" />
-
-                            <textarea placeholder="Message" rows={5}></textarea>
-
-                            <button type="submit" className={styles.submit}>
+                        <div className={styles.formPlaceholder}>
+                            <p>Have a specific requirement or question? Our team is ready to help.</p>
+                            <button 
+                                className={styles.submit}
+                                onClick={() => openGeneralModal("Submit Request")}
+                                style={{ marginTop: '20px', width: '100%', justifyContent: 'center' }}
+                            >
                                 <span className={styles.arrow}>→</span> Submit Request
                             </button>
-                        </form>
+                        </div>
                     </div>
 
                 </div>

@@ -1,4 +1,7 @@
+"use client";
+
 import styles from "./ApplicationGrid.module.css";
+import { useCTA } from "@/context/CTAContext";
 
 const sections: Section[] = [
   {
@@ -85,6 +88,7 @@ type NormalSection = BaseSection & {
 type Section = ColdSection | NormalSection;
 
 export default function ApplicationGrid() {
+  const { openServiceModal } = useCTA();
   return (
     <section className={styles.section}>
       <div className="container">
@@ -140,7 +144,12 @@ export default function ApplicationGrid() {
             <p>
               Wondering whether your industry is our expertise?
             </p>
-            <button className={styles.ctaBtn}>Book a Call</button>
+            <button 
+              className={styles.ctaBtn}
+              onClick={() => openServiceModal("Book a Call")}
+            >
+              Book a Call
+            </button>
           </div>
         </div>
 

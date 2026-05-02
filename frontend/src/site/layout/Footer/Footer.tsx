@@ -5,10 +5,12 @@ import { socialLinks } from "@/site/constants/socialLinks";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useCTA } from "@/context/CTAContext";
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const { openServiceModal } = useCTA();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -156,6 +158,7 @@ export default function Footer() {
 
               <motion.button
                 className={styles.quote}
+                onClick={() => openServiceModal("Get A Quote", "", "Footer")}
                 animate={
                   visible
                     ? {
