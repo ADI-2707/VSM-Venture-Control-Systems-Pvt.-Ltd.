@@ -62,8 +62,10 @@ export default function CTAEnquiriesPage() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>CTA Management</h1>
-        <p className={styles.subtitle}>Track button clicks and user enquiries</p>
+        <div>
+          <h1 className={styles.title}>CTA Insights</h1>
+          <p className={styles.subtitle}>Track button performance and manage customer enquiries</p>
+        </div>
       </div>
 
       <div className={styles.tabs}>
@@ -82,57 +84,67 @@ export default function CTAEnquiriesPage() {
       </div>
 
       <div className={styles.content}>
-        <section className={styles.statsSection}>
-          <h2 className={styles.sectionTitle}>Click Analytics</h2>
+        <section>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Performance Analytics</h2>
+          </div>
           <div className={styles.statsGrid}>
             {stats && stats.length > 0 ? (
               stats.map((stat, i) => (
                 <div key={i} className={styles.statCard}>
                   <div className={styles.statLabel}>{stat.button_label}</div>
-                  <div className={styles.statValue}>{stat.click_count}</div>
+                  <div className={styles.statValue}>{stat.click_count.toLocaleString()}</div>
                   <div className={styles.statSub}>{stat.page_path}</div>
                 </div>
               ))
             ) : (
-              <p className={styles.noData}>No click data yet.</p>
+              <div className={styles.noData}>
+                <p>No engagement data recorded for this category yet.</p>
+              </div>
             )}
           </div>
         </section>
 
-        <section className={styles.enquiriesSection}>
-          <h2 className={styles.sectionTitle}>Recent Enquiries</h2>
+        <section>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>Recent submissions</h2>
+          </div>
           {loading ? (
-            <p>Loading...</p>
+            <div className={styles.noData}>
+              <p>Fetching latest enquiries...</p>
+            </div>
           ) : enquiries.length > 0 ? (
-            <div className={styles.tableWrapper}>
+            <div className={styles.tableContainer}>
               <table className={styles.table}>
                 <thead>
                   <tr>
                     <th>Date</th>
-                    <th>Email</th>
+                    <th>Contact</th>
                     {activeTab === "general" ? (
                       <>
-                        <th>Name</th>
-                        <th>Query</th>
+                        <th>Full Name</th>
+                        <th>Message / Query</th>
                       </>
                     ) : (
                       <>
-                        <th>Org Name</th>
-                        <th>Service</th>
-                        <th>Material/Line</th>
+                        <th>Organization</th>
+                        <th>Target Service</th>
+                        <th>Details</th>
                       </>
                     )}
-                    <th>Source</th>
+                    <th>Entry Point</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {enquiries.map((enq) => (
                     <tr key={enq.id}>
-                      <td className={styles.date}>
-                        {new Date(enq.created_at).toLocaleDateString()}
+                      <td className={styles.dateCell}>
+                        {new Date(enq.created_at).toLocaleDateString("en-IN", {
+                          day: "2-digit", month: "short", year: "numeric"
+                        })}
                       </td>
-                      <td>{enq.email}</td>
+                      <td className={styles.emailCell}>{enq.email}</td>
                       {activeTab === "general" ? (
                         <>
                           <td>{enq.full_name}</td>
@@ -145,9 +157,11 @@ export default function CTAEnquiriesPage() {
                           <td>{enq.material_type} / {enq.line}</td>
                         </>
                       )}
-                      <td className={styles.source}>{enq.source_page}</td>
                       <td>
-                        <button className={styles.replyBtn} disabled>Reply (Soon)</button>
+                        <span className={styles.sourceBadge}>{enq.source_page}</span>
+                      </td>
+                      <td>
+                        <button className={styles.replyBtn}>Connect</button>
                       </td>
                     </tr>
                   ))}
@@ -155,7 +169,9 @@ export default function CTAEnquiriesPage() {
               </table>
             </div>
           ) : (
-            <p className={styles.noData}>No enquiries found in this category.</p>
+            <div className={styles.noData}>
+              <p>No enquiries received in this category.</p>
+            </div>
           )}
         </section>
       </div>
