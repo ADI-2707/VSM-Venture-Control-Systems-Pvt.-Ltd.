@@ -78,10 +78,10 @@ export default function MonitoringPage() {
   }, [isAllowed]);
 
   useEffect(() => {
-    if (isAutoScrollEnabled && logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (isAutoScrollEnabled && logContainerRef.current) {
+      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
-  }, [logs, isAutoScrollEnabled]);
+  }, [logs, isAutoScrollEnabled, activeTab]);
 
   const handleScroll = () => {
     if (logContainerRef.current) {
