@@ -73,6 +73,18 @@ export function useCTA() {
 function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage: string }) {
   const [formData, setFormData] = useState({ full_name: "", email: "", query: "" });
   const [submitting, setSubmitting] = useState(false);
+  const [shaking, setShaking] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleOutsideClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShaking(true);
+    setShowError(true);
+    setTimeout(() => {
+      setShaking(false);
+      setShowError(false);
+    }, 500);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,9 +105,9 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
   };
 
   return (
-    <div className="cta-modal-overlay" onClick={onClose}>
-      <div className="cta-modal-content" onClick={e => e.stopPropagation()}>
-        <button className="cta-modal-close" onClick={onClose}>&times;</button>
+    <div className="cta-modal-overlay" onClick={handleOutsideClick}>
+      <div className={`cta-modal-content ${shaking ? "shake" : ""}`} onClick={e => e.stopPropagation()}>
+        <button className={`cta-modal-close ${showError ? "error" : ""}`} onClick={onClose}>&times;</button>
         <h2>Ask a Query</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -122,9 +134,11 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
               onChange={e => setFormData({...formData, query: e.target.value})}
             ></textarea>
           </div>
-          <button type="submit" disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit Request"}
-          </button>
+          <div className="button-wrapper">
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Request"}
+            </button>
+          </div>
         </form>
       </div>
       <style jsx>{`
@@ -148,21 +162,53 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
         .cta-modal-close {
           position: absolute; top: 16px; right: 16px;
           background: none; border: none; font-size: 24px; cursor: pointer;
+          transition: all 0.2s;
+          color: #64748b;
         }
-        h2 { margin-bottom: 24px; font-weight: 700; }
+        .cta-modal-close.error {
+          color: #ef4444;
+          transform: scale(1.2);
+        }
+        h2 { margin-bottom: 24px; font-weight: 700; color: #0f172a; }
         .form-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #475569; }
         input, textarea {
           width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;
-          font-family: inherit;
+          font-family: inherit; font-size: 14px;
+        }
+        input:focus, textarea:focus {
+          outline: 2px solid #1f8acb;
+          border-color: transparent;
+        }
+        .button-wrapper {
+          display: flex;
+          justify-content: flex-start;
+          margin-top: 24px;
         }
         button[type="submit"] {
-          width: 100%; padding: 14px; background: #3b82f6; color: white;
-          border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
-          margin-top: 12px; transition: background 0.2s;
+          padding: 14px 32px; 
+          background: #1f8acb; 
+          color: white;
+          border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(31, 138, 203, 0.2);
         }
-        button[type="submit"]:hover { background: #2563eb; }
+        button[type="submit"]:hover { 
+          background: #1777af;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(31, 138, 203, 0.3);
+        }
         button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-8px); }
+          50% { transform: translateX(8px); }
+          75% { transform: translateX(-8px); }
+        }
+        .shake {
+          animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
       `}</style>
     </div>
   );
@@ -178,6 +224,18 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
     service_name: defaultService || "" 
   });
   const [submitting, setSubmitting] = useState(false);
+  const [shaking, setShaking] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleOutsideClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShaking(true);
+    setShowError(true);
+    setTimeout(() => {
+      setShaking(false);
+      setShowError(false);
+    }, 500);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,9 +256,9 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
   };
 
   return (
-    <div className="cta-modal-overlay" onClick={onClose}>
-      <div className="cta-modal-content" onClick={e => e.stopPropagation()}>
-        <button className="cta-modal-close" onClick={onClose}>&times;</button>
+    <div className="cta-modal-overlay" onClick={handleOutsideClick}>
+      <div className={`cta-modal-content ${shaking ? "shake" : ""}`} onClick={e => e.stopPropagation()}>
+        <button className={`cta-modal-close ${showError ? "error" : ""}`} onClick={onClose}>&times;</button>
         <h2>Service Enquiry</h2>
         <form onSubmit={handleSubmit}>
           <div className="grid">
@@ -255,9 +313,11 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
               onChange={e => setFormData({...formData, location: e.target.value})}
             />
           </div>
-          <button type="submit" disabled={submitting}>
-            {submitting ? "Submitting..." : "Submit Enquiry"}
-          </button>
+          <div className="button-wrapper">
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Submitting..." : "Submit Enquiry"}
+            </button>
+          </div>
         </form>
       </div>
       <style jsx>{`
@@ -281,22 +341,54 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
         .cta-modal-close {
           position: absolute; top: 16px; right: 16px;
           background: none; border: none; font-size: 24px; cursor: pointer;
+          transition: all 0.2s;
+          color: #64748b;
         }
-        h2 { margin-bottom: 24px; font-weight: 700; }
+        .cta-modal-close.error {
+          color: #ef4444;
+          transform: scale(1.2);
+        }
+        h2 { margin-bottom: 24px; font-weight: 700; color: #0f172a; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .form-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #475569; }
         input {
           width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;
-          font-family: inherit;
+          font-family: inherit; font-size: 14px;
+        }
+        input:focus {
+          outline: 2px solid #1f8acb;
+          border-color: transparent;
+        }
+        .button-wrapper {
+          display: flex;
+          justify-content: flex-start;
+          margin-top: 24px;
         }
         button[type="submit"] {
-          width: 100%; padding: 14px; background: #10b981; color: white;
-          border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
-          margin-top: 12px; transition: background 0.2s;
+          padding: 14px 32px; 
+          background: #1f8acb; 
+          color: white;
+          border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(31, 138, 203, 0.2);
         }
-        button[type="submit"]:hover { background: #059669; }
+        button[type="submit"]:hover { 
+          background: #1777af;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(31, 138, 203, 0.3);
+        }
         button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-8px); }
+          50% { transform: translateX(8px); }
+          75% { transform: translateX(-8px); }
+        }
+        .shake {
+          animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
       `}</style>
     </div>
   );
