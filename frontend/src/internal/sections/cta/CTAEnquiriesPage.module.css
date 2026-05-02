@@ -179,9 +179,15 @@
 }
 
 .queryCell {
-  max-width: 400px;
-  color: var(--admin-text-secondary);
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   line-height: 1.5;
+  color: var(--admin-text-secondary);
+  font-size: 13px;
 }
 
 .dateCell {
@@ -190,14 +196,32 @@
   font-variant-numeric: tabular-nums;
 }
 
+.sourceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sourcePage {
+  font-weight: 600;
+  color: var(--admin-text-primary);
+  font-size: 13px;
+}
+
 .sourceBadge {
-  font-size: 11px;
+  font-size: 10px;
   font-family: var(--font-mono, monospace);
-  background: var(--admin-bg);
-  padding: 4px 8px;
-  border-radius: 6px;
   color: var(--admin-text-secondary);
-  border: 1px solid var(--admin-border);
+  opacity: 0.7;
+}
+
+.buttonLabel {
+  font-size: 11px;
+  color: var(--admin-text-secondary);
+  background: var(--admin-bg-secondary);
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
 }
 
 .replyBtn {

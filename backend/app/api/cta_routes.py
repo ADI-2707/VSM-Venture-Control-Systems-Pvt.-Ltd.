@@ -49,7 +49,7 @@ def get_cta_analytics(
     ).group_by(CTAClick.button_label, CTAClick.page_path).all()
 
     general_buttons = ["Schedule a Consultation", "Submit Request"]
-    service_buttons = ["Get a Quote", "Book a Call"]
+    service_buttons = ["Get A Quote", "Book a Call"]
     
     general_stats = [
         CTAClickStats(button_label=s.button_label, page_path=s.page_path, click_count=s.click_count)

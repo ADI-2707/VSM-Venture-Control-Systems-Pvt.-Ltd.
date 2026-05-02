@@ -31,33 +31,39 @@ export function CTAProvider({ children }: { children: React.ReactNode }) {
   };
 
   const openGeneralModal = (buttonLabel: string) => {
+  const openGeneralModal = (buttonLabel: string, customSource?: string) => {
+    const page = customSource || pathname;
+    setSourcePage(page);
     setActiveButton(buttonLabel);
-    setIsGeneralOpen(true);
-    trackClick(buttonLabel);
+    setGeneralOpen(true);
+    trackClick(buttonLabel, page);
   };
 
-  const openServiceModal = (buttonLabel: string, service?: string) => {
+  const openServiceModal = (buttonLabel: string, serviceName: string = "", customSource?: string) => {
+    const page = customSource || pathname;
+    setSourcePage(page);
     setActiveButton(buttonLabel);
-    setDefaultService(service || "");
-    setIsServiceOpen(true);
-    trackClick(buttonLabel);
+    setDefaultService(serviceName);
+    setServiceOpen(true);
+    trackClick(buttonLabel, page);
   };
 
   return (
-    <CTAContext.Provider value={{ openGeneralModal, openServiceModal, trackClick }}>
+    <CTAContext.Provider value={{ openGeneralModal, openServiceModal }}>
       {children}
-      {/* Modals will be rendered here or in a separate component */}
-      {isGeneralOpen && (
+      {generalOpen && (
         <GeneralModal 
-          onClose={() => setIsGeneralOpen(false)} 
-          sourcePage={pathname}
+          onClose={() => setGeneralOpen(false)} 
+          sourcePage={sourcePage} 
+          buttonLabel={activeButton}
         />
       )}
-      {isServiceOpen && (
+      {serviceOpen && (
         <ServiceModal 
-          onClose={() => setIsServiceOpen(false)} 
-          sourcePage={pathname}
-          defaultService={defaultService}
+          onClose={() => setServiceOpen(false)} 
+          sourcePage={sourcePage} 
+          buttonLabel={activeButton}
+          defaultService={defaultService} 
         />
       )}
     </CTAContext.Provider>
@@ -70,12 +76,13 @@ export function useCTA() {
   return context;
 }
 
-function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage: string }) {
+function GeneralModal({ onClose, sourcePage, buttonLabel }: { onClose: () => void, sourcePage: string, buttonLabel: string }) {
   const [formData, setFormData] = useState({ full_name: "", email: "", query: "" });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [showError, setShowError] = useState(false);
+  const MAX_CHARS = 500;
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -95,6 +102,7 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
       await api.post("/cta/enquiry", {
         type: "general",
         source_page: sourcePage,
+        button_label: buttonLabel,
         ...formData
       });
       setSuccess(true);
@@ -128,6 +136,7 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
                   type="text" required 
                   value={formData.full_name} 
                   onChange={e => setFormData({...formData, full_name: e.target.value})}
+                  placeholder="e.g. John Doe"
                 />
               </div>
               <div className="form-group">
@@ -136,14 +145,22 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
                   type="email" required 
                   value={formData.email} 
                   onChange={e => setFormData({...formData, email: e.target.value})}
+                  placeholder="john@example.com"
                 />
               </div>
               <div className="form-group">
-                <label>Your Message / Query</label>
+                <div className="label-row">
+                  <label>Your Message / Query</label>
+                  <span className={`char-count ${formData.query.length >= MAX_CHARS ? 'limit' : ''}`}>
+                    {formData.query.length}/{MAX_CHARS}
+                  </span>
+                </div>
                 <textarea 
                   required rows={4}
+                  maxLength={MAX_CHARS}
                   value={formData.query} 
                   onChange={e => setFormData({...formData, query: e.target.value})}
+                  placeholder="How can we help you?"
                 ></textarea>
               </div>
               <div className="button-wrapper">
@@ -185,14 +202,18 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
         }
         h2 { margin-bottom: 24px; font-weight: 700; color: #0f172a; }
         .form-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #475569; }
+        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        label { font-size: 14px; font-weight: 600; color: #475569; }
+        .char-count { font-size: 12px; color: #94a3b8; }
+        .char-count.limit { color: #ef4444; font-weight: 700; }
         input, textarea {
           width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;
-          font-family: inherit; font-size: 14px;
+          font-family: inherit; font-size: 14px; transition: all 0.2s;
         }
         input:focus, textarea:focus {
-          outline: 2px solid #1f8acb;
-          border-color: transparent;
+          outline: none;
+          border-color: #1f8acb;
+          box-shadow: 0 0 0 3px rgba(31, 138, 203, 0.1);
         }
         .button-wrapper {
           display: flex;
@@ -250,7 +271,7 @@ function GeneralModal({ onClose, sourcePage }: { onClose: () => void, sourcePage
   );
 }
 
-function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => void, sourcePage: string, defaultService: string }) {
+function ServiceModal({ onClose, sourcePage, buttonLabel, defaultService }: { onClose: () => void, sourcePage: string, buttonLabel: string, defaultService: string }) {
   const [formData, setFormData] = useState({ 
     organization_name: "", 
     email: "", 
@@ -263,6 +284,12 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
   const [success, setSuccess] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    if (defaultService) {
+      setFormData(prev => ({ ...prev, service_name: defaultService }));
+    }
+  }, [defaultService]);
 
   const handleOutsideClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -282,6 +309,7 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
       await api.post("/cta/enquiry", {
         type: "service",
         source_page: sourcePage,
+        button_label: buttonLabel,
         ...formData
       });
       setSuccess(true);
@@ -404,11 +432,12 @@ function ServiceModal({ onClose, sourcePage, defaultService }: { onClose: () => 
         label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #475569; }
         input {
           width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px;
-          font-family: inherit; font-size: 14px;
+          font-family: inherit; font-size: 14px; transition: all 0.2s;
         }
         input:focus {
-          outline: 2px solid #1f8acb;
-          border-color: transparent;
+          outline: none;
+          border-color: #1f8acb;
+          box-shadow: 0 0 0 3px rgba(31, 138, 203, 0.1);
         }
         .button-wrapper {
           display: flex;

@@ -5,6 +5,7 @@ from datetime import datetime
 class CTAEnquiryCreate(BaseModel):
     type: Literal["general", "service"]
     source_page: str
+    button_label: Optional[str] = None
     
     email: EmailStr
     full_name: Optional[str] = None

@@ -10,6 +10,7 @@ class CTAEnquiry(Base):
     
     email = Column(String, nullable=False)
     source_page = Column(String, nullable=False)
+    button_label = Column(String, nullable=True)
     status = Column(String, default="pending")
     
     full_name = Column(String, nullable=True)

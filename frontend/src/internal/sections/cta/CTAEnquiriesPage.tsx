@@ -38,6 +38,7 @@ export default function CTAEnquiriesPage() {
   const [loading, setLoading] = useState(true);
 
   const getPageName = (path: string) => {
+    if (path === "Footer") return "Footer";
     const mapping: { [key: string]: string } = {
       "/": "Home Page",
       "/contact": "Contact Us",
@@ -186,7 +187,10 @@ export default function CTAEnquiriesPage() {
                         </>
                       )}
                       <td>
-                        <span className={styles.sourceBadge}>{getPageName(enq.source_page)}</span>
+                        <div className={styles.sourceInfo}>
+                          <span className={styles.sourcePage}>{getPageName(enq.source_page)}</span>
+                          <span className={styles.buttonLabel}>{enq.button_label || 'Direct'}</span>
+                        </div>
                       </td>
                       <td>
                         <button 

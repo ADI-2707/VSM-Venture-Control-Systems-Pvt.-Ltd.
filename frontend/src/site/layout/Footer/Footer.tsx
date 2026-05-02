@@ -158,7 +158,7 @@ export default function Footer() {
 
               <motion.button
                 className={styles.quote}
-                onClick={() => openServiceModal("Get A Quote")}
+                onClick={() => openServiceModal("Get A Quote", "", "Footer")}
                 animate={
                   visible
                     ? {
