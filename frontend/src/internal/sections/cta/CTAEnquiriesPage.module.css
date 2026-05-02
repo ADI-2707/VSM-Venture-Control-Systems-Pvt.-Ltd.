@@ -28,40 +28,31 @@
 
 .tabs {
   display: flex;
-  gap: 32px;
+  gap: 16px;
   border-bottom: 1px solid var(--admin-border);
+  padding-bottom: 8px;
   margin-top: 8px;
 }
 
 .tab {
-  padding: 12px 4px;
+  background: transparent;
   border: none;
-  background: none;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--admin-text-secondary);
+  padding: 8px 16px;
   cursor: pointer;
-  position: relative;
-  transition: all 0.2s;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
 .tab:hover {
-  color: var(--admin-text-primary);
+  background: rgba(0, 0, 0, 0.04);
 }
 
-.activeTab {
-  color: var(--admin-accent);
-}
-
-.activeTab::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
+.tabActive {
   background: var(--admin-accent);
-  border-radius: 2px;
+  color: white;
 }
 
 .content {

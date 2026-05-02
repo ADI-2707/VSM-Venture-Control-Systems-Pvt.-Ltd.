@@ -101,13 +101,13 @@ export default function CTAEnquiriesPage() {
 
       <div className={styles.tabs}>
         <button 
-          className={`${styles.tab} ${activeTab === "general" ? styles.activeTab : ""}`}
+          className={`${styles.tab} ${activeTab === "general" ? styles.tabActive : ""}`}
           onClick={() => setActiveTab("general")}
         >
           General Queries
         </button>
         <button 
-          className={`${styles.tab} ${activeTab === "service" ? styles.activeTab : ""}`}
+          className={`${styles.tab} ${activeTab === "service" ? styles.tabActive : ""}`}
           onClick={() => setActiveTab("service")}
         >
           Service Enquiries
