@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./CTA.module.css";
 import { useCTA } from "@/context/CTAContext";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./ContactSection.module.css";
 import Reveal from "@/site/components/Reveal/Reveal";
 import { useCTA } from "@/context/CTAContext";

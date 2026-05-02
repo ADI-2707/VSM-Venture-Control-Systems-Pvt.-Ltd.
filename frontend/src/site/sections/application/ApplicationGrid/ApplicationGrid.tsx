@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./ApplicationGrid.module.css";
 import { useCTA } from "@/context/CTAContext";
 
