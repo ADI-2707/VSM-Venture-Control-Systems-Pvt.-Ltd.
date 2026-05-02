@@ -32,7 +32,9 @@ export default function MonitoringPage() {
   const { isAllowed, isLoading } = useRBACGuard();
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [activeTab, setActiveTab] = useState<"site" | "internal">("internal");
+  const [isAutoScrollEnabled, setIsAutoScrollEnabled] = useState(true);
   const logsEndRef = useRef<HTMLDivElement>(null);
+  const logContainerRef = useRef<HTMLDivElement>(null);
   
   const [latency, setLatency] = useState<any>(null);
   const [errors, setErrors] = useState<any>(null);
@@ -76,10 +78,18 @@ export default function MonitoringPage() {
   }, [isAllowed]);
 
   useEffect(() => {
-    if (logsEndRef.current) {
+    if (isAutoScrollEnabled && logsEndRef.current) {
       logsEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [logs]);
+  }, [logs, isAutoScrollEnabled]);
+
+  const handleScroll = () => {
+    if (logContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = logContainerRef.current
+      const atBottom = scrollHeight - scrollTop - clientHeight < 50;
+      setIsAutoScrollEnabled(atBottom);
+    }
+  };
 
   if (isLoading || !isAllowed) return null;
 
@@ -240,7 +250,11 @@ export default function MonitoringPage() {
             <span>Message</span>
           </div>
 
-          <div className={styles.logBody}>
+          <div 
+            className={styles.logBody}
+            ref={logContainerRef}
+            onScroll={handleScroll}
+          >
             {logs.filter(l => l.source === activeTab).length === 0 ? (
               <div style={{ padding: "12px", fontSize: "12px", color: "gray" }}>Waiting for {activeTab} logs...</div>
             ) : (
