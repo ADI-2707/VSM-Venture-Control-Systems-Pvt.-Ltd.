@@ -26,6 +26,7 @@ export type Job = {
   status: string;
   created_at: string;
   updated_at: string;
+  unread_applications_count: number;
 };
 
 export default function JobsPage() {
@@ -38,7 +39,6 @@ export default function JobsPage() {
 
   const triggerRefresh = () => setRefresh((r) => r + 1);
 
-  // 🔥 Fetch Jobs (clean service-based)
   useEffect(() => {
     const loadJobs = async () => {
       setLoading(true);

@@ -85,6 +85,11 @@ export default function JobsTable({
                     }
                   >
                     📋 Applications
+                    {job.unread_applications_count > 0 && (
+                      <span className={styles.notificationBadge}>
+                        {job.unread_applications_count > 9 ? "9+" : job.unread_applications_count}
+                      </span>
+                    )}
                   </button>
                 </div>
               </td>

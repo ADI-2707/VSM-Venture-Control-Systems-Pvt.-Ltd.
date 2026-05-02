@@ -2,8 +2,10 @@
 
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useJobs } from "@/context/JobContext";
 import { hasAccess } from "@/utils/rbac";
 import Tooltip from "@/components/ui/Tooltip/Tooltip";
 
@@ -20,6 +22,13 @@ const navItems = [
 export default function Sidebar({ collapsed, setCollapsed }: any) {
   const pathname = usePathname();
   const { user } = useAuth();
+  const { hasNewApplications, clearSectionNotification } = useJobs();
+
+  useEffect(() => {
+    if (pathname.startsWith("/internal/jobs")) {
+      clearSectionNotification();
+    }
+  }, [pathname, clearSectionNotification]);
 
   const filteredNavItems = navItems.filter((item) => {
     if (!user) return false;
@@ -50,6 +59,7 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
       <nav className={styles.nav}>
         {filteredNavItems.map((item) => {
           const active = isActive(item.href);
+          const showDot = item.label === "Jobs" && hasNewApplications;
 
           const link = (
             <Link
@@ -57,7 +67,10 @@ export default function Sidebar({ collapsed, setCollapsed }: any) {
               href={item.href}
               className={`${styles.link} ${active ? styles.active : ""}`}
             >
-              <img src={item.icon} className={styles.icon} alt={item.label} />
+              <div className={styles.iconContainer}>
+                <img src={item.icon} className={styles.icon} alt={item.label} />
+                {showDot && <div className={styles.dot} />}
+              </div>
               {!collapsed && <span className={styles.label}>{item.label}</span>}
             </Link>
           );

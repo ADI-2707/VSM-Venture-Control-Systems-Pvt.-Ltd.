@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import { MediaProvider } from "@/context/MediaContext";
+import { JobProvider } from "@/context/JobContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={inter.variable}>
         <AuthProvider>
           <MediaProvider>
-            {children}
+            <JobProvider>
+              {children}
+            </JobProvider>
           </MediaProvider>
         </AuthProvider>
       </body>

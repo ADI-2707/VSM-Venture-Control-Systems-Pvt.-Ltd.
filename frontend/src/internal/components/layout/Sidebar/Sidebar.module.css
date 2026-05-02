@@ -69,11 +69,30 @@
   white-space: nowrap;
 }
 
+.iconContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .icon {
   width: 17px;
   height: 17px;
   opacity: 0.6;
   flex-shrink: 0;
+}
+
+.dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  background: #3b82f6;
+  border: 1.5px solid var(--admin-surface);
+  border-radius: 50%;
+  z-index: 1;
 }
 
 .link:hover {
